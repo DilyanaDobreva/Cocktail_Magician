@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CocktailMagician.Data.Migrations
 {
-    [DbContext(typeof(CocktailMagician))]
+    [DbContext(typeof(CocktailMagicianDb))]
     partial class CocktailMagicianModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

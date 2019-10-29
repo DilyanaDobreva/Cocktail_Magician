@@ -4,16 +4,14 @@ using CocktailMagician.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CocktailMagician.Data.Migrations
 {
     [DbContext(typeof(CocktailMagicianDb))]
-    [Migration("20191029111234_initial")]
-    partial class initial
+    partial class CocktailMagicianDbModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,6 +38,21 @@ namespace CocktailMagician.Data.Migrations
                     b.HasIndex("CityId");
 
                     b.ToTable("Addresses");
+                });
+
+            modelBuilder.Entity("CocktailMagician.Data.Models.Bann", b =>
+                {
+                    b.Property<string>("Id");
+
+                    b.Property<DateTime>("EnDateTime");
+
+                    b.Property<string>("Reason");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Banns");
                 });
 
             modelBuilder.Entity("CocktailMagician.Data.Models.Bar", b =>
@@ -124,6 +137,8 @@ namespace CocktailMagician.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CocktailType");
 
                     b.Property<bool>("IsDeleted");
 
@@ -223,6 +238,8 @@ namespace CocktailMagician.Data.Migrations
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("BannId");
+
                     b.Property<bool>("IsDeleted");
 
                     b.Property<string>("Password")
@@ -257,6 +274,14 @@ namespace CocktailMagician.Data.Migrations
                     b.HasOne("CocktailMagician.Data.Models.City", "City")
                         .WithMany("Addresses")
                         .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("CocktailMagician.Data.Models.Bann", b =>
+                {
+                    b.HasOne("CocktailMagician.Data.Models.User", "User")
+                        .WithOne("Bann")
+                        .HasForeignKey("CocktailMagician.Data.Models.Bann", "Id")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

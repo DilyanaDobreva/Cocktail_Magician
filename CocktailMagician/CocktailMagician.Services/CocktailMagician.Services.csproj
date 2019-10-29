@@ -14,9 +14,13 @@
     <Folder Include="DTOs\" />
     <Folder Include="Mapper\" />
     <Folder Include="Hasher\" />
+    <Folder Include="Contracts\Factories\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Contracts\CocktailServices.cs" />
     <Compile Remove="Contracts\IngredientServices.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.EntityFrameworkCore, Version=2.2.6.0, Culture=neutral, PublicKeyToken=adb9793829ddae60" />
   </ItemGroup>
 </Project>
