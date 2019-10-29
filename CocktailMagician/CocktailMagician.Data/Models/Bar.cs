@@ -12,9 +12,9 @@ namespace CocktailMagician.Data.Models
         public string Name { get; set; }
         public int AddressId { get; set; }
         public Address Address { get; set; }
-        public ICollection<BarCoctail> Coctails { get; set; }
+        public ICollection<BarCocktail> Cocktails { get; set; }
         public string Image { get; set; }
-        public ICollection<Review> Reviews { get; set; }
+        public ICollection<BarReview> BarReviews { get; set; }
         public bool IsDeleted { get; set; }
     }
 }

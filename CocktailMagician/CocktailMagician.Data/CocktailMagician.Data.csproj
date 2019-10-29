@@ -9,5 +9,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Models\Member.cs" />
+    <Compile Remove="Models\Admin.cs" />
+    <Compile Remove="Models\BarCoctail.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.6" />
   </ItemGroup>
 </Project>

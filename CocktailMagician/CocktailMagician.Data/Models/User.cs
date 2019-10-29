@@ -22,7 +22,10 @@ namespace CocktailMagician.Data.Models
         [Required]
         [StringLength(50, MinimumLength = (5))]
         public string Password { get; set; }
-        public ICollection<Review> Reviews { get; set; }
+        public int RoleId { get; set; }
+        public Role Role { get; set; }
+        public ICollection<CocktailReview> CocktailReviews { get; set; }
+        public ICollection<BarReview> BarReviews { get; set; }
         public bool IsDeleted { get; set; }
     }
 }
