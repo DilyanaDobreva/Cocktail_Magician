@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using CocktailMagician.Data;
 using CocktailMagician.Data.Models;
 using CocktailMagician.Services.Contracts;
 using CocktailMagician.Services.Contracts.Factories;
 using CocktailMagician.Services.DTOs;
+using CocktailMagician.Services.Mapper;
 using Microsoft.EntityFrameworkCore;
 
 namespace CocktailMagician.Services
@@ -24,49 +26,108 @@ namespace CocktailMagician.Services
             this.bannFactory = bannFactory;
             this.hasher = hasher;
         }
-        public async Task<Bann> BanUserAsync(string reason, User user)
+        public async Task<BannDTO> BanAsync(string reason, User user)
         {
-            throw new NotImplementedException();
+            var date = DateTime.Now;
+
+            if (user.Bann != null)
+            {
+                var existingBan = await context.Banns.Include(m => m.User).FirstOrDefaultAsync(m => m.UserId == user.Id);
+                this.context.Banns.Remove(existingBan);
+            }
+            var bann = bannFactory.CreateBan(reason, date.AddDays(30), user);
+            this.context.Banns.Add(bann);
+            await this.context.SaveChangesAsync();
+            return bann.MapToDTO();
+        }
+        public async Task DeleteBan(Bann bann)
+        {
+            context.Banns.Remove(bann);
+            await this.context.SaveChangesAsync();
         }
 
-        public Task DeleteBan(Bann bann)
+        public async Task<User> FindUserAsync(string name)
         {
-            throw new NotImplementedException();
+            var findUser = await context.Users
+                .FirstOrDefaultAsync(u => u.UserName == name);
+            return findUser;
         }
 
-        public Task<List<Bann>> FindExpiredBans()
+        public async Task<List<UserDTO>> GetListOfUsersDTO()
         {
-            throw new NotImplementedException();
+            var users = await context.Users
+                .Include(u => u.Role)
+                .Include(u => u.Bann)
+                .ToListAsync();
+            var listOfDTO = users.Select(m => m.MapToDTO()).ToList();
+            return listOfDTO;
         }
 
-        public Task<List<UserDTO>> GetListOfUsersDTO()
+        public async Task<UserDTO> GetUserAsync(string name)
         {
-            throw new NotImplementedException();
+            var users = await context.Users
+                .Include(m => m.Role)
+                .Include(m => m.Bann)
+                .FirstAsync(m => m.UserName == name);
+            return users.MapToDTO();
         }
 
-        public Task<UserDTO> GetUserAsync(string name)
+        public async Task<UserDTO> LoginAsync(string username, string password)
         {
-            throw new NotImplementedException();
+            password = hasher.Hasher(password);
+            var user = await context.Users
+                .Include(u => u.Role)
+                .Include(b => b.Bann)
+                .FirstOrDefaultAsync(user => user.UserName == username && user.Password == password);
+
+            if (user == null)
+            {
+                throw new ArgumentException("Invalid Username or Password");
+            }
+            return user.MapToDTO();
+
+        }
+        public async Task<UserDTO> RegisterAdminAsync(string username, string password)
+        {
+            var findUser = await FindUserAsync(username);
+            if (findUser != null)
+            {
+                throw new ArgumentException("User with this name already exist.");
+            }
+            var newAdmin = usersFactory.CreateUser(username, password, 2);
+            newAdmin.Password = hasher.Hasher(newAdmin.Password);
+            this.context.Users.Add(newAdmin);
+            await this.context.SaveChangesAsync();
+            return newAdmin.MapToDTO();
         }
 
-        public Task<UserDTO> LoginAsync(string username, string password)
+        public async Task<UserDTO> RegisterUserAsync(string username, string password)
         {
-            throw new NotImplementedException();
+            var findUser = await FindUserAsync(username);
+            if (findUser != null)
+            {
+                throw new ArgumentException("User with this name already exist.");
+            }
+            var newUser = usersFactory.CreateUser(username, password, 1);
+            newUser.Password = hasher.Hasher(newUser.Password);
+            this.context.Users.Add(newUser);
+            await this.context.SaveChangesAsync();
+            var member = await context.Users
+                .Include(m => m.Role)
+                .FirstOrDefaultAsync(m => m.UserName == username);
+            return member.MapToDTO();
         }
 
-        public Task<UserDTO> RegisterAdminAsync(string username, string password)
+        public async Task UpdateUserAsync(string id, string newPassword)
         {
-            throw new NotImplementedException();
-        }
+            var user = await context.Users
+                .FirstOrDefaultAsync(u => u.Id == id);
+            if (newPassword != null)
+            {
+                user.Password = hasher.Hasher(newPassword);
 
-        public Task<UserDTO> RegisterUserAsync(string username, string password)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task UpdateUserAsync(string id, string newPassword)
-        {
-            throw new NotImplementedException();
+                await this.context.SaveChangesAsync();
+            }
         }
     }
 }
