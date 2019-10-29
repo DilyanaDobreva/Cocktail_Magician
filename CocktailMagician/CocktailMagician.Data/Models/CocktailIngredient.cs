@@ -1,10 +1,10 @@
 ﻿using System;
 namespace CocktailMagician.Data.Models
 {
-    public class CoctailIngredient
+    public class CocktailIngredient
     {
-        public int CoctailId { get; set; }
-        public Coctail Coctail { get; set; }
+        public int CocktailId { get; set; }
+        public Cocktail Coctail { get; set; }
         public int IngredientId { get; set; }
         public Ingredient Ingredient { get; set; }
     }

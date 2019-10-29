@@ -7,7 +7,7 @@
         public int? Rating { get; set; }
         public string UserId { get; set; }
         public User User { get; set; }
-        public int CoctailId { get; set; }
+        public int CocktailId { get; set; }
         public Cocktail Coctail { get; set; }
         public bool IsDeleted { get; set; }
     }
