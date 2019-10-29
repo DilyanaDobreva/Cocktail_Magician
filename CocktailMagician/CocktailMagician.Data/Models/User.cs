@@ -12,13 +12,13 @@ namespace CocktailMagician.Data.Models
         }
         public User(string username, string password)
         {
-            this.Username = username;
+            this.UserName = username;
             this.Password = password;
         }
         public string Id { get; set; }
         [Required]
         [StringLength(50, MinimumLength = (5))]
-        public string Username { get; set; }
+        public string UserName { get; set; }
         [Required]
         [StringLength(50, MinimumLength = (5))]
         public string Password { get; set; }
