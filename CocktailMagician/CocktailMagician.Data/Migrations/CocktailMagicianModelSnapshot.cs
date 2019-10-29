@@ -141,6 +141,8 @@ namespace CocktailMagician.Data.Migrations
 
                     b.Property<int>("CocktailId");
 
+                    b.Property<int>("Quatity");
+
                     b.HasKey("IngredientId", "CocktailId");
 
                     b.HasIndex("CocktailId");
@@ -291,7 +293,7 @@ namespace CocktailMagician.Data.Migrations
 
             modelBuilder.Entity("CocktailMagician.Data.Models.CocktailIngredient", b =>
                 {
-                    b.HasOne("CocktailMagician.Data.Models.Cocktail", "Coctail")
+                    b.HasOne("CocktailMagician.Data.Models.Cocktail", "Cocktail")
                         .WithMany("CocktailIngredients")
                         .HasForeignKey("CocktailId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -304,7 +306,7 @@ namespace CocktailMagician.Data.Migrations
 
             modelBuilder.Entity("CocktailMagician.Data.Models.CocktailReview", b =>
                 {
-                    b.HasOne("CocktailMagician.Data.Models.Cocktail", "Coctail")
+                    b.HasOne("CocktailMagician.Data.Models.Cocktail", "Cocktail")
                         .WithMany("CocktailReviews")
                         .HasForeignKey("CocktailId")
                         .OnDelete(DeleteBehavior.Cascade);

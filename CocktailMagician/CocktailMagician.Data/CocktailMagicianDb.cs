@@ -28,8 +28,6 @@ namespace CocktailMagician.Data
         public DbSet<Bar> Bars { get; set; }
         public DbSet<Address> Addresses { get; set; }
 
-
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -37,7 +35,7 @@ namespace CocktailMagician.Data
 
                 optionsBuilder
                     .ConfigureWarnings(options => options.Throw(RelationalEventId.QueryClientEvaluationWarning))
-                    //.UseSqlServer(@"Server=localhost\KristiqnTashev, 1433;Database=LMSTEST;User=sa;Password=Whocanbe1;Trusted_Connection=False;");
+                    //.UseSqlServer(@"Server=localhost\KristiqnTashev, 1433;Database=CocktailMagician;User=sa;Password=Whocanbe1;Trusted_Connection=False;");
                     .UseSqlServer("Server=.\\SQLEXPRESS;Database=CocktailMagician;Trusted_Connection=True;Integrated Security=True;");
             }
         }

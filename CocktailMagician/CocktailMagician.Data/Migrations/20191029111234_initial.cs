@@ -90,7 +90,8 @@ namespace CocktailMagician.Data.Migrations
                 columns: table => new
                 {
                     CocktailId = table.Column<int>(nullable: false),
-                    IngredientId = table.Column<int>(nullable: false)
+                    IngredientId = table.Column<int>(nullable: false),
+                    Quatity = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
