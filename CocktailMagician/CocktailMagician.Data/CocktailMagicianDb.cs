@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace CocktailMagician.Data
 {
-    public class CocktailMagician : DbContext
+    public class CocktailMagicianDb : DbContext
     {
-        public CocktailMagician()
+        public CocktailMagicianDb()
         {
 
         }
-        public CocktailMagician(DbContextOptions<CocktailMagician> options) : base(options)
+        public CocktailMagicianDb(DbContextOptions<CocktailMagicianDb> options) : base(options)
         {
 
         }
