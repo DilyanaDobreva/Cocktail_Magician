@@ -1,7 +1,15 @@
+using CocktailMagician.Data;
+using CocktailMagician.Services;
+using CocktailMagician.Services.Contracts;
+using CocktailMagician.Services.Contracts.Factories;
+using CocktailMagician.Services.Factories;
+using CocktailMagician.Services.Hasher;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -19,15 +27,28 @@ namespace CocktailMagician.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<CookiePolicyOptions>(options =>
-            {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
-            });
+            services.AddDbContext<CocktailMagicianDb>(
+                options => options.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection")));
 
 
+            //services.Configure<CookiePolicyOptions>(options =>
+            //{
+            //    // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+            //    options.CheckConsentNeeded = context => true;
+            //    options.MinimumSameSitePolicy = SameSiteMode.None;
+            //});
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddScoped<ICocktailServices, CocktailServices>();
+            services.AddScoped<IIngredientServices, IngredientServices>();
+            services.AddScoped<IReviewServices, ReviewServices>();
+            services.AddScoped<IUserServices, UserServices>();
+            services.AddScoped<IBannFactory, BannFactory>();
+            services.AddScoped<IIngredientFactory, IngredientFactory>();
+            services.AddScoped<IUserFactory, UserFactory>();
+            services.AddScoped<IHasher, Hasher>();
+            services.AddScoped<ICocktailServices, CocktailServices>();
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -39,14 +60,17 @@ namespace CocktailMagician.Web
             }
             else
             {
-                app.UseExceptionHandler("/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
+            //app.UseStatusCodePagesWithRedirects("/Home/Error?code={0}");
+
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {

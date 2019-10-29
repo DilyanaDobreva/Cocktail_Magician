@@ -10,6 +10,7 @@ namespace CocktailMagician.Services.Contracts
     {
         Task<UserDTO> RegisterUserAsync(string username, string password);
         Task<UserDTO> RegisterAdminAsync(string username, string password);
+        Task<UserDTO> FindUserDTOAsync(string name);
         Task<User> FindUserAsync(string name);
         Task<UserDTO> LoginAsync(string username, string password);
         Task UpdateUserAsync(string id, string newPassword);
@@ -17,5 +18,6 @@ namespace CocktailMagician.Services.Contracts
         Task<BannDTO> BanAsync(string reason, User member);
         Task DeleteBan(Bann bann);
         Task<List<UserDTO>> GetListOfUsersDTO();
+        Task<bool> IsBannedAsync(string userName);
     }
 }

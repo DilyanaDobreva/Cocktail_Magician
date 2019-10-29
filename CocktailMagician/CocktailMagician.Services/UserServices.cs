@@ -45,12 +45,19 @@ namespace CocktailMagician.Services
             context.Banns.Remove(bann);
             await this.context.SaveChangesAsync();
         }
-
-        public async Task<User> FindUserAsync(string name)
+        public Task<User> FindUserAsync(string name)
         {
-            var findUser = await context.Users
+            var findUser = context.Users
                 .FirstOrDefaultAsync(u => u.UserName == name);
             return findUser;
+        }
+        public async Task<UserDTO> FindUserDTOAsync(string name)
+        {
+            var findUser = await context.Users
+                .Include(u => u.Bann)
+                .Include(u => u.Role)
+                .FirstOrDefaultAsync(u => u.UserName == name);
+            return findUser.MapToDTO();
         }
 
         public async Task<List<UserDTO>> GetListOfUsersDTO()
@@ -78,7 +85,7 @@ namespace CocktailMagician.Services
             var user = await context.Users
                 .Include(u => u.Role)
                 .Include(b => b.Bann)
-                .FirstOrDefaultAsync(user => user.UserName == username && user.Password == password);
+                .FirstOrDefaultAsync(u => u.UserName == username && u.Password == password);
 
             if (user == null)
             {
@@ -128,6 +135,12 @@ namespace CocktailMagician.Services
 
                 await this.context.SaveChangesAsync();
             }
+        }
+        public Task<bool> IsBannedAsync(string userName)
+        {
+            return context.Banns
+                .Include(m => m.User)
+                .AnyAsync(u => u.User.UserName == userName);
         }
     }
 }

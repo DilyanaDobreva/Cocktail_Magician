@@ -23,4 +23,23 @@
     <ProjectReference Include="..\CocktailMagician.Services\CocktailMagician.Services.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\" />
+    <Folder Include="Areas\Authentication\" />
+    <Folder Include="ViewModels\" />
+    <Folder Include="ViewModels\Auth\" />
+    <Folder Include="Views\Auth\" />
+    <Folder Include="Mapper\" />
+    <Folder Include="ViewModels\Users\" />
+    <Folder Include="Areas\Home\" />
+    <Folder Include="Views\Home\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Views\Index.cshtml.cs" />
+    <Compile Remove="Views\Privacy.cshtml.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="Views\Index.cshtml" />
+    <Content Remove="Views\Privacy.cshtml" />
+  </ItemGroup>
 </Project>

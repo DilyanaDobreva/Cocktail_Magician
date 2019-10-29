@@ -1,0 +1,23 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@{ var statusMessage = TempData["Status"]?.ToString(); }
+
+<body class="bg-img">
+    
+    @if (!User.Identity.IsAuthenticated)
+    {
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <div class="btn-group btn-group-lg">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Login">
+                        <input id="login-btn" type="button" value="Login" class="btn btn-light" />
+                    </a>
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Register">
+                        <input type="button" value="Register" class="btn btn-light" />
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+</body>
