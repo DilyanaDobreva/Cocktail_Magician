@@ -8,4 +8,15 @@
     <ProjectReference Include="..\CocktailMagician.Data\CocktailMagician.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Contracts\" />
+    <Folder Include="Factories\" />
+    <Folder Include="DTOs\" />
+    <Folder Include="Mapper\" />
+    <Folder Include="Hasher\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Contracts\CocktailServices.cs" />
+    <Compile Remove="Contracts\IngredientServices.cs" />
+  </ItemGroup>
 </Project>
