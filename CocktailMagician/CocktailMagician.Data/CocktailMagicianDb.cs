@@ -44,6 +44,11 @@ namespace CocktailMagician.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<BarCocktail>()
+                .HasKey(k => new { k.BarId, k.CocktailId });
+            modelBuilder.Entity<CocktailIngredient>()
+                .HasKey(k => new { k.IngredientId, k.CocktailId });
+
             modelBuilder.Entity<Role>().HasData(RoleSeed.roleSeed);
             modelBuilder.Entity<User>().HasData(UserSeed.userSeed);
         }

@@ -20,7 +20,7 @@ namespace CocktailMagician.Data.Models
         [StringLength(50, MinimumLength = (5))]
         public string UserName { get; set; }
         [Required]
-        [StringLength(50, MinimumLength = (5))]
+        [StringLength(500, MinimumLength = (5))]
         public string Password { get; set; }
         public int RoleId { get; set; }
         public Role Role { get; set; }

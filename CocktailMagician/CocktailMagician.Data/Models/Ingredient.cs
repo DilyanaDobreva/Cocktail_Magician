@@ -7,7 +7,7 @@ namespace CocktailMagician.Data.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public ICollection<BarCocktail> Cocktails { get; set; }
+        public ICollection<CocktailIngredient> CocktailIngredients { get; set; }
         public bool IsDeleted { get; set; }
     }
 }
