@@ -47,6 +47,9 @@ namespace CocktailMagician.Services
 
         }
 
-
+        public async Task Delete(int id)
+        {
+            var cocktail = await context.Cocktails.FirstOrDefaultAsync(c => c.Id == id);
+        }
     }
 }

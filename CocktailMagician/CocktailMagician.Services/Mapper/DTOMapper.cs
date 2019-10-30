@@ -19,7 +19,7 @@ namespace CocktailMagician.Services.Mapper
             if (user.Bann != null)
             {
                 dto.BannReason = user.Bann?.Reason;
-                dto.BannEndTime = user.Bann.EnDateTime;
+                dto.BannEndTime = user.Bann.EndDateTime;
                 dto.BannId = user.Bann.Id;
             }
 
@@ -31,7 +31,7 @@ namespace CocktailMagician.Services.Mapper
             {
                 Id = bann.Id,
                 Reason = bann.Reason,
-                EnDateTime = bann.EnDateTime
+                EndDateTime = bann.EndDateTime
 
             };
             if (bann.User != null)

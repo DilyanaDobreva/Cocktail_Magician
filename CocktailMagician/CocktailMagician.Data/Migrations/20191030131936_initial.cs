@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CocktailMagician.Data.Migrations
@@ -28,6 +29,8 @@ namespace CocktailMagician.Data.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: false),
+                    CocktailType = table.Column<int>(nullable: false),
+                    ImageUrl = table.Column<string>(nullable: true),
                     Quantity = table.Column<int>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false)
                 },
@@ -91,7 +94,8 @@ namespace CocktailMagician.Data.Migrations
                 {
                     CocktailId = table.Column<int>(nullable: false),
                     IngredientId = table.Column<int>(nullable: false),
-                    Quatity = table.Column<int>(nullable: false)
+                    Quatity = table.Column<int>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -118,6 +122,7 @@ namespace CocktailMagician.Data.Migrations
                     UserName = table.Column<string>(maxLength: 50, nullable: false),
                     Password = table.Column<string>(maxLength: 500, nullable: false),
                     RoleId = table.Column<int>(nullable: false),
+                    BannId = table.Column<string>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
@@ -139,7 +144,7 @@ namespace CocktailMagician.Data.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(maxLength: 50, nullable: false),
                     AddressId = table.Column<int>(nullable: false),
-                    Image = table.Column<string>(nullable: true),
+                    ImageUrl = table.Column<string>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
@@ -149,6 +154,27 @@ namespace CocktailMagician.Data.Migrations
                         name: "FK_Bars_Addresses_AddressId",
                         column: x => x.AddressId,
                         principalTable: "Addresses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Banns",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    Reason = table.Column<string>(nullable: true),
+                    EndDateTime = table.Column<DateTime>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    UserId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Banns", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Banns_Users_Id",
+                        column: x => x.Id,
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -187,7 +213,8 @@ namespace CocktailMagician.Data.Migrations
                 columns: table => new
                 {
                     BarId = table.Column<int>(nullable: false),
-                    CocktailId = table.Column<int>(nullable: false)
+                    CocktailId = table.Column<int>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -247,8 +274,8 @@ namespace CocktailMagician.Data.Migrations
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "Id", "IsDeleted", "Password", "RoleId", "UserName" },
-                values: new object[] { "f0476104-41a2-48df-8f15-eb8dc9abbc49", false, "1283eaf1b5d8f1430e47aeb106f598970762618445a450d575aaba48f85b9b39", 2, "origin" });
+                columns: new[] { "Id", "BannId", "IsDeleted", "Password", "RoleId", "UserName" },
+                values: new object[] { "f0476104-41a2-48df-8f15-eb8dc9abbc49", null, false, "1283eaf1b5d8f1430e47aeb106f598970762618445a450d575aaba48f85b9b39", 2, "origin" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Addresses_CityId",
@@ -298,6 +325,9 @@ namespace CocktailMagician.Data.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Banns");
+
             migrationBuilder.DropTable(
                 name: "BarCocktails");
 
