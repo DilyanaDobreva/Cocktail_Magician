@@ -13,6 +13,7 @@ namespace CocktailMagician.Data.Models
         public ICollection<BarCocktail> BarCocktails { get; set; }
         public ICollection<CocktailIngredient> CocktailIngredients { get; set; }
         public ICollection<CocktailReview> CocktailReviews { get; set; }
+        public string ImageUrl { get; set; }
         public int Quantity { get; set; }
         public bool IsDeleted { get; set; }
     }

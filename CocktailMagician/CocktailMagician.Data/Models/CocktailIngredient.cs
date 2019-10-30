@@ -10,5 +10,6 @@ namespace CocktailMagician.Data.Models
         public int IngredientId { get; set; }
         public Ingredient Ingredient { get; set; }
         public int Quatity { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

@@ -13,7 +13,7 @@ namespace CocktailMagician.Data.Models
         public int AddressId { get; set; }
         public Address Address { get; set; }
         public ICollection<BarCocktail> BarCocktails { get; set; }
-        public string Image { get; set; }
+        public string ImageUrl { get; set; }
         public ICollection<BarReview> BarReviews { get; set; }
         public bool IsDeleted { get; set; }
     }
