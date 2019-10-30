@@ -42,10 +42,15 @@ namespace CocktailMagician.Services
         }
         public async Task Delete(int id)
         {
-            var ingredient = await context.Ingredients.FirstOrDefaultAsync(i => i.Id == id && i.IsDeleted == false);
+            var ingredient = await context.Ingredients.Include(i => i.CocktailIngredients).FirstOrDefaultAsync(i => i.Id == id && i.IsDeleted == false);
             if (ingredient == null)
             {
                 throw new ArgumentException(OutputConstants.IngredientNotFound);
+            }
+            //TODO Why cannot use AnyAsync
+            if(ingredient.CocktailIngredients.Any(ci => ci.IsDeleted == false))
+            {
+                throw new ArgumentException(OutputConstants.CoctailIncludeIngredient);
             }
             ingredient.IsDeleted = true;
         }

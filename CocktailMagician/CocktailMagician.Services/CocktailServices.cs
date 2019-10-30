@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CocktailMagician.Data;
+using CocktailMagician.Data.Models;
 using CocktailMagician.Services.Contracts;
 using CocktailMagician.Services.Contracts.Factories;
+using CocktailMagician.Services.DTOs;
 using Microsoft.EntityFrameworkCore;
 
 namespace CocktailMagician.Services
@@ -49,7 +51,16 @@ namespace CocktailMagician.Services
 
         public async Task Delete(int id)
         {
-            var cocktail = await context.Cocktails.FirstOrDefaultAsync(c => c.Id == id);
+            var cocktail = await context.Cocktails.Include(c => c.CocktailIngredients).FirstOrDefaultAsync(c => c.Id == id && c.IsDeleted == false);
+            cocktail.CocktailIngredients.Select(i => i.IsDeleted = true);
+            cocktail.IsDeleted = true;
+            await context.SaveChangesAsync();
         }
+        public async Task<Cocktail> Get(int id)
+        {
+            var cocktail = await context.Cocktails.Include(c => c.CocktailIngredients).FirstOrDefaultAsync(c => c.Id == id && c.IsDeleted == false);
+            return cocktail;
+        }
+        //public async Task<List<CocktailInListDTO>>
     }
 }
