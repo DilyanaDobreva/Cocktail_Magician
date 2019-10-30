@@ -44,7 +44,9 @@ namespace CocktailMagician.Data.Migrations
                 {
                     b.Property<string>("Id");
 
-                    b.Property<DateTime>("EnDateTime");
+                    b.Property<DateTime>("EndDateTime");
+
+                    b.Property<bool>("IsDeleted");
 
                     b.Property<string>("Reason");
 
@@ -63,7 +65,7 @@ namespace CocktailMagician.Data.Migrations
 
                     b.Property<int>("AddressId");
 
-                    b.Property<string>("Image");
+                    b.Property<string>("ImageUrl");
 
                     b.Property<bool>("IsDeleted");
 
@@ -83,6 +85,8 @@ namespace CocktailMagician.Data.Migrations
                     b.Property<int>("BarId");
 
                     b.Property<int>("CocktailId");
+
+                    b.Property<bool>("IsDeleted");
 
                     b.HasKey("BarId", "CocktailId");
 
@@ -140,6 +144,8 @@ namespace CocktailMagician.Data.Migrations
 
                     b.Property<int>("CocktailType");
 
+                    b.Property<string>("ImageUrl");
+
                     b.Property<bool>("IsDeleted");
 
                     b.Property<string>("Name")
@@ -157,6 +163,8 @@ namespace CocktailMagician.Data.Migrations
                     b.Property<int>("IngredientId");
 
                     b.Property<int>("CocktailId");
+
+                    b.Property<bool>("IsDeleted");
 
                     b.Property<int>("Quatity");
 
