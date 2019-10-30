@@ -8,5 +8,6 @@ namespace CocktailMagician.Services
     {
         //Exception Messages
         public const string IngredientNotFound = "Ingredient is not found.";
+        public const string CocktailWithNoIngredients = "This cocktail contains no ingredients.";
     }
 }

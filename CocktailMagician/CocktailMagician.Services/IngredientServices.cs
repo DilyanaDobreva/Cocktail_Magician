@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using CocktailMagician.Data;
 using CocktailMagician.Data.Models;
 using CocktailMagician.Services.Contracts;
 using CocktailMagician.Services.Contracts.Factories;
+using CocktailMagician.Services.DTOs;
 using Microsoft.EntityFrameworkCore;
 
 namespace CocktailMagician.Services
@@ -51,6 +54,20 @@ namespace CocktailMagician.Services
         {
             var ingredient = await context.Ingredients.FirstOrDefaultAsync(i => i.Id == id && i.IsDeleted == false);
             return ingredient;
+        }
+
+        public async Task<List<IngredientDTO>> GetAllDTO()
+        {
+            var ingredients = await context.Ingredients
+                .Where(i => i.IsDeleted == false)
+                .Select(i => new IngredientDTO
+                {
+                    Id = i.Id,
+                    Name = i.Name
+                })
+                .ToListAsync();
+
+            return ingredients;
         }
     }
 }

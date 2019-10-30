@@ -9,8 +9,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DTOs\" />
-    <Folder Include="Mapper\" />
     <Folder Include="Hasher\" />
     <Folder Include="Contracts\Factories\" />
   </ItemGroup>
