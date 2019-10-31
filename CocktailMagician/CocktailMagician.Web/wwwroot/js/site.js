@@ -1,4 +1,22 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿const serverResponseHandler = (serverData) => {
+    if (serverData) {
+        $('#add-ingredients-form').html(serverData);
+    }
+};
 
-// Write your Javascript code.
+
+$('#load-add-ingredient-form').click(function () {
+    $.get('/distribution/ingredient/add', serverResponseHandler)
+});
+
+$('#add-ingredient').on('submit', function (event) {
+    event.preventDefault();
+
+    const data = $(this).serialize();
+    const url = $(this).attr('action');
+    debugger
+    $.post(url, data)
+        .done(function () {
+            console.log('success')
+        })
+});

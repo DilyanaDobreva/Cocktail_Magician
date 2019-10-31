@@ -7,6 +7,7 @@ using CocktailMagician.Data.Models;
 using CocktailMagician.Services.Contracts;
 using CocktailMagician.Services.Contracts.Factories;
 using CocktailMagician.Services.DTOs;
+using CocktailMagician.Services.Mapper;
 using Microsoft.EntityFrameworkCore;
 
 namespace CocktailMagician.Services
@@ -22,11 +23,14 @@ namespace CocktailMagician.Services
             this.ingredientFactory = ingredientFactory;
         }
 
-        public async Task Add(string name)
+        public async Task<IngredientBasicDTO> Add(string name)
         {
             var ingredient = ingredientFactory.Create(name);
             context.Ingredients.Add(ingredient);
             await context.SaveChangesAsync();
+
+            var dbIngredient = await context.Ingredients.SingleAsync(i => i.Name == name);
+            return dbIngredient.MapToDTO();
         }
 
         public async Task Edit(int id, string newName)
@@ -61,11 +65,11 @@ namespace CocktailMagician.Services
             return ingredient;
         }
 
-        public async Task<List<IngredientDTO>> GetAllDTO()
+        public async Task<List<IngredientBasicDTO>> GetAllDTO()
         {
             var ingredients = await context.Ingredients
                 .Where(i => i.IsDeleted == false)
-                .Select(i => new IngredientDTO
+                .Select(i => new IngredientBasicDTO
                 {
                     Id = i.Id,
                     Name = i.Name

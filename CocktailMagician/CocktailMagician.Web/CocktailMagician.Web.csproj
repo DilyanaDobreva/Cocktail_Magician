@@ -16,6 +16,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.4" />
   </ItemGroup>
 
 
@@ -24,8 +25,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\" />
     <Folder Include="Areas\Authentication\" />
+    <Folder Include="Areas\Distribution\Views\Ingredients\" />
     <Folder Include="ViewModels\" />
     <Folder Include="ViewModels\Auth\" />
     <Folder Include="Views\Auth\" />
