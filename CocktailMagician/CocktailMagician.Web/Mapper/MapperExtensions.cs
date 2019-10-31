@@ -12,7 +12,7 @@ namespace CocktailMagician.Web.Mapper
         {
             var vm = new UserViewModel
             {
-                LoggerId = member.Id,
+                Id = member.Id,
                 UserName = member.UserName,
                 RoleName = member.RoleName,
                 

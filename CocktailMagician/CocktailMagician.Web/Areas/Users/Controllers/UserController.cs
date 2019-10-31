@@ -49,7 +49,7 @@ namespace CocktailMagician.Web.Areas.Users.Controllers
                 if (vm.RoleId == 1)
                 {
                     await this.userService.RegisterUserAsync(vm.RegisterUsername, vm.RegisterPassword);
-                    return RedirectToAction("Index", "User","Users");
+                    return RedirectToAction("Index", "User", "Users");
                 }
                 await this.userService.RegisterAdminAsync(vm.RegisterUsername, vm.RegisterPassword);
                 return RedirectToAction("Index", "User", "Users");
@@ -57,8 +57,48 @@ namespace CocktailMagician.Web.Areas.Users.Controllers
             catch (Exception ex)
             {
                 this.TempData["Status"] = ex.Message;
-                return RedirectToAction("Create", "User","Users");
+                return RedirectToAction("Create", "User", "Users");
             }
+        }
+        [Authorize(Roles = "admin")]
+        public async Task<IActionResult> Edit(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+                
+            var user = await userService.GetUserInfoAsync(id);
+
+            var allRoles = await this.userService.GetAllRoles();
+            var viewModel = new UpdateUserViewMode()
+            {
+                Role = allRoles.Select(r => new SelectListItem(r.RoleName, r.Id.ToString())).ToList()
+            };
+
+            if (user.RoleName == "admin")
+                viewModel.Role.Reverse();
+            
+
+            if (viewModel == null)
+            {
+                return NotFound();
+            }
+            return View(viewModel);
+        }
+        [HttpPost]
+        [Authorize(Roles = "admin")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(UpdateUserViewMode vm)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                throw new Exception();
+            }
+
+            await this.userService.UpdateUserAsync(vm.Id, vm.Password, vm.NewPassword, vm.RoleId);
+
+            return RedirectToAction("Index", "User", "Users");
         }
     }
 }

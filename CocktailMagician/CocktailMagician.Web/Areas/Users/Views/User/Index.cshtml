@@ -62,13 +62,13 @@ else
                     </td>
                 }
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.LoggerId">
+                    <a asp-action="Edit" asp-route-id="@item.Id">
                         <input type="submit" value="Modify" class="btn btn-outline-warning" />
                     </a>
-                    <a asp-action="Delete" asp-route-id="@item.LoggerId">
+                    <a asp-action="Delete" asp-route-id="@item.Id">
                         <input type="submit" value="Delete" class="btn btn-outline-danger" />
                     </a>
-                    <a asp-action="Ban" asp-route-id="@item.LoggerId">
+                    <a asp-action="Ban" asp-route-id="@item.Id">
                         <input type="submit" value="Ban" class="btn btn-outline-danger" />
                     </a>
                 </td>

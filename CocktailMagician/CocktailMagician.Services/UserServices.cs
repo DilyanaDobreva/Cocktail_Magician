@@ -61,7 +61,6 @@ namespace CocktailMagician.Services
                 .FirstOrDefaultAsync(u => u.UserName == name);
             return findUser.MapToDTO();
         }
-
         public async Task<List<UserDTO>> GetListOfUsersDTO()
         {
             var users = await context.Users
@@ -71,16 +70,14 @@ namespace CocktailMagician.Services
             var listOfDTO = users.Select(m => m.MapToDTO()).ToList();
             return listOfDTO;
         }
-
-        public async Task<UserDTO> GetUserAsync(string name)
+        public async Task<UserDTO> GetUserInfoAsync(string id)
         {
             var users = await context.Users
                 .Include(m => m.Role)
                 .Include(m => m.Bann)
-                .FirstAsync(m => m.UserName == name);
+                .FirstAsync(m => m.Id == id);
             return users.MapToDTO();
         }
-
         public async Task<UserDTO> LoginAsync(string username, string password)
         {
             password = hasher.Hasher(password);
@@ -109,7 +106,6 @@ namespace CocktailMagician.Services
             await this.context.SaveChangesAsync();
             return newAdmin.MapToDTO();
         }
-
         public async Task<UserDTO> RegisterUserAsync(string username, string password)
         {
             var findUser = await FindUserAsync(username);
@@ -126,15 +122,26 @@ namespace CocktailMagician.Services
                 .FirstOrDefaultAsync(m => m.UserName == username);
             return member.MapToDTO();
         }
-
-        public async Task UpdateUserAsync(string id, string newPassword)
+        public async Task UpdateUserAsync(string id,string passwrod, string newPassword, int roleId)
         {
             var user = await context.Users
                 .FirstOrDefaultAsync(u => u.Id == id);
+            if (passwrod != user.Password)
+            {
+                throw new ArgumentException("Current Password is incorrect.");
+            }
+            if (user.Password == newPassword)
+            {
+                throw new ArgumentException("New password cannot be the same as old password.");
+            }
             if (newPassword != null)
             {
                 user.Password = hasher.Hasher(newPassword);
-
+                await this.context.SaveChangesAsync();
+            }
+            if (roleId != user.RoleId)
+            {
+                user.RoleId = roleId;
                 await this.context.SaveChangesAsync();
             }
         }
@@ -144,7 +151,6 @@ namespace CocktailMagician.Services
                 .Include(m => m.User)
                 .AnyAsync(u => u.User.UserName == userName);
         }
-
         public async Task<IEnumerable<RoleDTO>> GetAllRoles()
         {
             var roles = await context.Roles.ToListAsync();
