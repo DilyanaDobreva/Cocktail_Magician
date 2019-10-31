@@ -18,6 +18,7 @@ namespace CocktailMagician.Services.Contracts
         Task<BannDTO> BanAsync(string reason, User member);
         Task DeleteBan(Bann bann);
         Task<List<UserDTO>> GetListOfUsersDTO();
+        Task<IEnumerable<RoleDTO>> GetAllRoles();
         Task<bool> IsBannedAsync(string userName);
     }
 }

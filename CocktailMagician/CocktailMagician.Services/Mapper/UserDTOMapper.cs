@@ -4,8 +4,18 @@ using CocktailMagician.Services.DTOs;
 
 namespace CocktailMagician.Services.Mapper
 {
-    public static class DTOMapper
+    public static class UserDTOMapper
     {
+        public static RoleDTO MapToDTO(this Role role)
+        {
+            var dto = new RoleDTO
+            {
+                Id = role.Id,
+                RoleName = role.Name
+            };
+
+            return dto;
+        }
         public static UserDTO MapToDTO(this User user)
         {
             var dto = new UserDTO

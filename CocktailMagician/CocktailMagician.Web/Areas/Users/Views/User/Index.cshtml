@@ -1,0 +1,78 @@
+﻿@model AllUsersViewModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@if (User.IsInRole("user"))
+{
+    <h1>Personal Infromation</h1>
+}
+else
+{
+    <h1>All Users</h1>
+
+    <a asp-action="Create">
+        <input type="submit" value="Create New User" class="btn btn-outline-info" />
+    </a>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Role</th>
+            <th>Ban Reason</th>
+            <th>Ban End</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in @Model.ListOfUsers)
+        {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RoleName)
+                </td>
+                @if (!String.IsNullOrEmpty(item.BannedReason))
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BannedReason)
+                    </td>
+                }
+                else
+                {
+                    <td align="center">
+                        -
+                    </td>
+                }
+                @if (item.BannedEndTime == DateTime.MinValue)
+                {
+                    <td align="center">
+                        -
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BannedEndTime)
+                    </td>
+                }
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.LoggerId">
+                        <input type="submit" value="Modify" class="btn btn-outline-warning" />
+                    </a>
+                    <a asp-action="Delete" asp-route-id="@item.LoggerId">
+                        <input type="submit" value="Delete" class="btn btn-outline-danger" />
+                    </a>
+                    <a asp-action="Ban" asp-route-id="@item.LoggerId">
+                        <input type="submit" value="Ban" class="btn btn-outline-danger" />
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

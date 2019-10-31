@@ -144,5 +144,13 @@ namespace CocktailMagician.Services
                 .Include(m => m.User)
                 .AnyAsync(u => u.User.UserName == userName);
         }
+
+        public async Task<IEnumerable<RoleDTO>> GetAllRoles()
+        {
+            var roles = await context.Roles.ToListAsync();
+
+            var rolesDTO = roles.Select(r => r.MapToDTO());
+            return rolesDTO;
+        }
     }
 }
