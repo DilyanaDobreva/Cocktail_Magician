@@ -24,19 +24,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\" />
-    <Folder Include="Areas\Users\" />
     <Folder Include="Mapper\" />
     <Folder Include="Views\Home\" />
     <Folder Include="Areas\Users\Controllers\" />
-    <Folder Include="Areas\Users\Views\" />
     <Folder Include="Areas\Users\ViewModels\" />
     <Folder Include="Controllers\" />
     <Folder Include="Controllers\Home\" />
     <Folder Include="Areas\Users\ViewModels\Users\" />
     <Folder Include="Areas\Users\Views\Auth\" />
     <Folder Include="Areas\Users\Views\Shared\" />
-    <Folder Include="Areas\Users\Views\User\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Views\Index.cshtml.cs" />
