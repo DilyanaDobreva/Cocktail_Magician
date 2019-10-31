@@ -4,16 +4,15 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using CocktailMagician.Services.Contracts;
 using CocktailMagician.Services.DTOs;
-using CocktailMagician.Web.ViewModels.Auth;
+using CocktailMagician.Web.Areas.ViewModels.Users;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
-using static CocktailMagician.Web.ViewModels.Users.BannViewModel;
+using static CocktailMagician.Web.Areas.ViewModels.Users.BannViewModel;
 
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
-namespace CocktailMagician.Web.Areas.Authentication
+namespace CocktailMagician.Web.Areas.Users.Controllers
 {
+    [Area("Users")]
     public class AuthController : Controller
     {
         private readonly IUserServices userService;

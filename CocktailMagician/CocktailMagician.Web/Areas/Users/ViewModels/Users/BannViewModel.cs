@@ -1,5 +1,5 @@
 ﻿using System;
-namespace CocktailMagician.Web.ViewModels.Users
+namespace CocktailMagician.Web.Areas.ViewModels.Users
 {
     public class BannViewModel
     {

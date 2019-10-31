@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace CocktailMagician.Web.ViewModels.Auth
+namespace CocktailMagician.Web.Areas.ViewModels.Users
 {
     public class RegisterViewModel
     {

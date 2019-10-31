@@ -1,7 +1,7 @@
 ﻿using System;
 using CocktailMagician.Services.DTOs;
-using CocktailMagician.Web.ViewModels.Users;
-using static CocktailMagician.Web.ViewModels.Users.BannViewModel;
+using CocktailMagician.Web.Areas.ViewModels.Users;
+using static CocktailMagician.Web.Areas.ViewModels.Users.BannViewModel;
 
 namespace CocktailMagician.Web.Mapper
 {

@@ -1,5 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 
@@ -8,7 +9,3 @@
         <partial name="_RegisterPartial" />
     </div>
 </body>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
