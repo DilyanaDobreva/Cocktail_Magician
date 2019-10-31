@@ -25,21 +25,31 @@
 
   <ItemGroup>
     <Folder Include="Areas\" />
-    <Folder Include="Areas\Authentication\" />
-    <Folder Include="ViewModels\" />
-    <Folder Include="ViewModels\Auth\" />
-    <Folder Include="Views\Auth\" />
+    <Folder Include="Areas\Users\" />
     <Folder Include="Mapper\" />
-    <Folder Include="ViewModels\Users\" />
-    <Folder Include="Areas\Home\" />
     <Folder Include="Views\Home\" />
+    <Folder Include="Areas\Users\Controllers\" />
+    <Folder Include="Areas\Users\Views\" />
+    <Folder Include="Areas\Users\ViewModels\" />
+    <Folder Include="Controllers\" />
+    <Folder Include="Controllers\Home\" />
+    <Folder Include="Areas\Users\ViewModels\Users\" />
+    <Folder Include="Areas\Users\Views\Auth\" />
+    <Folder Include="Areas\Users\Views\Shared\" />
+    <Folder Include="Areas\Users\Views\User\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Views\Index.cshtml.cs" />
     <Compile Remove="Views\Privacy.cshtml.cs" />
+    <Compile Remove="ViewModels\Auth\ErrorMessage.cs" />
+    <Compile Remove="CocktailMagician\Web\ViewModels.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="Views\Index.cshtml" />
     <Content Remove="Views\Privacy.cshtml" />
+    <Content Remove="Views\Shared\_RegisterPartial.cshtml" />
+    <Content Remove="Views\Shared\_LoginPartial.cshtml" />
+    <Content Remove="Areas\Users\Views\Shared\_Layout %28copy%29.cshtml" />
+    <Content Remove="Areas\Users\Views\Shared\_ValidationScriptsPartial.cshtml" />
   </ItemGroup>
 </Project>

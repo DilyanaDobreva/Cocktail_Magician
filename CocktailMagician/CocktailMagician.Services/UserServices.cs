@@ -42,7 +42,9 @@ namespace CocktailMagician.Services
         }
         public async Task DeleteBan(Bann bann)
         {
-            context.Banns.Remove(bann);
+            var findBan = context.Banns
+                .FirstOrDefault(b => b.Id == bann.Id);
+            findBan.IsDeleted = true;
             await this.context.SaveChangesAsync();
         }
         public Task<User> FindUserAsync(string name)
