@@ -26,7 +26,11 @@
         <div id="ingredients"></div>
     </form>
     <button class="btn btn-light" id="load-add-ingredient-form">Add ingredient</button>
-    <div id="add-ingredients-form"></div>
+    <div style="display:none" id="ingrediens-div">
+        <input type="text" id="ingrediens-input"/>
+        <button class="nav-link text-dark" id="ingrediens-to-db">Add new ingredient</button>
+    </div>
+    @*<div id="add-ingredients-form"></div>*@
     @*<div>
         <partial name="_AddIngredient" model="@(new IngredientBasicViewModel())" />
     </div>*@

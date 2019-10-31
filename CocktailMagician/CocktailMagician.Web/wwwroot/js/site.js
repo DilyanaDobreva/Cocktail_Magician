@@ -1,22 +1,54 @@
-﻿const serverResponseHandler = (serverData) => {
-    if (serverData) {
-        $('#add-ingredients-form').html(serverData);
-    }
-};
+﻿//const serverResponseHandler = (serverData) => {
+//    if (serverData) {
+//        $('#add-ingredients-form').html(serverData);
+//    }
+//};
 
+
+//$('#load-add-ingredient-form').click(function () {
+//    $.get('/distribution/ingredient/add', serverResponseHandler)
+//});
+
+//$('#add-ingredient').on('submit', function (event) {
+//    event.preventDefault();
+
+//    const data = $(this).serialize();
+//    const url = $(this).attr('action');
+
+//    $.post(url, data)
+//        .done(function () {
+//            console.log('success')
+//        })
+//});
 
 $('#load-add-ingredient-form').click(function () {
-    $.get('/distribution/ingredient/add', serverResponseHandler)
+    let div = $('#ingrediens-div');
+    div.show();
 });
 
-$('#add-ingredient').on('submit', function (event) {
-    event.preventDefault();
 
-    const data = $(this).serialize();
-    const url = $(this).attr('action');
-    debugger
-    $.post(url, data)
-        .done(function () {
-            console.log('success')
-        })
+$('#ingrediens-to-db').click(function () {
+    let name = $('#ingrediens-input').val();
+    let data = {
+        'Name': name
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "/Distribution/Ingredient/Add",
+        data: JSON.stringify(data),
+        headers: {
+            RequestVerificationToken:
+                $('input:hidden[name="__RequestVerificationToken"]').val(),
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        dataType: 'json',
+        success: function (response) {
+            $('#list-of-ingredients').append(new Option(response.name, response.id))
+        },
+        error: function (msg) {
+            console.dir(msg);
+        }
+    })
 });

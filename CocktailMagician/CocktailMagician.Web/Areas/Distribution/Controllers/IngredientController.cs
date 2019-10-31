@@ -28,7 +28,7 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
             return PartialView("_AddIngredient", vm);
         }
         [HttpPost]
-        public async Task<IActionResult> Add(IngredientBasicViewModel vm)
+        public async Task<IActionResult> Add([FromBody]IngredientBasicViewModel vm)
         {
             var ingredient = (await ingredientServices.Add(vm.Name)).MapToViewModel();
 
