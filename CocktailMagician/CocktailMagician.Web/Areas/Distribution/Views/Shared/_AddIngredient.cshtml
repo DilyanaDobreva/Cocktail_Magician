@@ -1,0 +1,9 @@
+﻿@model IngredientBasicViewModel
+
+    <form asp-action="/Distribution/Ingredient/Add" id="add-ingredient" class="container" method="post">
+        @*<div id="add-ingredient" class="container">*@
+        <label asp-for="@Model.Name"> Ingredient name:</label>
+        <input asp-for="@Model.Name" class="form-control" />
+        <span asp-validation-for="@Model.Name" class="text-danger"></span>
+        <button id="add-ingredient-button" class="btn">Add to list</button>
+    </form>

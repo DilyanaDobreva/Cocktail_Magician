@@ -16,6 +16,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.4" />
   </ItemGroup>
 
 
@@ -24,26 +25,22 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Authentication\" />
+    <Folder Include="Areas\Distribution\Views\Ingredients\" />
+    <Folder Include="ViewModels\" />
+    <Folder Include="ViewModels\Auth\" />
+    <Folder Include="Views\Auth\" />
     <Folder Include="Mapper\" />
+    <Folder Include="ViewModels\Users\" />
+    <Folder Include="Areas\Home\" />
     <Folder Include="Views\Home\" />
-    <Folder Include="Areas\Users\Controllers\" />
-    <Folder Include="Controllers\" />
-    <Folder Include="Controllers\Home\" />
-    <Folder Include="Areas\Users\Views\Auth\" />
-    <Folder Include="Areas\Users\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Views\Index.cshtml.cs" />
     <Compile Remove="Views\Privacy.cshtml.cs" />
-    <Compile Remove="ViewModels\Auth\ErrorMessage.cs" />
-    <Compile Remove="CocktailMagician\Web\ViewModels.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="Views\Index.cshtml" />
     <Content Remove="Views\Privacy.cshtml" />
-    <Content Remove="Views\Shared\_RegisterPartial.cshtml" />
-    <Content Remove="Views\Shared\_LoginPartial.cshtml" />
-    <Content Remove="Areas\Users\Views\Shared\_Layout %28copy%29.cshtml" />
-    <Content Remove="Areas\Users\Views\Shared\_ValidationScriptsPartial.cshtml" />
   </ItemGroup>
 </Project>

@@ -1,0 +1,36 @@
+﻿@model AddCocktailViewModel
+@{
+    ViewData["Title"] = "Add Cocktail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Add Cocktail</h1>
+
+<div asp-validation-summary="All"></div>
+<hr />
+
+<div class="col-md-6">
+    <form asp-action="/Books/CreateBook">
+        <div class="form-group">
+            <label asp-for="@Model.Name" class="control-label"></label>
+            <input asp-for="@Model.Name" class="form-control" />
+            <span asp-validation-for="@Model.Name" class="text-danger"></span>
+        </div>
+        <div>Please select ingredients:</div>
+        <div class="form-group">
+            <label>Ingredients</label>
+            <select multiple="multiple" asp-items="@Model.AllIngredients " class="form-control" id="list-of-ingredients">
+                <option hidden disabled selected="">Select...</option>
+            </select>
+        </div>
+        <div id="ingredients"></div>
+    </form>
+    <button class="btn btn-light" id="load-add-ingredient-form">Add ingredient</button>
+    <div id="add-ingredients-form"></div>
+    @*<div>
+        <partial name="_AddIngredient" model="@(new IngredientBasicViewModel())" />
+    </div>*@
+
+</div>
+
+

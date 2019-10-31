@@ -48,6 +48,9 @@ namespace CocktailMagician.Web
             services.AddScoped<IUserFactory, UserFactory>();
             services.AddScoped<IHasher, Hasher>();
             services.AddScoped<ICocktailServices, CocktailServices>();
+            services.AddScoped<ICocktailFactory, CocktailFactory>();
+            services.AddScoped<ICocktailIngredientFactory, CocktailIngredientFactory>();
+            services.AddScoped<IIngredientServices, IngredientServices>();
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
         }
 

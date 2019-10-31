@@ -1,0 +1,79 @@
+﻿@model CocktailInListViewModel
+
+
+    <div class="col">
+        <div class="card-deck">
+            <img class="card-img-top" src="@Model.ImageURL" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">@Model.Name</h5>
+                <p>
+                    View content
+                </p>
+                <p>
+                    View bars
+                </p>
+                @if(User.IsInRole("admin"))
+                {
+                    <p>
+                        Edit
+                    </p>
+                }
+            </div>
+        </div>
+    </div>
+
+
+
+
+@*<tr>
+    <td class="table-info ">
+        <img src="@Model.Url" alt="missing image" height="70" align="right">
+    </td>
+    <td class="table-info">
+        <a asp-controller="Books" asp-action="Details" asp-route-id="@Model.BookId">
+            @Model.Title
+        </a>
+    </td>
+    <td class="table-info ">@Model.Author</td>
+    <td class="table-info" align="center">
+        @for (int i = 1; i <= Model.AverageRating; i++)
+        {
+            <span>&#11088;</span>
+        }
+        @String.Format("{0:0.0}", Model.AverageRating)
+    </td>
+    <td class="table-info">
+
+        @if (User.IsInRole("user"))
+        {
+            @if (Model.CanCheckOut)
+            {
+                <a href="/MemberBooks/CheckOutBook/@Model.BookId">Check Out</a>
+                <span> | </span>
+            }
+            @if (Model.CanReserve)
+            {
+                <a href="/MemberBooks/ReserveBook/@Model.BookId">Reserve</a>
+                <span> | </span>
+            }
+
+            <a href="/Books/Review/@Model.BookId">Add Review</a>
+        }
+        @if (User.IsInRole("admin"))
+        {
+            @if (Model.IsLocked == false)
+            {
+                @if (Model.HasAvailabeItems)
+                {
+                    <a href="/MemberBooks/CheckOutBook/@Model.BookId">Check Out</a>
+                    <span> | </span>
+                }
+                <a href="/MemberBooks/ReserveBook/@Model.BookId">Reserve</a>
+            }
+            <span> | </span>
+            <a href="/Books/Edit/@Model.BookId">Edit</a>
+            <span> | </span>
+            <a href="/Books/Delete/@Model.BookId">Delete</a>
+        }
+    </td>
+</tr>*@
