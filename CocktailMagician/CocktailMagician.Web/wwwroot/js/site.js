@@ -20,13 +20,14 @@
 //            console.log('success')
 //        })
 //});
-$('#list-of-ingredients').multiselect({
+//$('#list-of-ingredients').multiselect({
        
-    });
+//    });
 
 
 $('#load-add-ingredient-form').click(function () {
     let div = $('#ingrediens-div');
+    //document.querySelector(div).show();
     div.show();
 });
 

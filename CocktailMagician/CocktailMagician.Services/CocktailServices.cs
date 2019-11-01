@@ -24,14 +24,14 @@ namespace CocktailMagician.Services
             this.cocktailIngredientFactory = cocktailIngredientFactory;
         }
 
-        public async Task Add(string name, Dictionary<string, int> ingredientsAndQuantities)
+        public async Task Add(string name, string imageURL, List<CocktailIngredientDTO> ingredientsAndQuantities)
         {
             if (ingredientsAndQuantities.Count() == 0)
             {
                 throw new ArgumentException(OutputConstants.CocktailWithNoIngredients);
             }
-            var cocktail = this.cocktailFactory.Create(name);
-
+            var cocktail = this.cocktailFactory.Create(name, imageURL);
+            cocktail.Quantity = ingredientsAndQuantities.Sum(i => i.Value);
             context.Cocktails.Add(cocktail);
             await context.SaveChangesAsync();
 
@@ -40,7 +40,7 @@ namespace CocktailMagician.Services
 
             foreach (var ingredient in ingredientsAndQuantities)
             {
-                var ingrId = await context.Ingredients.FirstOrDefaultAsync(i => i.Name == ingredient.Key && i.IsDeleted==false);
+                var ingrId = await context.Ingredients.FirstOrDefaultAsync(i => i.Name == ingredient.Name && i.IsDeleted==false);
                 var cocktailIngredient = this.cocktailIngredientFactory.Create(cocktail.Id, ingrId.Id, ingredient.Value);
                 context.CocktailIngredients.Add(cocktailIngredient);
             }

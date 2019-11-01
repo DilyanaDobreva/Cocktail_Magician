@@ -1,9 +1,6 @@
-﻿using CocktailMagician.Web.Areas.Distribution.Models.Ingredients;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace CocktailMagician.Web.Areas.Distribution.Models.Cocktails
 {
@@ -11,17 +8,15 @@ namespace CocktailMagician.Web.Areas.Distribution.Models.Cocktails
     {
         public AddCocktailViewModel()
         {
-            this.IngredientsQuantity = new List<Coct1>();
+            this.IngredientsQuantity = new List<CocktailIngredientViewModel>();
         }
+        [Required]
+        [MaxLength(50, ErrorMessage ="Name must be less than 50 symbols")]
         public string Name { get; set; }
+        [Url]
+        public string ImageURL { get; set; }
         public List<SelectListItem> AllIngredients { get; set; }
         public List<string> CocktilIngredients { get; set; }
-        public List<Coct1> IngredientsQuantity { get; set; }
-    }
-
-    public class Coct1
-    {
-        public int Value { get; set; }
-        public string Name { get; set; }
+        public List<CocktailIngredientViewModel> IngredientsQuantity { get; set; }
     }
 }
