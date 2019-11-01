@@ -24,7 +24,7 @@ namespace CocktailMagician.Services
             this.cocktailIngredientFactory = cocktailIngredientFactory;
         }
 
-        public async Task Add(string name, Dictionary<int, int> ingredientsAndQuantities)
+        public async Task Add(string name, Dictionary<string, int> ingredientsAndQuantities)
         {
             if (ingredientsAndQuantities.Count() == 0)
             {
@@ -40,13 +40,11 @@ namespace CocktailMagician.Services
 
             foreach (var ingredient in ingredientsAndQuantities)
             {
-                var cocktailIngredient = this.cocktailIngredientFactory.Create(cocktail.Id, ingredient.Key, ingredient.Value);
+                var ingrId = await context.Ingredients.FirstOrDefaultAsync(i => i.Name == ingredient.Key && i.IsDeleted==false);
+                var cocktailIngredient = this.cocktailIngredientFactory.Create(cocktail.Id, ingrId.Id, ingredient.Value);
                 context.CocktailIngredients.Add(cocktailIngredient);
             }
-
             await context.SaveChangesAsync();
-
-
         }
         public async Task Delete(int id)
         {

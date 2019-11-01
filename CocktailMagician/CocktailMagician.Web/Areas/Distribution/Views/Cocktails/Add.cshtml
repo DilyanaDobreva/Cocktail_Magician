@@ -8,33 +8,68 @@
 
 <div asp-validation-summary="All"></div>
 <hr />
-
-<div class="col-md-6">
-    <form asp-action="/Books/CreateBook">
-        <div class="form-group">
-            <label asp-for="@Model.Name" class="control-label"></label>
-            <input asp-for="@Model.Name" class="form-control" />
-            <span asp-validation-for="@Model.Name" class="text-danger"></span>
+@if (Model.IngredientsQuantity.Count() == 0)
+{
+    <div class="row">
+        <div class="col-md-6">
+            <form asp-action="/Distribution/Cocktails/Add" method="get">
+                <div class="form-group">
+                    <label asp-for="@Model.Name" class="control-label"></label>
+                    <input asp-for="@Model.Name" class="form-control" />
+                    <span asp-validation-for="@Model.Name" class="text-danger"></span>
+                </div>
+                <div>Please select ingredients:</div>
+                <div class="form-group">
+                    <label>Ingredients</label>
+                    <select multiple="multiple" asp-for="@Model.CocktilIngredients" asp-items="@Model.AllIngredients " class="multiselect" id="list-of-ingredients" size="2">
+                        <option hidden disabled selected="">Select...</option>
+                    </select>
+                </div>
+                <input type="submit" value="Continue" class="btn btn-outline-info" />
+                @*<div id="ingredients"></div>*@
+            </form>
         </div>
-        <div>Please select ingredients:</div>
-        <div class="form-group">
-            <label>Ingredients</label>
-            <select multiple="multiple" asp-items="@Model.AllIngredients " class="form-control" id="list-of-ingredients">
-                <option hidden disabled selected="">Select...</option>
-            </select>
+        <div class="col-md-6">
+            <button class="btn btn-light" id="load-add-ingredient-form">Add ingredient</button>
+            <div style="display:none" id="ingrediens-div">
+                <input type="text" id="ingrediens-input" />
+                <button class="nav-link text-dark" id="ingrediens-to-db">Add new ingredient</button>
+            </div>
         </div>
-        <div id="ingredients"></div>
-    </form>
-    <button class="btn btn-light" id="load-add-ingredient-form">Add ingredient</button>
-    <div style="display:none" id="ingrediens-div">
-        <input type="text" id="ingrediens-input"/>
-        <button class="nav-link text-dark" id="ingrediens-to-db">Add new ingredient</button>
     </div>
-    @*<div id="add-ingredients-form"></div>*@
-    @*<div>
-        <partial name="_AddIngredient" model="@(new IngredientBasicViewModel())" />
-    </div>*@
 
-</div>
+}
+else
+{
+    <h3>
+        Cocktail name: @Model.Name
+    </h3>
+    <h5>
+        Please enter ingrediens quantites:
+    </h5>
+    <div>
+        <form asp-action="/Distribution/Cocktails/Add">
+
+            @*@foreach (var ingr in Model.IngredientsQuantity)
+        {
+            <label asp-for="@ingr.Name" class="control-label">@ingr.Name</label>
+            <input type="text" asp-for="@ingr.Value" class="form-control" />
+            <span asp-validation-for="@ingr.Value" class="text-danger"></span>
+        }*@
+
+            @for (int i = 0; i < Model.IngredientsQuantity.Count(); ++i)
+            {
+                @Html.HiddenFor(m => m.IngredientsQuantity[i].Name)
+
+                <label asp-for="@Model.IngredientsQuantity[i].Name" class="control-label">@Model.IngredientsQuantity[i].Name</label>
+                <input type="text" asp-for="@Model.IngredientsQuantity[i].Value" class="form-control" />
+               
+                <span asp-validation-for="@Model.IngredientsQuantity[i].Value" class="text-danger"></span>
+
+            }
+            <input type="submit" value="Add Cocktail" class="btn btn-outline-info" />
+        </form>
+    </div>
+}
 
 

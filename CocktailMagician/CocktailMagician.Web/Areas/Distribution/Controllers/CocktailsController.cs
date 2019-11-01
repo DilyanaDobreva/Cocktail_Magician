@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using CocktailMagician.Services.Contracts;
 using Microsoft.AspNetCore.Mvc;
@@ -30,19 +31,29 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Add()
+        public async Task<IActionResult> Add([FromQuery]AddCocktailViewModel cocktailVM)
         {
-            var cocktailVM = new AddCocktailViewModel();
-            var ingredients = await ingredientServices.GetAllDTO();
-            cocktailVM.AllIngredients = ingredients.Select(b => new SelectListItem(b.Name, b.Id.ToString())).ToList();
-                                
+            //var cocktailVM = new AddCocktailViewModel();
+            if (cocktailVM.CocktilIngredients == null)
+            {
+                var ingredients = await ingredientServices.GetAllDTO();
+                cocktailVM.AllIngredients = ingredients.Select(b => new SelectListItem(b.Name, b.Name)).ToList();
+
+                return View(cocktailVM);
+            }
+            //cocktailVM.IngredientsQuantity = new Dictionary<string, int>();
+            foreach(var ingr in cocktailVM.CocktilIngredients)
+            {
+                cocktailVM.IngredientsQuantity.Add(new Coct1 {Name = ingr, Value = 0 });
+            }
             return View(cocktailVM);
         }
-        //[HttpPost]
-        //public async Task<IActionResult> Add(AddCocktailViewModel cocktailVM)
-        //{
+        [HttpPost, ActionName("Add")]
+        public async Task<IActionResult> FinalAdd(AddCocktailViewModel cocktailVM, List<string> ttt)
+        {
 
-        //}
-
+           // await cocktailServices.Add(cocktailVM.Name, cocktailVM.IngredientsQuantity);
+            return RedirectToAction("Index");
+        }
     }
 }
