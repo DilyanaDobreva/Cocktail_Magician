@@ -16,6 +16,7 @@
               integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" />
     </environment>
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.1/css/font-awesome.min.css">
 </head>
 <body>
     <header>
@@ -26,6 +27,9 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+                <span><span class="glyphicon">&#127864;</span>
+                        <a class="navbar-brand" asp-area="Distribution" asp-controller="Cocktails" asp-action="Index">Cocktails</a>
+                </span>
                 @if (User.Identity.IsAuthenticated)
                 {
                     if (User.IsInRole("admin"))
