@@ -2,9 +2,17 @@
     ViewData["Title"] = "Home Page";
 }
 @{ var statusMessage = TempData["Status"]?.ToString(); }
+@if (!string.IsNullOrWhiteSpace(statusMessage))
+{
+
+    <div class="alert alert-danger  ">
+        @statusMessage
+    </div>
+}
+
 
 <body class="bg-img">
-    
+
     @if (!User.Identity.IsAuthenticated)
     {
         <div class="row">

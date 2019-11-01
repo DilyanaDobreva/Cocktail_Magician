@@ -1,0 +1,24 @@
+﻿@model BannViewModel
+@{
+    ViewData["Title"] = "Bans";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-lg-6 container">
+        @*<img src="~/css/Banned.png" alt="Girl in a jacket" width="500" height="400">*@
+    </div>
+    <div class="col-lg-6 container">
+        <h1 align="center">Reason for your ban:</h1>
+        <div>
+            <h2 align="center" class="banned_message">" @Model.Reason "</h2>
+        </div>
+        <br />
+        <h3 align="center" class="banned_message"> You can log in again after:</h3>
+        <h3 align="center" class="banned_message">@Model.EnDateTime</h3>
+        <div class="nav-item logout-btn">
+            <form asp-area="" asp-controller="Home" asp-action="Index">
+                <button class="btn btn-outline-danger">Back to homepage</button>
+            </form>
+        </div>
+    </div>
+</div>

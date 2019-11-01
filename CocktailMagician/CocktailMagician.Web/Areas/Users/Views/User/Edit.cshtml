@@ -16,22 +16,28 @@
             <input type="hidden" asp-for="Id" />
 
             <div class="text-center">
-                <h5 class="text-center">Enter your current password.</h5>
+                <h5 class="text-center">Enter current password.</h5>
                 <input asp-for="Password" class="form-control" />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
-
+            <div class="text-center">
+                <h5 class="text-center">Retype password.</h5>
+                <input asp-for="ComparePassword" class="form-control" />
+                <span asp-validation-for="ComparePassword" class="text-danger"></span>
+            </div>
             <div class="text-center">
                 <h5 class="text-center">Choose new password</h5>
                 <input asp-for="NewPassword" class="form-control" />
                 <span asp-validation-for="NewPassword" class="text-danger"></span>
             </div>
-
-            <div class="form-group">
-                <label asp-for="Role" class="control-label"></label>
-                <select asp-for="RoleId" asp-items="@Model.Role " class="form-control">
-                </select>
-            </div>
+            @if (User.IsInRole("admin"))
+            {
+                <div class="form-group">
+                    <label asp-for="Role" class="control-label"></label>
+                    <select asp-for="RoleId" asp-items="@Model.Role " class="form-control">
+                    </select>
+                </div>
+            }
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-outline-info" />
             </div>
@@ -41,8 +47,8 @@
 
 @if (User.IsInRole("admin"))
 {
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
 }
 

@@ -14,9 +14,10 @@ namespace CocktailMagician.Services.Contracts
         Task<User> FindUserAsync(string name);
         Task<UserDTO> LoginAsync(string username, string password);
         Task UpdateUserAsync(string id, string password,string newPassword, int roleId);
-        Task<UserDTO> GetUserInfoAsync(string name);
-        Task<BannDTO> BanAsync(string reason, User member);
+        Task<UserDTO> GetUserInfoAsync(string id);
+        Task<BannDTO> BanAsync(string reason, UserDTO user);
         Task DeleteBan(Bann bann);
+        Task DeleteUserAsync(string id);
         Task<List<UserDTO>> GetListOfUsersDTO();
         Task<IEnumerable<RoleDTO>> GetAllRoles();
         Task<bool> IsBannedAsync(string userName);

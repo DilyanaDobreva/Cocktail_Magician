@@ -10,5 +10,6 @@ namespace CocktailMagician.Services.DTOs
         public string BannId { get; set; }
         public string BannReason { get; set; }
         public DateTime BannEndTime { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

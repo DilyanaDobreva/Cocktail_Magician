@@ -63,7 +63,7 @@ namespace CocktailMagician.Web.Areas.Users.Controllers
                 if (await userService.IsBannedAsync(vm.LoginUsername) == true)
                 {
                     var member = await userService.FindUserDTOAsync(vm.LoginUsername);
-                    var memberVm = new BannedViewModel()
+                    var memberVm = new BannViewModel()
                     {
                         UserName = member.UserName,
                         Reason = member.BannReason,
@@ -91,7 +91,7 @@ namespace CocktailMagician.Web.Areas.Users.Controllers
 
             return BackToHome();
         }
-        public async Task<IActionResult> Bans(BannedViewModel vm)
+        public async Task<IActionResult> Bans(BannViewModel vm)
         {
             if (TempData["Legit"] == null)
             {
@@ -130,7 +130,7 @@ namespace CocktailMagician.Web.Areas.Users.Controllers
 
         private RedirectToActionResult BackToHome()
             => RedirectToAction("Index", "Home");
-        private RedirectToActionResult Banned(BannedViewModel vm)
+        private RedirectToActionResult Banned(BannViewModel vm)
             => RedirectToAction("Bans", "Auth", vm);
     }
 }

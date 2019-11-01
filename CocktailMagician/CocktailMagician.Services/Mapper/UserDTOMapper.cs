@@ -23,7 +23,8 @@ namespace CocktailMagician.Services.Mapper
                 Id = user.Id,
                 UserName = user.UserName,
                 RoleName = user.Role.Name,
-                Password = user.Password
+                Password = user.Password,
+                IsDeleted = user.IsDeleted
 
             };
             if (user.Bann != null)

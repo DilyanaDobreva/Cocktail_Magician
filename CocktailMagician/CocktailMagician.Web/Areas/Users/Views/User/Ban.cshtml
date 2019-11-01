@@ -1,0 +1,32 @@
+﻿@model BannViewModel
+
+@{
+    ViewData["Title"] = "Ban";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Ban</h1>
+
+<h3>Are you sure you want to Ban "@Model.UserName" ?</h3>
+
+<div>
+    <div class="col-md-6">
+        <form asp-action="/Users/Ban">
+            <div class="form-group">
+                <input asp-for="@Model.UserName" class="form-control" type="hidden" />
+                <span asp-validation-for="@Model.UserName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <h4> Reason </h4>
+                <input asp-for="@Model.Reason" class="form-control" />
+                <span asp-validation-for="@Model.Reason" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Ban" class="btn btn-outline-danger" />
+                <div>
+                    <a asp-action="Index">Back to List</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

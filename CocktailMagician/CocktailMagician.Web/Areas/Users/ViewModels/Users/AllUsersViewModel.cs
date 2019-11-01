@@ -17,7 +17,10 @@ namespace CocktailMagician.Web.Areas.ViewModels.Users
             this.ListOfUsers = new List<UserViewModel>();
             foreach (var user in listOfUsers)
             {
-                this.ListOfUsers.Add(user.MapToViewModel());
+                if (user.IsDeleted == false)
+                {
+                    this.ListOfUsers.Add(user.MapToViewModel());
+                }
             }
         }
     }

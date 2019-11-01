@@ -3,9 +3,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using CocktailMagician.Services.Contracts;
 using CocktailMagician.Web.Areas.ViewModels.Users;
+using CocktailMagician.Web.Mapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using static CocktailMagician.Web.Areas.ViewModels.Users.BannViewModel;
 
 namespace CocktailMagician.Web.Areas.Users.Controllers
 {
@@ -60,34 +62,46 @@ namespace CocktailMagician.Web.Areas.Users.Controllers
                 return RedirectToAction("Create", "User", "Users");
             }
         }
-        [Authorize(Roles = "admin")]
+        [Authorize]
         public async Task<IActionResult> Edit(string id)
         {
-            if (id == null)
+            if (User.IsInRole("admin"))
             {
-                return NotFound();
+                var user = await userService.GetUserInfoAsync(id);
+
+                var allRoles = await this.userService.GetAllRoles();
+                var viewModel = new UpdateUserViewMode()
+                {
+                    Role = allRoles.Select(r => new SelectListItem(r.RoleName, r.Id.ToString())).ToList()
+                };
+
+                if (user.RoleName == "admin")
+                    viewModel.Role.Reverse();
+                if (viewModel == null)
+                {
+                    return NotFound();
+                }
+                return View(viewModel);
             }
-                
-            var user = await userService.GetUserInfoAsync(id);
-
-            var allRoles = await this.userService.GetAllRoles();
-            var viewModel = new UpdateUserViewMode()
+            else
             {
-                Role = allRoles.Select(r => new SelectListItem(r.RoleName, r.Id.ToString())).ToList()
-            };
+                var currentMember = User.Identity.Name;
+                var user = await userService.FindUserDTOAsync(currentMember);
+                id = user.Id;
+                var viewModel = new UpdateUserViewMode()
+                {
+                    Id = id
+                };
 
-            if (user.RoleName == "admin")
-                viewModel.Role.Reverse();
-            
-
-            if (viewModel == null)
-            {
-                return NotFound();
+                if (viewModel == null)
+                {
+                    return NotFound();
+                }
+                return View(viewModel);
             }
-            return View(viewModel);
         }
         [HttpPost]
-        [Authorize(Roles = "admin")]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(UpdateUserViewMode vm)
         {
@@ -96,8 +110,77 @@ namespace CocktailMagician.Web.Areas.Users.Controllers
                 throw new Exception();
             }
 
+            
+            if (User.IsInRole("user"))
+            {
+                await this.userService.UpdateUserAsync(vm.Id, vm.Password, vm.NewPassword, vm.RoleId);
+                return RedirectToAction("Index", "Home");
+            }
             await this.userService.UpdateUserAsync(vm.Id, vm.Password, vm.NewPassword, vm.RoleId);
+            return RedirectToAction("Index", "User", "Users");
+        }
+        [Authorize(Roles = "admin")]
+        public async Task<IActionResult> Ban(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            try
+            {
+                var user = await userService.GetUserInfoAsync(id);
+                if (user == null)
+                {
+                    return NotFound();
+                }
+                var viewModel = user.MapToBanViewModel();
+                return View(viewModel);
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Index", "User", "Users");
+            }
+        }
+        [HttpPost]
+        [Authorize(Roles = "admin")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Ban(BannViewModel vm)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                throw new Exception();
+            }
+            var userDTO = await userService.FindUserDTOAsync(vm.UserName);
+            await this.userService.BanAsync(vm.Reason, userDTO);
+            return RedirectToAction("Index", "User", "Users");
+        }
+        [Authorize(Roles = "admin")]
+        public async Task<IActionResult> Delete(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
+            var user = await userService.GetUserInfoAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            var viewModel = user.MapToViewModel();
+            return View(viewModel);
+        }
+
+        [HttpPost,ActionName("Delete")]
+        [Authorize(Roles = "admin")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ConfirmDelete(string id)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                throw new Exception();
+            }
+            await this.userService.DeleteUserAsync(id);
             return RedirectToAction("Index", "User", "Users");
         }
     }

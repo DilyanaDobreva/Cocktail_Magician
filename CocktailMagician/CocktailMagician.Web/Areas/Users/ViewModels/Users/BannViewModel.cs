@@ -3,12 +3,9 @@ namespace CocktailMagician.Web.Areas.ViewModels.Users
 {
     public class BannViewModel
     {
-        public class BannedViewModel
-        {
-            public string UserName { get; set; }
-            public string RoleName { get; set; }
-            public string Reason { get; set; }
-            public DateTime EnDateTime { get; set; }
-        }
+        public string UserName { get; set; }
+        public string RoleName { get; set; }
+        public string Reason { get; set; }
+        public DateTime EnDateTime { get; set; }
     }
 }

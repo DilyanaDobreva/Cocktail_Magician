@@ -26,15 +26,16 @@ namespace CocktailMagician.Services
             this.bannFactory = bannFactory;
             this.hasher = hasher;
         }
-        public async Task<BannDTO> BanAsync(string reason, User user)
+        public async Task<BannDTO> BanAsync(string reason, UserDTO userDTO)
         {
             var date = DateTime.Now;
 
-            if (user.Bann != null)
+            if (userDTO.BannId != null)
             {
-                var existingBan = await context.Banns.Include(m => m.User).FirstOrDefaultAsync(m => m.UserId == user.Id);
+                var existingBan = await context.Banns.Include(m => m.User).FirstOrDefaultAsync(m => m.Id == userDTO.BannId);
                 this.context.Banns.Remove(existingBan);
             }
+            var user = await FindUserAsync(userDTO.UserName);
             var bann = bannFactory.CreateBan(reason, date.AddDays(30), user);
             this.context.Banns.Add(bann);
             await this.context.SaveChangesAsync();
@@ -87,11 +88,30 @@ namespace CocktailMagician.Services
                 .FirstOrDefaultAsync(u => u.UserName == username && u.Password == password);
 
             if (user == null)
-            {
                 throw new ArgumentException("Invalid Username or Password");
-            }
+            if (user.IsDeleted == true)
+                throw new ArgumentException("Invalid Username or Password");
+
             return user.MapToDTO();
 
+        }
+        public async Task DeleteUserAsync(string id )
+        {
+            var user = await context.Users
+                .Include(m => m.Role)
+                .Include(m => m.Bann)
+                .FirstAsync(m => m.Id == id);
+
+            if (user.BannId != null)
+            {
+                var existingBan = await context.Banns.Include(m => m.User).FirstOrDefaultAsync(m => m.Id == user.BannId);
+                existingBan.IsDeleted = true;
+                this.context.Banns.Update(existingBan);
+            }
+            user.IsDeleted = true;
+
+            this.context.Users.Update(user);
+            await context.SaveChangesAsync();
         }
         public async Task<UserDTO> RegisterAdminAsync(string username, string password)
         {
@@ -126,13 +146,14 @@ namespace CocktailMagician.Services
         {
             var user = await context.Users
                 .FirstOrDefaultAsync(u => u.Id == id);
-            if (passwrod != user.Password)
+            var userPassword = hasher.Hasher(passwrod);
+            if (roleId == 0)
+            {
+                roleId = 1;
+            }
+            if (userPassword != user.Password)
             {
                 throw new ArgumentException("Current Password is incorrect.");
-            }
-            if (user.Password == newPassword)
-            {
-                throw new ArgumentException("New password cannot be the same as old password.");
             }
             if (newPassword != null)
             {

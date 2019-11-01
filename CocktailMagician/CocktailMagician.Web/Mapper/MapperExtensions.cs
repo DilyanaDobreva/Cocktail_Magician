@@ -1,35 +1,34 @@
 ﻿using System;
 using CocktailMagician.Services.DTOs;
 using CocktailMagician.Web.Areas.ViewModels.Users;
-using static CocktailMagician.Web.Areas.ViewModels.Users.BannViewModel;
 
 namespace CocktailMagician.Web.Mapper
 {
     public static class MapperExtensions
     {
         
-        public static UserViewModel MapToViewModel(this UserDTO member)
+        public static UserViewModel MapToViewModel(this UserDTO user)
         {
             var vm = new UserViewModel
             {
-                Id = member.Id,
-                UserName = member.UserName,
-                RoleName = member.RoleName,
+                Id = user.Id,
+                UserName = user.UserName,
+                RoleName = user.RoleName,
                 
 
 
             };
-            if (member.BannId != null)
+            if (user.BannId != null)
             {
 
-                vm.BannedReason = member.BannReason;
-                vm.BannedEndTime = member.BannEndTime;
+                vm.BannedReason = user.BannReason;
+                vm.BannedEndTime = user.BannEndTime;
             }
             return vm;
         }
-        public static BannedViewModel MapToBanViewModel(this UserDTO member)
+        public static BannViewModel MapToBanViewModel(this UserDTO member)
         {
-            var vm = new BannedViewModel
+            var vm = new BannViewModel
             {
                 UserName = member.UserName,
                 RoleName = member.RoleName
