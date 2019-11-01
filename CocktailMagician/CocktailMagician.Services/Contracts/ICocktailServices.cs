@@ -7,7 +7,7 @@ namespace CocktailMagician.Services.Contracts
 {
     public interface ICocktailServices
     {
-        Task Add(string name, Dictionary<string, int> ingredientsAndQuantities);
+        Task Add(string name, string inmageURL, List<CocktailIngredientDTO> ingredientsAndQuantities);
         Task Delete(int id);
         Task<Cocktail> Get(int id);
         Task<List<CocktailInListDTO>> GetAllDTO();

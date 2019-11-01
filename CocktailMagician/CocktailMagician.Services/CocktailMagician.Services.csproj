@@ -10,11 +10,12 @@
 
   <ItemGroup>
     <Folder Include="Hasher\" />
-    <Folder Include="Contracts\Factories\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Contracts\CocktailServices.cs" />
     <Compile Remove="Contracts\IngredientServices.cs" />
-    <Compile Remove="BarServices.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Analyzers" Version="2.2.6" />
   </ItemGroup>
 </Project>

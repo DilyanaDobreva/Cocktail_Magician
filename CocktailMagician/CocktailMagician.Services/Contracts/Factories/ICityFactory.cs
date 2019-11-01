@@ -2,8 +2,8 @@
 
 namespace CocktailMagician.Services.Contracts.Factories
 {
-    public interface ICocktailFactory
+    public interface ICityFactory
     {
-        Cocktail Create(string name, string imageURL);
+        City Create(string name);
     }
 }

@@ -44,15 +44,15 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
             //cocktailVM.IngredientsQuantity = new Dictionary<string, int>();
             foreach(var ingr in cocktailVM.CocktilIngredients)
             {
-                cocktailVM.IngredientsQuantity.Add(new Coct1 {Name = ingr, Value = 0 });
+                cocktailVM.IngredientsQuantity.Add(new CocktailIngredientViewModel { Name = ingr, Value = 0 });
             }
             return View(cocktailVM);
         }
         [HttpPost, ActionName("Add")]
-        public async Task<IActionResult> FinalAdd(AddCocktailViewModel cocktailVM, List<string> ttt)
+        public async Task<IActionResult> FinalAdd(AddCocktailViewModel cocktailVM)
         {
-
-           // await cocktailServices.Add(cocktailVM.Name, cocktailVM.IngredientsQuantity);
+            var ingredientsQuantityDTO = cocktailVM.IngredientsQuantity.Select(i => i.MapToDTO()).ToList();
+            await cocktailServices.Add(cocktailVM.Name, cocktailVM.ImageURL, ingredientsQuantityDTO);
             return RedirectToAction("Index");
         }
     }

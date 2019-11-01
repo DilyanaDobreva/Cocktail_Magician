@@ -5,11 +5,12 @@ namespace CocktailMagician.Services.Factories
 {
     public class CocktailFactory : ICocktailFactory
     {
-        public Cocktail Create(string name)
+        public Cocktail Create(string name, string imageURL)
         {
             var cocktail = new Cocktail
             {
-                Name = name
+                Name = name,
+                ImageUrl = imageURL
             };
             return cocktail;
         }

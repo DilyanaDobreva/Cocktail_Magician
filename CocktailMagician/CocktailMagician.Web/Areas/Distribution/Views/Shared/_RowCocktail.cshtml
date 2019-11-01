@@ -1,18 +1,18 @@
 ﻿@model CocktailInListViewModel
 
 
-    <div class="col">
-        <div class="card-deck">
-            <img class="card-img-top" src="@Model.ImageURL" alt="Card image cap">
+    <div class="col-md-3 " align="center">
+        <div class="card-deck margin-card shadow">
+            <h5 class="card-title" >@Model.Name</h5>
+            <img class="card-img-top" src="@Model.ImageURL" alt="Card image cap" @*height="200" width="auto"*@>
             <div class="card-body">
-                <h5 class="card-title">@Model.Name</h5>
                 <p>
                     View content
                 </p>
                 <p>
                     View bars
                 </p>
-                @if(User.IsInRole("admin"))
+                @if (User.IsInRole("admin"))
                 {
                     <p>
                         Edit
