@@ -24,5 +24,10 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
 
             return View(listOfBars);
         }
+
+        public async Task<IActionResult> Add()
+        {
+
+        }
     }
 }

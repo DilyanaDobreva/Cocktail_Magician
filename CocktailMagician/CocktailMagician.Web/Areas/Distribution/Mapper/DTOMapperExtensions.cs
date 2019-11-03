@@ -15,5 +15,16 @@ namespace CocktailMagician.Web.Areas.Distribution.Mapper
             };
             return dto;
         }
+        public static AddressDTO MapToDTO(this AddressViewModel address)
+        {
+            var dto = new AddressDTO
+            {
+                Name = address.AddressName,
+                CityId = address.CityId,
+                Latitude = address.Latitude,
+                Longitude = address.Longitude
+            };
+            return dto;
+        }
     }
 }

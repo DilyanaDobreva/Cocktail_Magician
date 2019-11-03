@@ -10,7 +10,8 @@ namespace CocktailMagician.Services.Mapper
             var dto = new IngredientBasicDTO
             {
                 Id = ingredient.Id,
-                Name = ingredient.Name
+                Name = ingredient.Name,
+                Unit = ingredient.Unit
             };
             return dto;
         }

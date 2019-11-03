@@ -27,15 +27,16 @@
 
 $('#load-add-ingredient-form').click(function () {
     let div = $('#ingrediens-div');
-    //document.querySelector(div).show();
     div.show();
 });
 
 
 $('#ingrediens-to-db').click(function () {
-    let name = $('#ingrediens-input').val();
+    let name = $('#ingredient-name').val();
+    let unit = $('#ingredient-unit').val();
     let data = {
-        'Name': name
+        'Name': name,
+        'Unit': unit
     }
 
     $.ajax({
@@ -57,3 +58,5 @@ $('#ingrediens-to-db').click(function () {
         }
     })
 });
+
+$('#list-of-ingredients').multiselect();

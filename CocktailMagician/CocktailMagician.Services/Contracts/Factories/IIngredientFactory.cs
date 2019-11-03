@@ -4,6 +4,6 @@ namespace CocktailMagician.Services.Contracts.Factories
 {
     public interface IIngredientFactory
     {
-        Ingredient Create(string name);
+        Ingredient Create(string name, string unit);
     }
 }

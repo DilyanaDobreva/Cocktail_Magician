@@ -22,15 +22,15 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
         {
             return View();
         }
-        public IActionResult Add()
-        {
-            var vm = new IngredientBasicViewModel();
-            return PartialView("_AddIngredient", vm);
-        }
+        //public IActionResult Add()
+        //{
+        //    var vm = new IngredientBasicViewModel();
+        //    return Ok();
+        //}
         [HttpPost]
         public async Task<IActionResult> Add([FromBody]IngredientBasicViewModel vm)
         {
-            var ingredient = (await ingredientServices.Add(vm.Name)).MapToViewModel();
+            var ingredient = (await ingredientServices.Add(vm.Name, vm.Unit)).MapToViewModel();
 
             return Json(ingredient);
         }

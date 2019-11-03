@@ -22,7 +22,8 @@ namespace CocktailMagician.Web.Areas.Distribution.Mapper
             var vm = new IngredientBasicViewModel
             {
                 Id = ingredient.Id,
-                Name = ingredient.Name
+                Name = ingredient.Name,
+                Unit = ingredient.Unit
             };
 
             return vm;

@@ -8,7 +8,7 @@ namespace CocktailMagician.Services.Contracts
 {
     public interface IIngredientServices
     {
-        Task<IngredientBasicDTO> Add(string name);
+        Task<IngredientBasicDTO> Add(string name, string unit);
         Task<Ingredient> Get(int id);
         Task Edit(int id, string newName);
         Task Delete(int id);
