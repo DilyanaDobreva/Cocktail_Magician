@@ -23,7 +23,18 @@
 //$('#list-of-ingredients').multiselect({
        
 //    });
-
+//let isFormLoaded = true;
+//$('#load-modify-user-form').click(function () {
+//    let div = $('#modify-user-div');
+//    if (isFormLoaded) {
+//        div.show();
+//        isFormLoaded = false;
+//    }
+//    else {
+//        div.hide();
+//        isFormLoaded = true;
+//    }
+//});
 
 $('#load-add-ingredient-form').click(function () {
     let div = $('#ingrediens-div');
