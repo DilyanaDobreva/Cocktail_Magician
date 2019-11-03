@@ -1,4 +1,5 @@
 ﻿using CocktailMagician.Services.DTOs;
+using CocktailMagician.Web.Areas.Distribution.Models.Bars;
 using CocktailMagician.Web.Areas.Distribution.Models.Cocktails;
 
 namespace CocktailMagician.Web.Areas.Distribution.Mapper

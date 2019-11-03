@@ -11,17 +11,15 @@ using System.Threading.Tasks;
 
 namespace CocktailMagician.Services
 {
-    public class AddressServices : IAddressServices
+    public class CityServices : ICityServices
     {
         private readonly CocktailMagicianDb context;
         private readonly ICityFactory cityFactory;
-        private readonly IAddressFactory addressFactory;
 
-        public AddressServices(CocktailMagicianDb context, ICityFactory cityFactory, IAddressFactory addressFactory)
+        public CityServices(CocktailMagicianDb context, ICityFactory cityFactory)
         {
             this.context = context;
             this.cityFactory = cityFactory;
-            this.addressFactory = addressFactory;
         }
         public async Task AddCity(string name)
         {

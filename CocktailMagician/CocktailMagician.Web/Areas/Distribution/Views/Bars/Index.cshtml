@@ -1,0 +1,23 @@
+﻿@model BarsListViewModel
+@{
+    ViewData["Title"] = "Bars";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Bars</h1>
+<a href="/Distribution/Bars/Add">Add bar</a>
+<hr />
+<div class="container">
+    @if (Model.AllBars.Count() == 0)
+    {
+        <div>
+            No bars in list!
+        </div>
+    }
+    <div class="row">
+        @foreach (var bar in Model.AllBars)
+        {
+            <partial name="_BarRow" model="@bar" />
+        }
+    </div>
+</div>

@@ -27,9 +27,15 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <span><span class="glyphicon">&#127864;</span>
-                        <a class="navbar-brand" asp-area="Distribution" asp-controller="Cocktails" asp-action="Index">Cocktails</a>
+                <span>
+                    <span class="glyphicon">&#127864;</span>
+                    <a class="navbar-brand" asp-area="Distribution" asp-controller="Cocktails" asp-action="Index">Cocktails</a>
                 </span>
+                <span>
+                    @*<span class="glyphicon">&#127864;</span>*@
+                    <a class="navbar-brand" asp-area="Distribution" asp-controller="Bars" asp-action="Index">Bars</a>
+                </span>
+
                 @if (User.Identity.IsAuthenticated)
                 {
                     if (User.IsInRole("admin"))
