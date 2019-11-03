@@ -7,8 +7,8 @@ namespace CocktailMagician.Services.Contracts
 {
     public interface ICityServices
     {
-        Task AddCity(string name);
-        Task<City> GetCity(int id);
-        Task<List<CityDTO>> GetAllCities();
+        Task<CityDTO> Add(string name);
+        Task<City> Get(int id);
+        Task<List<CityDTO>> GetAllDTO();
     }
 }

@@ -1,31 +1,4 @@
-﻿//const serverResponseHandler = (serverData) => {
-//    if (serverData) {
-//        $('#add-ingredients-form').html(serverData);
-//    }
-//};
-
-
-//$('#load-add-ingredient-form').click(function () {
-//    $.get('/distribution/ingredient/add', serverResponseHandler)
-//});
-
-//$('#add-ingredient').on('submit', function (event) {
-//    event.preventDefault();
-
-//    const data = $(this).serialize();
-//    const url = $(this).attr('action');
-
-//    $.post(url, data)
-//        .done(function () {
-//            console.log('success')
-//        })
-//});
-//$('#list-of-ingredients').multiselect({
-       
-//    });
-
-
-$('#load-add-ingredient-form').click(function () {
+﻿$('#load-add-ingredient-form').click(function () {
     let div = $('#ingrediens-div');
     div.show();
 });
@@ -51,12 +24,45 @@ $('#ingrediens-to-db').click(function () {
         },
         dataType: 'json',
         success: function (response) {
-            $('#list-of-ingredients').append(new Option(response.name, response.id))
+            $('#list-of-ingredients').append(new Option(response.name, response.name))
         },
         error: function (msg) {
             console.dir(msg);
         }
     })
 });
+
+$('#load-add-city-form').click(function () {
+    let cityDiv = $('#city-div');
+    cityDiv.show();
+});
+
+
+$('#city-to-db').click(function () {
+    let cityName = $('#city-name').val();
+    let cityData = {
+        'Name': cityName
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "/Distribution/City/Add",
+        data: JSON.stringify(cityData),
+        headers: {
+            RequestVerificationToken:
+                $('input:hidden[name="__RequestVerificationToken"]').val(),
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        dataType: 'json',
+        success: function (response) {
+            $('#list-of-cities').append(new Option(response.name, response.id))
+        },
+        error: function (msg) {
+            console.dir(msg);
+        }
+    })
+});
+
 
 $('#list-of-ingredients').multiselect();

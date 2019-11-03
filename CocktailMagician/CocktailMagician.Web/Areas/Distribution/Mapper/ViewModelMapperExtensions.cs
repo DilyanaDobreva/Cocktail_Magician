@@ -1,5 +1,6 @@
 ﻿using CocktailMagician.Services.DTOs;
 using CocktailMagician.Web.Areas.Distribution.Models.Bars;
+using CocktailMagician.Web.Areas.Distribution.Models.City;
 using CocktailMagician.Web.Areas.Distribution.Models.Cocktails;
 using CocktailMagician.Web.Areas.Distribution.Models.Ingredients;
 
@@ -40,7 +41,15 @@ namespace CocktailMagician.Web.Areas.Distribution.Mapper
             };
             return vm;
         }
-
+        public static CityViewModel MapToViewModel(this CityDTO city)
+        {
+            var dto = new CityViewModel
+            {
+                Id = city.Id,
+                Name = city.Name
+            };
+            return dto;
+        }
     }
 }
 
