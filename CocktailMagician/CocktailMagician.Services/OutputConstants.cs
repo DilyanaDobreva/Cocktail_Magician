@@ -10,5 +10,6 @@ namespace CocktailMagician.Services
         public const string IngredientNotFound = "Ingredient is not found.";
         public const string CocktailWithNoIngredients = "This cocktail contains no ingredients.";
         public const string CoctailIncludeIngredient = "This ingredient is part of some cocktail and cannot be deleted.";
+        public const string CityAlreadyExists = "This city already exists in data base.";
     }
 }

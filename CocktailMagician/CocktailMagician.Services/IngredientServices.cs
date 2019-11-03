@@ -23,9 +23,9 @@ namespace CocktailMagician.Services
             this.ingredientFactory = ingredientFactory;
         }
 
-        public async Task<IngredientBasicDTO> Add(string name)
+        public async Task<IngredientBasicDTO> Add(string name, string unit)
         {
-            var ingredient = ingredientFactory.Create(name);
+            var ingredient = ingredientFactory.Create(name, unit);
             context.Ingredients.Add(ingredient);
             await context.SaveChangesAsync();
 

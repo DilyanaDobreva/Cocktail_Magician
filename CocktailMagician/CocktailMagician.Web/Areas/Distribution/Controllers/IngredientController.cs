@@ -18,19 +18,11 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
         {
             this.ingredientServices = ingredientServices;
         }
-        public IActionResult Index()
-        {
-            return View();
-        }
-        public IActionResult Add()
-        {
-            var vm = new IngredientBasicViewModel();
-            return PartialView("_AddIngredient", vm);
-        }
+
         [HttpPost]
         public async Task<IActionResult> Add([FromBody]IngredientBasicViewModel vm)
         {
-            var ingredient = (await ingredientServices.Add(vm.Name)).MapToViewModel();
+            var ingredient = (await ingredientServices.Add(vm.Name, vm.Unit)).MapToViewModel();
 
             return Json(ingredient);
         }

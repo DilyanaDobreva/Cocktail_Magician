@@ -1,23 +1,51 @@
 ﻿using CocktailMagician.Data;
 using CocktailMagician.Services.Contracts;
+using CocktailMagician.Services.Contracts.Factories;
+using CocktailMagician.Services.DTOs;
+using CocktailMagician.Services.Mapper;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace CocktailMagician.Services
 {
-    public class BarServices :IBarServices
+    public class BarServices : IBarServices
     {
         private readonly CocktailMagicianDb context;
-        private readonly IBarServices barServices;
+        private readonly IBarFactory barFactory;
 
-        public BarServices(CocktailMagicianDb context, IBarServices barServices)
+        public BarServices(CocktailMagicianDb context, IBarFactory barFactory)
         {
             this.context = context;
-            this.barServices = barServices;
+            this.barFactory = barFactory;
         }
 
-        //public Task  Add(string Name, string address, int cityId )
-        //{
+        public async Task Add(string name, string imageURL, AddressDTO address)
+        {
+            var barAddress = address.MapFromDTO();
+            var bar = barFactory.Create(name, imageURL, barAddress);
 
-        //}
+            context.Bars.Add(bar);
+            await context.SaveChangesAsync();
+        }
+        public async Task<List<BarInListDTO>> GetAllDTO()
+        {
+            var allBars = await context.Bars
+                .Include(b => b.Address)
+                    .ThenInclude(a => a.City)
+                .Where(b => b.IsDeleted == false)
+                .Select(b => new BarInListDTO
+                {
+                    Id = b.Id,
+                    Name = b.Name,
+                    ImageURL = b.ImageUrl,
+                    Address = b.Address.Name,
+                    City = b.Address.City.Name
+                })
+                .ToListAsync();
+
+            return allBars;
+        }
     }
 }

@@ -1,5 +1,8 @@
 ﻿using CocktailMagician.Services.DTOs;
+using CocktailMagician.Web.Areas.Distribution.Models.Bars;
+using CocktailMagician.Web.Areas.Distribution.Models.City;
 using CocktailMagician.Web.Areas.Distribution.Models.Cocktails;
+using CocktailMagician.Web.Areas.Distribution.Models.Ingredients;
 
 namespace CocktailMagician.Web.Areas.Distribution.Mapper
 {
@@ -15,15 +18,37 @@ namespace CocktailMagician.Web.Areas.Distribution.Mapper
             };
             return vm;
         }
-        public static IngredientBasicDTO MapToViewModel(this IngredientBasicDTO ingredient)
+        public static IngredientBasicViewModel MapToViewModel(this IngredientBasicDTO ingredient)
         {
-            var vm = new IngredientBasicDTO
+            var vm = new IngredientBasicViewModel
             {
                 Id = ingredient.Id,
-                Name = ingredient.Name
+                Name = ingredient.Name,
+                Unit = ingredient.Unit
             };
 
             return vm;
+        }
+        public static BarInListViewModel MapToViewModel(this BarInListDTO bar)
+        {
+            var vm = new BarInListViewModel
+            {
+                Id = bar.Id,
+                Name = bar.Name,
+                ImageURL = bar.ImageURL,
+                Address = bar.Address,
+                City = bar.City
+            };
+            return vm;
+        }
+        public static CityViewModel MapToViewModel(this CityDTO city)
+        {
+            var dto = new CityViewModel
+            {
+                Id = city.Id,
+                Name = city.Name
+            };
+            return dto;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using CocktailMagician.Services.DTOs;
+using CocktailMagician.Web.Areas.Distribution.Models.Bars;
 using CocktailMagician.Web.Areas.Distribution.Models.Cocktails;
 
 namespace CocktailMagician.Web.Areas.Distribution.Mapper
@@ -11,6 +12,17 @@ namespace CocktailMagician.Web.Areas.Distribution.Mapper
             {
                 Name = vm.Name,
                 Value = vm.Value
+            };
+            return dto;
+        }
+        public static AddressDTO MapToDTO(this AddressViewModel address)
+        {
+            var dto = new AddressDTO
+            {
+                Name = address.AddressName,
+                CityId = address.CityId,
+                Latitude = address.Latitude,
+                Longitude = address.Longitude
             };
             return dto;
         }

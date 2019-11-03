@@ -6,13 +6,14 @@
 
 <h1>Add Cocktail</h1>
 
-<div asp-validation-summary="All"></div>
+@*<div asp-validation-summary="All"></div>*@
 <hr />
 @if (Model.IngredientsQuantity.Count() == 0)
 {
     <div class="row">
         <div class="col-md-6">
             <form asp-action="/Distribution/Cocktails/Add" method="get">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
                     <label asp-for="@Model.Name" class="control-label"></label>
                     <input asp-for="@Model.Name" class="form-control" />
@@ -26,7 +27,7 @@
                 <div>Please select ingredients:</div>
                 <div class="form-group">
                     <label>Ingredients</label>
-                    <select multiple="multiple" asp-for="@Model.CocktilIngredients" asp-items="@Model.AllIngredients " class="multiselect" id="list-of-ingredients" size="2">
+                    <select multiple="multiple" asp-for="@Model.CocktilIngredients" asp-items="@Model.AllIngredients " class="custom-select" id="list-of-ingredients" size="2">
                         <option hidden disabled selected="">Select...</option>
                     </select>
                 </div>
@@ -37,8 +38,17 @@
         <div class="col-md-6">
             <button class="btn btn-light" id="load-add-ingredient-form">Add ingredient</button>
             <div style="display:none" id="ingrediens-div">
-                <input type="text" id="ingrediens-input" />
-                <button class="nav-link text-dark" id="ingrediens-to-db">Add new ingredient</button>
+                <div class="m-4">
+                    <div>
+                        Name:
+                        <input type="text" class=" form-control" id="ingredient-name" />
+                    </div>
+                    <div>
+                        Unit:
+                        <input type="text" class=" form-control" id="ingredient-unit" />
+                    </div>
+                </div>
+                <button class="btn btn-light" id="ingrediens-to-db">Add new ingredient</button>
             </div>
         </div>
     </div>
