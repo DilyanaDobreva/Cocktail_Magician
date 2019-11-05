@@ -3,6 +3,7 @@ using CocktailMagician.Web.Areas.Distribution.Models.Bars;
 using CocktailMagician.Web.Areas.Distribution.Models.City;
 using CocktailMagician.Web.Areas.Distribution.Models.Cocktails;
 using CocktailMagician.Web.Areas.Distribution.Models.Ingredients;
+using System.Linq;
 
 namespace CocktailMagician.Web.Areas.Distribution.Mapper
 {
@@ -49,6 +50,30 @@ namespace CocktailMagician.Web.Areas.Distribution.Mapper
                 Name = city.Name
             };
             return dto;
+        }
+        public static CocktailDetailsViewModel MapToViewModel (this CocktailDetailsDTO cocktail)
+        {
+            var vm = new CocktailDetailsViewModel
+            {
+                Id = cocktail.Id,
+                Name = cocktail.Name,
+                ImageURL = cocktail.ImageURL,
+                Ingredients = cocktail.Ingredients.Select(i => i.MapToViewModel()),
+                Bars = cocktail.Bars?.Select(b => b.MapToViewModel())
+            };
+            vm.ListedIngredients = string.Join(", ", vm.Ingredients.Select(i => i.Name));
+
+            return vm;
+        }
+        public static CocktailIngredientViewModel MapToViewModel(this CocktailIngredientDTO dto)
+        {
+            var vm = new CocktailIngredientViewModel
+            {
+                Name = dto.Name,
+                Value = dto.Value,
+                Unit = dto.Unit
+            };
+            return vm;
         }
     }
 }

@@ -14,9 +14,6 @@ namespace CocktailMagician.Web.Mapper
                 Id = user.Id,
                 UserName = user.UserName,
                 RoleName = user.RoleName,
-                
-
-
             };
             if (user.BannId != null)
             {

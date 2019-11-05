@@ -83,7 +83,7 @@ else
                     @Html.HiddenFor(m => m.IngredientsQuantity[i].Name)
 
                     <label asp-for="@Model.IngredientsQuantity[i].Name" class="control-label">@Model.IngredientsQuantity[i].Name</label>
-                    <input type="text" asp-for="@Model.IngredientsQuantity[i].Value" class="form-control" />
+                    <input type="text" asp-for="@Model.IngredientsQuantity[i].Value" class="form-control" maxlength="20"/>
 
                     <span asp-validation-for="@Model.IngredientsQuantity[i].Value" class="text-danger"></span>
 

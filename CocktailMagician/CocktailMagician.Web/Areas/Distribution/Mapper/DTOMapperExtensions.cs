@@ -11,7 +11,8 @@ namespace CocktailMagician.Web.Areas.Distribution.Mapper
             var dto = new CocktailIngredientDTO
             {
                 Name = vm.Name,
-                Value = vm.Value
+                Value = vm.Value,
+                Unit = vm.Unit
             };
             return dto;
         }

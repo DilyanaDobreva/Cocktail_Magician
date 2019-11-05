@@ -9,9 +9,10 @@ namespace CocktailMagician.Services.Contracts
     {
         Task Add(string name, string inmageURL, List<CocktailIngredientDTO> ingredientsAndQuantities);
         Task Delete(int id);
-        Task<Cocktail> Get(int id);
+        Task<CocktailDetailsDTO> GetDTO(int id);
         Task<List<CocktailInListDTO>> GetAllDTO();
         Task AddIngredient(int cocktailId, int ingredientId, int quantity);
         Task RemoveIngredient(int cocktailId, int ingredientId);
+        Task<string> GetName(int id);
     }
 }

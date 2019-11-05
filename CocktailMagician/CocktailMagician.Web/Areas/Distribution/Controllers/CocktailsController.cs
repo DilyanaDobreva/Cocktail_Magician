@@ -14,11 +14,13 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
     {
         private readonly ICocktailServices cocktailServices;
         private readonly IIngredientServices ingredientServices;
+        private readonly IBarServices barServices;
 
-        public CocktailsController(ICocktailServices cocktailServices, IIngredientServices ingredientServices)
+        public CocktailsController(ICocktailServices cocktailServices, IIngredientServices ingredientServices, IBarServices barServices)
         {
             this.cocktailServices = cocktailServices;
             this.ingredientServices = ingredientServices;
+            this.barServices = barServices;
         }
 
         public async Task<IActionResult> Index()
@@ -44,6 +46,7 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
             //cocktailVM.IngredientsQuantity = new Dictionary<string, int>();
             foreach(var ingr in cocktailVM.CocktilIngredients)
             {
+
                 cocktailVM.IngredientsQuantity.Add(new CocktailIngredientViewModel { Name = ingr, Value = 0 });
             }
             return View(cocktailVM);
@@ -51,9 +54,33 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
         [HttpPost, ActionName("Add")]
         public async Task<IActionResult> FinalAdd(AddCocktailViewModel cocktailVM)
         {
-            var ingredientsQuantityDTO = cocktailVM.IngredientsQuantity.Select(i => i.MapToDTO()).ToList();
-            await cocktailServices.Add(cocktailVM.Name, cocktailVM.ImageURL, ingredientsQuantityDTO);
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                var ingredientsQuantityDTO = cocktailVM.IngredientsQuantity.Select(i => i.MapToDTO()).ToList();
+                await cocktailServices.Add(cocktailVM.Name, cocktailVM.ImageURL, ingredientsQuantityDTO);
+                return RedirectToAction("Index");
+            }
+            ModelState.AddModelError("", "Something went wrong...");
+            return View(cocktailVM);
         }
+        public async Task<IActionResult> Details(int id)
+        {
+            var cocktail = (await cocktailServices.GetDTO(id)).MapToViewModel();
+
+            return View(cocktail);
+        }
+        public async Task<IActionResult> AddBars(int id)
+        {
+            var vm = new AddBarsViewModel();
+            vm.CocktailName = await cocktailServices.GetName(id);
+            vm.AllBars = (await barServices.GetAllDTO()).Select(b => new SelectListItem(b.Name, b.Id.ToString())).ToList();
+
+            return View(vm);
+        }
+        //[HttpPost]
+        //public Task<IActionResult> AddBars(int id, AddBarsViewModel vm)
+        //{
+
+        //}
     }
 }

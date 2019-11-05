@@ -26,5 +26,6 @@ namespace CocktailMagician.Services.Mapper
             };
             return dto;
         }
+        
     }
 }

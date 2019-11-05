@@ -7,6 +7,7 @@ using CocktailMagician.Data.Models;
 using CocktailMagician.Services.Contracts;
 using CocktailMagician.Services.Contracts.Factories;
 using CocktailMagician.Services.DTOs;
+using CocktailMagician.Services.Mapper;
 using Microsoft.EntityFrameworkCore;
 
 namespace CocktailMagician.Services
@@ -53,10 +54,17 @@ namespace CocktailMagician.Services
             cocktail.IsDeleted = true;
             await context.SaveChangesAsync();
         }
-        public async Task<Cocktail> Get(int id)
+        public async Task<CocktailDetailsDTO> GetDTO(int id)
         {
-            var cocktail = await context.Cocktails.Include(c => c.CocktailIngredients).FirstOrDefaultAsync(c => c.Id == id && c.IsDeleted == false);
-            return cocktail;
+            var cocktail = await context.Cocktails
+                .Include(c => c.CocktailIngredients)
+                    .ThenInclude(i => i.Ingredient)
+                .Include(c => c.BarCocktails)
+                    .ThenInclude(b => b.Bar)
+                        .ThenInclude(b => b.Address)
+                            .ThenInclude(a => a.City)
+                .FirstOrDefaultAsync(c => c.Id == id && c.IsDeleted == false);
+            return cocktail.MapToDetailsDTO();
         }
         public async Task<List<CocktailInListDTO>> GetAllDTO()
         {
@@ -103,5 +111,22 @@ namespace CocktailMagician.Services
             ingredient.IsDeleted = true;
             await context.SaveChangesAsync();
         }
+        public Task<string> GetName(int id)
+        {
+            if (id == 0)
+            {
+                throw new InvalidOperationException(OutputConstants.InvalidId);
+            }
+            var cokctailName = context.Cocktails.Where(c => c.Id == id).Select(c => c.Name).FirstAsync();
+
+            return cokctailName;
+        }
+        //public Task AddBarsAsync(int cocktailID, List<int> barsId)
+        //{
+        //    foreach(var id in barsId)
+        //    {
+        //        var barCocktail = 
+        //    }
+        //}
     }
 }

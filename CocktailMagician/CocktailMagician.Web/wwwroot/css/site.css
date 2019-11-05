@@ -63,3 +63,7 @@ body {
     border-radius: 5px;
     padding: 5px;
 }
+.details-image{
+    height: 100%;
+    width: auto;
+}

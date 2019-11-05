@@ -1,5 +1,6 @@
 ﻿using CocktailMagician.Data.Models;
 using CocktailMagician.Services.DTOs;
+using System.Linq;
 
 namespace CocktailMagician.Services.Mapper
 {
@@ -15,5 +16,37 @@ namespace CocktailMagician.Services.Mapper
 
             return dto;
         }
+        public static CocktailDetailsDTO MapToDetailsDTO(this Cocktail cocktail)
+        {
+            var dto = new CocktailDetailsDTO
+            {
+                Id = cocktail.Id,
+                Name = cocktail.Name,
+                ImageURL = cocktail.ImageUrl,
+                Ingredients = cocktail.CocktailIngredients.Select(i => i.MapToDTO()),
+                Bars = cocktail.BarCocktails?.Select(b => b.Bar.MapToDTO())
+            };
+            return dto;
+        }
+        public static CocktailIngredientDTO MapToDTO( this CocktailIngredient ci)
+        {
+            var dto = new CocktailIngredientDTO
+            {
+                Name = ci.Ingredient.Name,
+                Unit = ci.Ingredient.Unit,
+                Value = ci.Quatity
+            };
+            return dto;
+        }
+        public static CocktailBasicDTO MapToBasicDTO(this Cocktail cocktail)
+        {
+            var dto = new CocktailBasicDTO
+            {
+                Id = cocktail.Id,
+                Name = cocktail.Name
+            };
+            return dto;
+        }
     }
 }
+

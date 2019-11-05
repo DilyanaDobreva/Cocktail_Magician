@@ -52,6 +52,7 @@ namespace CocktailMagician.Web
             services.AddScoped<ICityFactory, CityFactory>();
             services.AddScoped<ICocktailFactory, CocktailFactory>();
             services.AddScoped<ICocktailIngredientFactory, CocktailIngredientFactory>();
+            services.AddScoped<IBarCocktailFactory, BarCocktailFactory>();
             services.AddScoped<IIngredientServices, IngredientServices>();
             services.AddScoped<IBarServices, BarServices>();
             services.AddScoped<ICityServices, CityServices>();
