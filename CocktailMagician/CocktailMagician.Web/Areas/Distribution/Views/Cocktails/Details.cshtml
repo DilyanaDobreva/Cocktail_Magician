@@ -11,38 +11,51 @@
     </div>
     <div class="col-md-6">
         <h3>@Model.Name</h3>
+        <div class="m-4">
+            @if (User.IsInRole("admin"))
+            {
+                <h5>Recipe: </h5>
+                @foreach (var ingr in Model.Ingredients)
+                {
+                    <div> @ingr.Value @ingr.Unit    @ingr.Name</div>
+                }
+            }
+            else
+            {
+                <h5>Ingredients:</h5>
+                <div> @Model.ListedIngredients </div>
+            }
+        </div>
+        @if (Model.Bars != null)
+        {
+            <div class="m-4">
+                <h5>Bars:</h5>
+                @foreach (var bar in Model.Bars)
+                {
+                    <div class="m-3">
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <img src=@bar.ImageURL height="50" />
+                            </div>
+                            <div class="col-sm-8">
+                                <div class="p-2" align="center">
+                                    <a asp-controller="Bars" asp-action="Details" asp-route-id="@bar.Id">@bar.Name</a>
+                                    <div>@bar.Address, @bar.City</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+        }
+    <div>
         @if (User.IsInRole("admin"))
         {
-            <h5>Recipe: </h5>
-            @foreach (var ingr in Model.Ingredients)
-            {
-                <div> @ingr.Value @ingr.Unit    @ingr.Name</div>
-            }
-        }
-        else
-        {
-            <div>Ingredients: @Model.ListedIngredients </div>
-        }
-        @if(Model.Bars != null)
-        {
-            <h3>Bars:</h3>
-            @foreach(var bar in Model.Bars)
-            {
-                <div class="row">
-                    <div class="col-2">
-                        <img src=@bar.ImageURL height="50" />
-                    </div>
-                    <div class="col">
-                        <a asp-controller="Bars" asp-action="Details" asp-route-id="@bar.Id">@bar.Name</a>
-                        <div>@bar.Address, @bar.City</div>
-                    </div>
-                </div>
-            }
-        }
-        @if(User.IsInRole("admin"))
-        {
             <a asp-action="AddBars" asp-controller="Cocktails" asp-route-id="@Model.Id">Add bar</a>
+            <a asp-action="RemoveBars" asp-controller="Cocktails" asp-route-id="@Model.Id">Remove bar</a>
         }
+    </div>
     </div>
 </div>
 

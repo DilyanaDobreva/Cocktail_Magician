@@ -14,5 +14,6 @@ namespace CocktailMagician.Services.Contracts
         Task AddIngredient(int cocktailId, int ingredientId, int quantity);
         Task RemoveIngredient(int cocktailId, int ingredientId);
         Task<string> GetName(int id);
+        Task AddBarsAsync(int cocktailID, List<int> barsId);
     }
 }

@@ -65,9 +65,10 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
         }
         public async Task<IActionResult> Details(int id)
         {
-            var cocktail = (await cocktailServices.GetDTO(id)).MapToViewModel();
+            var cocktail = (await cocktailServices.GetDTO(id));
+            var cocktailVM = cocktail.MapToViewModel();
 
-            return View(cocktail);
+            return View(cocktailVM);
         }
         public async Task<IActionResult> AddBars(int id)
         {
@@ -77,10 +78,11 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
 
             return View(vm);
         }
-        //[HttpPost]
-        //public Task<IActionResult> AddBars(int id, AddBarsViewModel vm)
-        //{
-
-        //}
+        [HttpPost]
+        public async Task<IActionResult> AddBars(int id, AddBarsViewModel vm)
+        {
+            await cocktailServices.AddBarsAsync(id, vm.SelectedBars);
+            return RedirectToAction("Details", new { id = id });
+        }
     }
 }

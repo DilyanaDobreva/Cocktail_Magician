@@ -17,12 +17,15 @@ namespace CocktailMagician.Services
         private readonly CocktailMagicianDb context;
         private readonly ICocktailFactory cocktailFactory;
         private readonly ICocktailIngredientFactory cocktailIngredientFactory;
+        private readonly IBarCocktailFactory barCocktailFactory;
 
-        public CocktailServices(CocktailMagicianDb context, ICocktailFactory cocktailFactory, ICocktailIngredientFactory cocktailIngredientFactory)
+        public CocktailServices(CocktailMagicianDb context, ICocktailFactory cocktailFactory, ICocktailIngredientFactory cocktailIngredientFactory,
+            IBarCocktailFactory barCocktailFactory)
         {
             this.context = context;
             this.cocktailFactory = cocktailFactory;
             this.cocktailIngredientFactory = cocktailIngredientFactory;
+            this.barCocktailFactory = barCocktailFactory;
         }
 
         public async Task Add(string name, string imageURL, List<CocktailIngredientDTO> ingredientsAndQuantities)
@@ -64,7 +67,8 @@ namespace CocktailMagician.Services
                         .ThenInclude(b => b.Address)
                             .ThenInclude(a => a.City)
                 .FirstOrDefaultAsync(c => c.Id == id && c.IsDeleted == false);
-            return cocktail.MapToDetailsDTO();
+            var cocktailDTO = cocktail.MapToDetailsDTO();
+            return cocktailDTO;
         }
         public async Task<List<CocktailInListDTO>> GetAllDTO()
         {
@@ -121,12 +125,15 @@ namespace CocktailMagician.Services
 
             return cokctailName;
         }
-        //public Task AddBarsAsync(int cocktailID, List<int> barsId)
-        //{
-        //    foreach(var id in barsId)
-        //    {
-        //        var barCocktail = 
-        //    }
-        //}
+        public async Task AddBarsAsync(int cocktailID, List<int> barsId)
+        {
+            foreach (var id in barsId)
+            {
+                var barCocktail = barCocktailFactory.Create(id, cocktailID);
+                context.BarCocktails.Add(barCocktail);
+            }
+
+            await context.SaveChangesAsync();
+        }
     }
 }

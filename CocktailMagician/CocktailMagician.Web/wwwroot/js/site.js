@@ -68,3 +68,8 @@ $('#ingrediens-to-db').click(function () {
         }
     })
 });
+
+
+$(document).ready(function () {
+    $('.multiple-select2').select2();
+});

@@ -22,7 +22,9 @@ namespace CocktailMagician.Services.Mapper
             {
                 Id = bar.Id,
                 Name = bar.Name,
-                ImageURL = bar.ImageUrl
+                ImageURL = bar.ImageUrl,
+                Address = bar.Address.Name,
+                City = bar.Address.City.Name
             };
             return dto;
         }
