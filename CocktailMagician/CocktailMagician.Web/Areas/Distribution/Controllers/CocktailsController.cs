@@ -74,7 +74,7 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
         {
             var vm = new AddBarsViewModel();
             vm.CocktailName = await cocktailServices.GetName(id);
-            vm.AllBars = (await barServices.GetAllDTO()).Select(b => new SelectListItem(b.Name, b.Id.ToString())).ToList();
+            vm.AllBars = (await barServices.GetAllNotIncludedDTO(id)).Select(b => new SelectListItem(b.Name, b.Id.ToString())).ToList();
 
             return View(vm);
         }
@@ -82,6 +82,20 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
         public async Task<IActionResult> AddBars(int id, AddBarsViewModel vm)
         {
             await cocktailServices.AddBarsAsync(id, vm.SelectedBars);
+            return RedirectToAction("Details", new { id = id });
+        }
+        public async Task<IActionResult> RemoveBars(int id)
+        {
+            var vm = new RemoveBarsViewModel();
+            vm.CocktailName = await cocktailServices.GetName(id);
+            vm.BarsOfCocktail = (await barServices.GetBarsOfCocktail(id)).Select(b => new SelectListItem(b.Name, b.Id.ToString())).ToList();
+
+            return View(vm);
+        }
+        [HttpPost]
+        public async Task<IActionResult> RemoveBars(int id, RemoveBarsViewModel vm)
+        {
+            await cocktailServices.RemoveBarsAsync(id, vm.BarsToRemove);
             return RedirectToAction("Details", new { id = id });
         }
     }

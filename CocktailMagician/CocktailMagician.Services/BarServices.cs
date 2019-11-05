@@ -47,5 +47,37 @@ namespace CocktailMagician.Services
 
             return allBars;
         }
+        public async Task<List<BarBasicDTO>> GetAllNotIncludedDTO(int cocktailId)
+        {
+            var allBars = await context.Bars
+                .Include(b => b.BarCocktails)
+                    .ThenInclude(c => c.Cocktail)
+                .Where(b => b.IsDeleted == false && !(b.BarCocktails.Any(c => c.CocktailId == cocktailId && c.IsDeleted == false)))
+                .Select(b => new BarBasicDTO
+                {
+                    Id = b.Id,
+                    Name = b.Name,
+                })
+                .ToListAsync();
+
+            return allBars;
+        }
+        public async Task<List<BarBasicDTO>> GetBarsOfCocktail(int cocktailId)
+        {
+            var allBars = await context.Bars
+                .Include(b => b.BarCocktails)
+                    .ThenInclude(c => c.Cocktail)
+                .Where(b => b.IsDeleted == false && b.BarCocktails.Any(c => c.CocktailId == cocktailId && c.IsDeleted==false))
+                .Select(b => new BarBasicDTO
+                {
+                    Id = b.Id,
+                    Name = b.Name,
+                })
+                .ToListAsync();
+
+            return allBars;
+
+        }
+
     }
 }

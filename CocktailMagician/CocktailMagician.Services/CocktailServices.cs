@@ -129,10 +129,30 @@ namespace CocktailMagician.Services
         {
             foreach (var id in barsId)
             {
-                var barCocktail = barCocktailFactory.Create(id, cocktailID);
-                context.BarCocktails.Add(barCocktail);
+                var barCocktail = await context.BarCocktails.FirstOrDefaultAsync(bc => bc.CocktailId == cocktailID && bc.BarId == id);
+                if (barCocktail != null)
+                {
+                    barCocktail.IsDeleted = false;
+                }
+                else
+                {
+                    barCocktail = barCocktailFactory.Create(id, cocktailID);
+                    context.BarCocktails.Add(barCocktail);
+                }
             }
 
+            await context.SaveChangesAsync();
+        }
+        public async Task RemoveBarsAsync(int cocktailID, List<int> barsId)
+        {
+            foreach(var id in barsId)
+            {
+                var barCocktail = await context.BarCocktails.FirstOrDefaultAsync(bc => bc.CocktailId == cocktailID && bc.BarId == id);
+                if(barCocktail != null)
+                {
+                    barCocktail.IsDeleted = true;
+                }
+            }
             await context.SaveChangesAsync();
         }
     }

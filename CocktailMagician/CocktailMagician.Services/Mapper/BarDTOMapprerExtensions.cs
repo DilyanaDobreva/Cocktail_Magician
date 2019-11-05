@@ -28,6 +28,14 @@ namespace CocktailMagician.Services.Mapper
             };
             return dto;
         }
-        
+        public static BarBasicDTO MapToBasicDTO(this Bar bar)
+        {
+            var dto = new BarBasicDTO
+            {
+                Id = bar.Id,
+                Name = bar.Name
+            };
+            return dto;
+        }
     }
 }

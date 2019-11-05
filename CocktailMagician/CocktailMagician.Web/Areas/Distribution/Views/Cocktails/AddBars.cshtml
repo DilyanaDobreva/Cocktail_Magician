@@ -7,8 +7,7 @@
 <h3>Add Bar for cocktail @Model.CocktailName</h3>
 <form asp-action="AddBars" asp-controller="Cocktails">
     <label>Select bars</label>
-    <select multiple="multiple" class="multiple-select2" asp-for="@Model.SelectedBars" asp-items="@Model.AllBars" size="5">
-        <option hidden disabled selected="">Select...</option>
+    <select multiple="multiple" class="multiple-select2 input-group input-group-lg" asp-for="@Model.SelectedBars" asp-items="@Model.AllBars" size="5">
     </select>
     <input type="submit" class="btn btn-light" />
 </form>

@@ -26,7 +26,7 @@
                 <div> @Model.ListedIngredients </div>
             }
         </div>
-        @if (Model.Bars != null)
+        @if (Model.Bars != null  && Model.Bars?.Count() != 0)
         {
             <div class="m-4">
                 <h5>Bars:</h5>
