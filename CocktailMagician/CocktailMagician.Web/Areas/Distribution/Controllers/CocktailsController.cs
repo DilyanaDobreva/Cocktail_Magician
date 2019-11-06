@@ -149,6 +149,11 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
             ModelState.AddModelError("", "Something went wrong...");
             return View(cocktailToEdit);
         }
-
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
+        {
+            await cocktailServices.Delete(id);
+            return RedirectToAction("Index");
+        }
     }
 }
