@@ -1,0 +1,97 @@
+﻿@model EditCocktailViewModel
+@{
+    ViewData["Title"] = "EditIngredients";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>Edit Ingredients</h3>
+@if (Model.IngredientsToRemove == null && Model.CocktilNewIngredients == null)
+{
+    <div>
+        Cocktail recepie:
+        @foreach (var ci in Model.ListCurrentIngredients)
+        {
+            <div>
+                @ci
+            </div>
+        }
+    </div>
+    <form asp-action="/Distribution/Cocktails/Add" method="get">
+        @*<div>Add new ingredients:</div>*@
+        <input type="hidden" asp-for="@Model.Name" />
+        <input type="hidden" asp-for="@Model.ImageURL" />
+
+        @for (int i = 0; i < Model.IngredientsQuantity.Count(); i++)
+        {
+            <input type="hidden" asp-for="@Model.IngredientsQuantity[i].Name" />
+            <input type="hidden" asp-for="@Model.IngredientsQuantity[i].Value" />
+        }
+        <div class="form-group">
+            <label>Add new ingredients:</label>
+            <select multiple="multiple" class="multiple-select2" asp-for="@Model.CocktilNewIngredients" asp-items="@Model.AllNotIncludedIngredients " id="list-of-ingredients" width="100">
+            </select>
+        </div>
+        <button class="btn btn-light m-3" id="load-add-ingredient-form">Add ingredient</button>
+        <div class="form-group">
+            <label>Remove ingredients:</label>
+            <select multiple="multiple" class="multiple-select2" asp-for="@Model.IngredientsToRemove" asp-items="@Model.CurrentCocktailIngredients " width="100">
+            </select>
+        </div>
+        <input type="submit" value="Continue" class="btn btn-outline-info" />
+    </form>
+
+    <div class="col-md-6">
+        <button class="btn btn-light" id="load-add-ingredient-form">Add ingredient</button>
+        <div style="display:none" id="ingrediens-div">
+            <div class="m-4">
+                <div>
+                    Name:
+                    <input type="text" class=" form-control" id="ingredient-name" />
+                </div>
+                <div>
+                    Unit:
+                    <input type="text" class=" form-control" id="ingredient-unit" />
+                </div>
+            </div>
+            <button class="btn btn-light" id="ingrediens-to-db">Add new ingredient</button>
+        </div>
+    </div>
+}
+else
+{
+    <h5>
+        Please enter ingrediens quantites:
+    </h5>
+    <div class="row">
+        <div class="col-md-4 ">
+            <img src="@Model.ImageURL" alt="missing image" height="250" align="right">
+        </div>
+        <div class="col-md-6">
+            <form asp-action="/Distribution/Cocktails/EditIngredients">
+
+                @*@foreach (var ingr in Model.IngredientsQuantity)
+                    {
+                        <label asp-for="@ingr.Name" class="control-label">@ingr.Name</label>
+                        <input type="text" asp-for="@ingr.Value" class="form-control" />
+                        <span asp-validation-for="@ingr.Value" class="text-danger"></span>
+                    }*@
+
+                @for (var ci = 0; ci < Model.IngredientsQuantity.Count(); ci++)
+                {
+                    <div class="form-group">
+                        <label asp-for="@Model.IngredientsQuantity[ci].Name" class="control-label">@Model.IngredientsQuantity[ci].Name</label>
+                        <input type="text" asp-for="@Model.IngredientsQuantity[ci].Value" value="@Model.IngredientsQuantity[ci].Value" class="form-control" />
+                        <span asp-validation-for="@Model.IngredientsQuantity[ci].Value" class="text-danger"></span>
+                        <input type="hidden" asp-for="@Model.IngredientsQuantity[ci].Name" value="@Model.IngredientsQuantity[ci].Name" />
+                    </div>
+                }
+
+                <input type="submit" value="Edit Cocktail" class="btn btn-outline-info" />
+            </form>
+        </div>
+    </div>
+
+}
+
+
+

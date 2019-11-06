@@ -13,5 +13,6 @@ namespace CocktailMagician.Services.Contracts
         Task Edit(int id, string newName);
         Task Delete(int id);
         Task<List<IngredientBasicDTO>> GetAllDTO();
+        Task<List<IngredientBasicDTO>> GetAllNotIncludedDTO(int cocktailId);
     }
 }

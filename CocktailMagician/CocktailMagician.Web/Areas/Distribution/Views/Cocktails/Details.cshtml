@@ -19,6 +19,8 @@
                 {
                     <div> @ingr.Value @ingr.Unit    @ingr.Name</div>
                 }
+                <a asp-action="EditIngredients" asp-controller="Cocktails" asp-route-id="@Model.Id">Edit Ingredients</a>
+
             }
             else
             {

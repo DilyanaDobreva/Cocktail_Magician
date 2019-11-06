@@ -65,6 +65,17 @@ namespace CocktailMagician.Web.Areas.Distribution.Mapper
 
             return vm;
         }
+        public static EditCocktailViewModel MapToEditViewModel(this CocktailDetailsDTO cocktail)
+        {
+            var vm = new EditCocktailViewModel
+            {
+                Id = cocktail.Id,
+                Name = cocktail.Name,
+                ImageURL = cocktail.ImageURL,
+                IngredientsQuantity = cocktail.Ingredients.Select(ci => ci.MapToViewModel()).ToList(),
+            };
+            return vm;
+        }
         public static CocktailIngredientViewModel MapToViewModel(this CocktailIngredientDTO dto)
         {
             var vm = new CocktailIngredientViewModel

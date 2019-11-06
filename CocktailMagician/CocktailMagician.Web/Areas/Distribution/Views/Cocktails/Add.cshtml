@@ -8,7 +8,7 @@
 
 @*<div asp-validation-summary="All"></div>*@
 <hr />
-@if (Model.IngredientsQuantity.Count() == 0)
+@if ((Model?.IngredientsQuantity?.Count() ?? 0) == 0)
 {
     <div class="row">
         <div class="col-md-6">
@@ -17,12 +17,12 @@
                 <div class="form-group">
                     <label asp-for="@Model.Name" class="control-label"></label>
                     <input asp-for="@Model.Name" class="form-control" />
-                    <span asp-validation-for="@Model.Name" class="text-danger"></span>
+                    <span asp-validation-for="@Model.Name" class="text-danger"/>
                 </div>
                 <div>
                     <label asp-for="@Model.ImageURL" class="control-label"></label>
                     <input asp-for="@Model.ImageURL" class="form-control" />
-                    <span asp-validation-for="@Model.ImageURL" class="text-danger"></span>
+                    <span asp-validation-for="@Model.ImageURL" class="text-danger"/>
                 </div>
                 <div>Please select ingredients:</div>
                 <div class="form-group">

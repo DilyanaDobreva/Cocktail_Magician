@@ -35,7 +35,7 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
         [HttpGet]
         public async Task<IActionResult> Add([FromQuery]AddCocktailViewModel cocktailVM)
         {
-            //var cocktailVM = new AddCocktailViewModel();
+
             if (cocktailVM.CocktilIngredients == null)
             {
                 var ingredients = await ingredientServices.GetAllDTO();
@@ -43,8 +43,7 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
 
                 return View(cocktailVM);
             }
-            //cocktailVM.IngredientsQuantity = new Dictionary<string, int>();
-            foreach(var ingr in cocktailVM.CocktilIngredients)
+            foreach (var ingr in cocktailVM.CocktilIngredients)
             {
 
                 cocktailVM.IngredientsQuantity.Add(new CocktailIngredientViewModel { Name = ingr, Value = 0 });
@@ -98,5 +97,58 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
             await cocktailServices.RemoveBarsAsync(id, vm.BarsToRemove);
             return RedirectToAction("Details", new { id = id });
         }
+        public async Task<IActionResult> EditIngredients(int id, [FromQuery]EditCocktailViewModel cocktailToEdit)
+        {
+
+            if (cocktailToEdit.CocktilNewIngredients == null && cocktailToEdit.IngredientsToRemove == null)
+            {
+                cocktailToEdit = (await cocktailServices.GetDTO(id)).MapToEditViewModel();
+
+                cocktailToEdit.ListCurrentIngredients = cocktailToEdit.IngredientsQuantity
+                    .Select(i => i.Value + i.Unit + " " + i.Name)
+                    .ToList();
+
+                var ingredients = await ingredientServices.GetAllNotIncludedDTO(id);
+
+                cocktailToEdit.AllNotIncludedIngredients = ingredients
+                    .Select(b => new SelectListItem(b.Name, b.Name)).ToList();
+
+                cocktailToEdit.CurrentCocktailIngredients = cocktailToEdit.IngredientsQuantity
+                    .Select(i => new SelectListItem(i.Name, i.Name)).ToList();
+
+                return View(cocktailToEdit);
+            }
+            foreach (var ingr in cocktailToEdit.CocktilNewIngredients)
+            {
+                cocktailToEdit.IngredientsQuantity.Add(new CocktailIngredientViewModel { Name = ingr, Value = 0 });
+            }
+
+            if (cocktailToEdit.IngredientsToRemove != null)
+            {
+                foreach (var ingr in cocktailToEdit.IngredientsToRemove)
+                {
+                    var iq = cocktailToEdit.IngredientsQuantity.FirstOrDefault(c => c.Name == ingr);
+                    cocktailToEdit.IngredientsQuantity.Remove(iq);
+                }
+            }
+            
+            return View(cocktailToEdit);
+
+        }
+
+
+        [HttpPost, ActionName("EditIngredients")]
+        public async Task<IActionResult> EditQuanities(int id, EditCocktailViewModel cocktailToEdit)
+        {
+            if (ModelState.IsValid)
+            {
+                var ingredientsQuantityDTO = cocktailToEdit.IngredientsQuantity.Select(i => i.MapToDTO()).ToList();
+                await cocktailServices.EditIngredients(id, ingredientsQuantityDTO, cocktailToEdit.IngredientsToRemove);
+                return RedirectToAction("Details", new { id = cocktailToEdit.Id });
+            }
+            ModelState.AddModelError("", "Something went wrong...");
+            return View(cocktailToEdit);
+        }
+
     }
 }
