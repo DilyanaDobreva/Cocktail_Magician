@@ -86,6 +86,17 @@ namespace CocktailMagician.Web.Areas.Distribution.Mapper
             };
             return vm;
         }
+        public static CocktailReviewDTO MapToViewModel(this CocktailReviewDTO review)
+        {
+            var vm = new CocktailReviewDTO()
+            {
+                Comment = review.Comment,
+                Rating = review.Rating,
+                UserName = review.UserName,
+                IsDeleted = review.IsDeleted
+            };
+            return vm;
+        }
     }
 }
 
