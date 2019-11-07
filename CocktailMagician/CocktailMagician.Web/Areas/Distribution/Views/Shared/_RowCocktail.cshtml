@@ -4,20 +4,11 @@
     <div class="col-md-3 " align="center">
         <div class="card-deck margin-card shadow">
             <h5 class="card-title" >@Model.Name</h5>
-            <img class="card-img-top" src="@Model.ImageURL" alt="Card image cap" @*height="200" width="auto"*@>
+            <img class="card-img-top image-cocktail-index" src="@Model.ImageURL" alt="Card image cap" @*height="200" width="auto"*@>
             <div class="card-body">
-                <p>
-                    <a asp-action="Details" asp-route-id="@Model.Id">Show Details</a>
-                </p>
-                <p>
-                    View bars
-                </p>
-                @if (User.IsInRole("admin"))
-                {
-                    <p>
-                        Edit
-                    </p>
-                }
+                <div>
+                    <a asp-action="Details" asp-route-id="@Model.Id" >Show Details</a>
+                </div>
                 <a asp-action="CockTailReview" asp-route-id="@Model.Id">Add Review</a>
             </div>
         </div>

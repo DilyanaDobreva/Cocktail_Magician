@@ -81,7 +81,6 @@ namespace CocktailMagician.Services
             return allBars;
 
         }
-
         public async Task<BarDetailsDTO> GetDetailedDTO(int id)
         {
             if (id == 0)
@@ -213,7 +212,6 @@ namespace CocktailMagician.Services
 
             await context.SaveChangesAsync();
         }
-
         public async Task Delete(int id)
         {
             var bar = await context.Bars

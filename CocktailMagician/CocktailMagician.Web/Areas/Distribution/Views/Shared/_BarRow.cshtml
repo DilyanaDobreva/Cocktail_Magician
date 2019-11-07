@@ -2,9 +2,9 @@
 
 
 <div class="col-md-4 " align="center">
-    <div class="card-deck margin-card shadow">
+    <div class="card-deck margin-card shadow bar-card-size">
         <h5 class="card-title">@Model.Name</h5>
-        <img class="card-img-top" src="@Model.ImageURL" alt="Card image cap">
+        <img class="card-img-top .image-bar-index" src="@Model.ImageURL" alt="Card image cap">
         <div class="card-body">
             <p>
                 Address: @Model.Address, @Model.City
@@ -12,12 +12,6 @@
             <p>
                 <a asp-controller="Bars" asp-action="Details" asp-route-id="@Model.Id"> More info</a>
             </p>
-            @if (User.IsInRole("admin"))
-            {
-                <p>
-                    Edit
-                </p>
-            }
         </div>
     </div>
 </div>

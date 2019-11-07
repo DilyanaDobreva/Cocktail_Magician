@@ -11,12 +11,12 @@
             <img class="details-image" src="@Model.ImageURL" alt="Card image cap">
         </div>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-6" align="center">
         <h3>@Model.Name</h3>
         <div class="m-4">
             @if (User.IsInRole("admin"))
             {
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#exampleModal">
                     Delete cokctail
                 </button>
 
@@ -36,7 +36,7 @@
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                 <form asp-controller="Cocktails" asp-action="Delete" asp-route-id="@Model.Id">
-                                    <button type="submit" class="btn btn-primary" >Delete</button>
+                                    <button type="submit" class="btn btn-primary">Delete</button>
                                 </form>
                             </div>
                         </div>
@@ -59,23 +59,27 @@
         @if (Model.Bars != null && Model.Bars?.Count() != 0)
         {
             <div class="m-4">
-                <h5>Bars:</h5>
-                @foreach (var bar in Model.Bars)
-                {
-                    <div class="m-3">
-                        <div class="row">
-                            <div class="col-sm-2">
-                                <img src=@bar.ImageURL height="50" />
-                            </div>
-                            <div class="col-sm-8">
-                                <div class="p-2" align="center">
-                                    <a asp-controller="Bars" asp-action="Details" asp-route-id="@bar.Id">@bar.Name</a>
-                                    <div>@bar.Address, @bar.City</div>
+                <div class="bars-scroll-frame">
+
+                    <h5>Bars:</h5>
+                    @foreach (var bar in Model.Bars)
+                    {
+                        <div @*class="m-4"*@ >
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <img src=@bar.ImageURL height="50" />
+                                </div>
+                                <div class="col-sm-8">
+                                    <div class="p-2" align="center">
+                                        <a asp-controller="Bars" asp-action="Details" asp-route-id="@bar.Id">@bar.Name</a>
+                                        <div>@bar.Address, @bar.City</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                }
+                        <hr />
+                    }
+                </div>
             </div>
 
         }

@@ -71,7 +71,7 @@ body {
     max-height:750px;
     max-width:750px;
 }
-.custom-scroll-frame {
+.cocktails-scroll-frame {
     overflow: auto;
     width: 250px;
     height: 250px;
@@ -81,3 +81,30 @@ body {
     border-radius: 5px;
     box-shadow: 7px 7px 15px grey;
 }
+.bars-scroll-frame {
+    overflow: auto;
+    width: 400px;
+    height: 250px;
+    border-style: hidden;
+    border-color: cadetblue;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 7px 7px 15px grey;
+}
+.image-cocktail-index{
+    height: 350px;
+    width:200px;
+    object-fit: cover;
+}
+
+.image-bar-index {
+    height: 300px;
+    width: 350px;
+    object-fit: cover;
+}
+
+.bar-card-size {
+    height: 400px;
+    width: 350px;
+}
+
