@@ -1,0 +1,34 @@
+﻿@model AddBarViewModel
+
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<div class="form-group">
+    <label asp-for="@Model.Name" class="control-label"></label>
+    <input asp-for="@Model.Name" class="form-control" />
+    <span asp-validation-for="@Model.Name" class="text-danger"></span>
+</div>
+<div>
+    <label asp-for="@Model.ImageURL" class="control-label"></label>
+    <input asp-for="@Model.ImageURL" class="form-control" />
+    <span asp-validation-for="@Model.ImageURL" class="text-danger"></span>
+</div>
+<div>
+    <label asp-for="@Model.Address.Address" class="control-label"></label>
+    <input asp-for="@Model.Address.Address" class="form-control" />
+    <span asp-validation-for="@Model.Address.Address" class="text-danger"></span>
+</div>
+<div>
+    <label asp-for="@Model.Address.Latitude" class="control-label"></label>
+    <input asp-for="@Model.Address.Latitude" class="form-control" />
+    <span asp-validation-for="@Model.Address.Latitude" class="text-danger"></span>
+</div>
+<div>
+    <label asp-for="@Model.Address.Longitude" class="control-label"></label>
+    <input asp-for="@Model.Address.Longitude" class="form-control" />
+    <span asp-validation-for="@Model.Address.Longitude" class="text-danger"></span>
+</div>
+<label>City</label>
+<select asp-for="@Model.Address.CityId" asp-items="@Model.AllCities" class="form-control" id="list-of-cities">
+    <option hidden disabled selected="">Select...</option>
+
+</select>
+

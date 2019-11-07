@@ -122,6 +122,16 @@ namespace CocktailMagician.Web.Areas.Distribution.Mapper
             };
             return vm;
         }
+        public static AddBarViewModel MapToViewModel(this BarToEditDTO bar)
+        {
+            var dto = new AddBarViewModel
+            {
+                Name = bar.Name,
+                ImageURL = bar.ImageURL,
+                Address = bar.Address.MapToViewModel()
+            };
+            return dto;
+        }
     }
 }
 

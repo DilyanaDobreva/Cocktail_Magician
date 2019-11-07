@@ -38,7 +38,6 @@
 
 $('#load-add-ingredient-form').click(function () {
     let div = $('#ingrediens-div');
-    //document.querySelector(div).show();
     div.show();
 });
 
@@ -69,6 +68,40 @@ $('#ingrediens-to-db').click(function () {
     })
 });
 
+$('.load-add-city-form').click(function (event) {
+    event.preventDefault();
+    let cityDiv = $('#city-div');
+    cityDiv.show();
+});
+
+
+$('#city-to-db').click(function () {
+    let cityName = $('#city-name').val();
+    let cityData = {
+        'Name': cityName
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "/Distribution/City/Add",
+        data: JSON.stringify(cityData),
+        headers: {
+            RequestVerificationToken:
+                $('input:hidden[name="__RequestVerificationToken"]').val(),
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        dataType: 'json',
+        success: function (response) {
+            $('#list-of-cities').append(new Option(response.name, response.id))
+            let cityDiv = $('#city-div');
+            cityDiv.hide();
+        },
+        error: function (msg) {
+            console.dir(msg);
+        }
+    })
+});
 
 $(document).ready(function () {
     $('.multiple-select2').select2();

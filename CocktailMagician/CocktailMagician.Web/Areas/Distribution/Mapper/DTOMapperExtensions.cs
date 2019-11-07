@@ -28,5 +28,15 @@ namespace CocktailMagician.Web.Areas.Distribution.Mapper
             };
             return dto;
         }
+        public static BarToEditDTO MapToDTO(this AddBarViewModel bar)
+        {
+            var dto = new BarToEditDTO
+            {
+                Name = bar.Name,
+                ImageURL = bar.ImageURL,
+                Address = bar.Address.MapToDTO()
+            };
+            return dto;
+        }
     }
 }

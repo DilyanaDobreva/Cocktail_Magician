@@ -50,5 +50,16 @@ namespace CocktailMagician.Services.Mapper
             };
             return dto;
         }
+        public static BarToEditDTO MapToEditDTO(this Bar bar)
+        {
+            var dto = new BarToEditDTO
+            {
+                Name = bar.Name,
+                ImageURL = bar.ImageUrl,
+                Id = bar.Id,
+                Address = bar.Address.MapToDTO()
+            };
+            return dto;
+        }
     }
 }

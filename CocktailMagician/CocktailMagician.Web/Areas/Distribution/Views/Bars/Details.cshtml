@@ -5,15 +5,22 @@
 
 }
 
-<div class="row">
+<div class="row" >
     <div class="col-md-8">
         <div align="right">
             <img class="details-bar-image" src="@Model.ImageURL" alt="Card image cap" />
         </div>
     </div>
-    <div class="col-md-4">
-        
+    <div class="col-md-4" align="center">
+
         <h3 class="m-4">@Model.Name</h3>
+        @if (User.IsInRole("admin"))
+        {
+    <div class="btn-group btn-group">
+        <a asp-action="Edit" asp-controller="Bars" asp-route-id="@Model.Id" class="btn btn-outline-info">Edit</a>
+        <a asp-action="Delete" asp-controller="Bars" asp-route-id="@Model.Id" class="btn btn-outline-info">Delete</a>
+    </div>
+        }
         <div class="m-4">
             <div>
                 <strong>Address:</strong>
@@ -27,25 +34,27 @@
         </div>
         <hr />
         <div class="m-4">
-            @if (Model.Cocktails != null && Model.Cocktails?.Count() != 0)
-            {
-                <h5>Cocktails:</h5>
-                @foreach (var cocktail in Model.Cocktails)
+            <div class="custom-scroll-frame">
+                @if (Model.Cocktails != null && Model.Cocktails?.Count() != 0)
                 {
-                    <div class="m-3">
-                        <div class="row">
-                            <div class="col-sm-2">
-                                <img src=@cocktail.ImageURL height="50" />
-                            </div>
-                            <div class="col-sm-8">
-                                <div class="p-2" align="left">
-                                    <a asp-controller="Cocktails" asp-action="Details" asp-route-id="@cocktail.Id">@cocktail.Name</a>
+                    <h5>Cocktails:</h5>
+                    @foreach (var cocktail in Model.Cocktails)
+                    {
+                        <div class="m-3">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <img src=@cocktail.ImageURL height="50" />
+                                </div>
+                                <div class="col-sm-8">
+                                    <div class="p-2" align="left">
+                                        <a asp-controller="Cocktails" asp-action="Details" asp-route-id="@cocktail.Id">@cocktail.Name</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    }
                 }
-            }
+            </div>
         </div>
         <div>
             @if (User.IsInRole("admin"))

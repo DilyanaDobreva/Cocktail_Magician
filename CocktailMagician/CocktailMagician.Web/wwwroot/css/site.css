@@ -71,4 +71,13 @@ body {
     max-height:750px;
     max-width:750px;
 }
-
+.custom-scroll-frame {
+    overflow: auto;
+    width: 250px;
+    height: 250px;
+    border-style: hidden;
+    border-color: cadetblue;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 7px 7px 15px grey;
+}

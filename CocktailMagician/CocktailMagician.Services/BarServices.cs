@@ -108,6 +108,17 @@ namespace CocktailMagician.Services
 
             return barDTO;
         }
+        public async Task<BarToEditDTO> GetBarToEditDTO(int id)
+        {
+            var barToEdit = await context.Bars
+                .Include(b => b.Address)
+                .ThenInclude(a => a.City)
+                .Where(b => b.Id == id && b.IsDeleted == false)
+                .FirstOrDefaultAsync();
+
+            var barToEditDTO = barToEdit.MapToEditDTO();
+            return barToEditDTO;
+        }
         public Task<string> GetName(int id)
         {
             if (id == 0)
@@ -185,6 +196,22 @@ namespace CocktailMagician.Services
                     barCocktail.IsDeleted = true;
                 }
             }
+            await context.SaveChangesAsync();
+        }
+        public async Task Edit(BarToEditDTO newBarInfo)
+        {
+            var bar = await context.Bars
+                .Include(b => b.Address)
+                .Where(b => b.Id == newBarInfo.Id && b.IsDeleted == false)
+                .FirstOrDefaultAsync();
+
+            bar.Name = newBarInfo.Name;
+            bar.ImageUrl = newBarInfo.ImageURL;
+            bar.Address.Name = newBarInfo.Address.Name;
+            bar.Address.Latitude = newBarInfo.Address.Latitude;
+            bar.Address.Longitude = newBarInfo.Address.Longitude;
+            bar.Address.CityId = newBarInfo.Address.CityId;
+
             await context.SaveChangesAsync();
         }
     }

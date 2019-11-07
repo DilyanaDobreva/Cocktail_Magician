@@ -78,5 +78,24 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
 
             return RedirectToAction("Details", new { id = id });
         }
+        public async Task<IActionResult> Edit(int id)
+        {
+            var barToEditDTO = await barServices.GetBarToEditDTO(id);
+            var barToEditVM = barToEditDTO.MapToViewModel();
+
+            var cities = await cityServices.GetAllDTO();
+            barToEditVM.AllCities = cities.Select(c => new SelectListItem(c.Name, c.Id.ToString())).ToList();
+
+            return View(barToEditVM);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, AddBarViewModel vm)
+        {
+            var barToEdit = vm.MapToDTO();
+            barToEdit.Id = id;
+
+            await barServices.Edit(barToEdit);
+            return RedirectToAction("Details", new { id = id });
+        }
     }
 }
