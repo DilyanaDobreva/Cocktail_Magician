@@ -19,5 +19,6 @@ namespace CocktailMagician.Services.Contracts
         Task<BarToEditDTO> GetBarToEditDTO(int id);
         Task Edit(BarToEditDTO newBarInfo);
         Task Delete(int id);
+        Task<List<BarInListDTO>> Search(string name, int? cityId, int? minRating);
     }
 }

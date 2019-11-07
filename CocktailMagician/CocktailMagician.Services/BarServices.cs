@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CocktailMagician.Services.SearchFilter;
 
 namespace CocktailMagician.Services
 {
@@ -24,6 +25,7 @@ namespace CocktailMagician.Services
             this.barCocktailFactory = barCocktailFactory;
         }
 
+        //TODO D: Check if found elemnt is deleted and if it is not alowing to send it to controller
         public async Task Add(string name, string imageURL, AddressDTO address)
         {
             var barAddress = address.MapFromDTO();
@@ -223,6 +225,19 @@ namespace CocktailMagician.Services
             }
             bar.IsDeleted = true;
             await context.SaveChangesAsync();
+        }
+        public async Task<List<BarInListDTO>> Search(string name, int? cityId, int? minRating)
+        {
+            var result = await context.Bars
+                .Include(b => b.Address)
+                .Include(b => b.BarReviews)
+                .FilterBuName(name)
+                .FilterByCity(cityId)
+                .FilterByRating(minRating)
+                .ToListAsync();
+
+            var resultDTO = result.Select(b => b.MapToDTO()).ToList();
+            return resultDTO;
         }
     }
 }

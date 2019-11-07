@@ -1,9 +1,11 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using CocktailMagician.Services.Contracts;
 using CocktailMagician.Services.DTOs;
 using CocktailMagician.Web.Areas.Distribution.Mapper;
 using CocktailMagician.Web.Areas.Distribution.Models.Bars;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -29,6 +31,7 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
             return View(listOfBars);
         }
 
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Add()
         {
             var barVM = new AddBarViewModel();
@@ -38,7 +41,10 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
 
             return View(barVM);
         }
+
         [HttpPost]
+        [Authorize(Roles = "admin")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Add(AddBarViewModel bar)
         {
             await barServices.Add(bar.Name, bar.ImageURL, bar.Address.MapToDTO());
@@ -53,6 +59,7 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
             return View(barVM);
         }
 
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> EditCocktails(int id)
         {
             var barVM = new EditCocktailsViewModel();
@@ -66,7 +73,10 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
 
             return View(barVM);
         }
+
         [HttpPost]
+        [Authorize(Roles = "admin")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditCocktails(int id, EditCocktailsViewModel vm)
         {
             var barCocktailDTO = new EditCocktailsDTO()
@@ -80,6 +90,7 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
             return RedirectToAction("Details", new { id = id });
         }
 
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Edit(int id)
         {
             var barToEditDTO = await barServices.GetBarToEditDTO(id);
@@ -90,7 +101,10 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
 
             return View(barToEditVM);
         }
+
         [HttpPost]
+        [Authorize(Roles = "admin")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, AddBarViewModel vm)
         {
             var barToEdit = vm.MapToDTO();
@@ -101,10 +115,31 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "admin")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete (int id)
         {
             await barServices.Delete(id);
             return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Search([FromQuery] BarSearchViewModel vm)
+        {
+            var allCities = (await cityServices.GetAllDTO());
+            vm.AllCities = new List<SelectListItem>();
+            vm.AllCities.Add(new SelectListItem("Select...", ""));
+
+            allCities.ForEach(c => vm.AllCities.Add(new SelectListItem(c.Name, c.Id.ToString())));
+
+            if (string.IsNullOrEmpty(vm.NameKey) && vm.MinRating == null && vm.CityId == null)
+            {
+                return View(vm);
+            }
+
+            vm.Result = (await barServices.Search(vm.NameKey, vm.CityId, vm.MinRating))
+                .Select(b => b.MapToViewModel());
+
+            return View(vm);
         }
     }
 }
