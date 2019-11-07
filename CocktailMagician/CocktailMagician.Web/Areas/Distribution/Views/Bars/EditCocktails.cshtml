@@ -1,0 +1,25 @@
+﻿@model EditCocktailsViewModel
+@{
+    ViewData["Title"] = " Cocktail details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div align="center">
+    <div class="col-md-6">
+        <h3>EditCocktails</h3>
+        <form asp-action="EditCocktails" asp-controller="Bars">
+            <div class="m-4">
+                <label>Select new cocktails to add:</label>
+                <select multiple="multiple" class="multiple-select2 input-group input-group-lg" asp-for="@Model.CocktailsToAdd" asp-items="@Model.NotPresentCocktails" size="5">
+                </select>
+            </div>
+            <div class="m-4">
+                <label>Select cocktails to remove:</label>
+                <select multiple="multiple" class="multiple-select2 input-group input-group-lg" asp-for="@Model.CocktailsToRemove" asp-items="@Model.PresentCocktails" size="5">
+                </select>
+            </div>
+            <input type="submit" class="btn btn-outline-info" />
+        </form>
+    </div>
+</div>
+

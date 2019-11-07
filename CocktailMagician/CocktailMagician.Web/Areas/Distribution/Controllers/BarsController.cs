@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using CocktailMagician.Services.Contracts;
+using CocktailMagician.Services.DTOs;
 using CocktailMagician.Web.Areas.Distribution.Mapper;
 using CocktailMagician.Web.Areas.Distribution.Models.Bars;
 using Microsoft.AspNetCore.Mvc;
@@ -46,10 +47,36 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
         }
         public async Task<IActionResult> Details(int id)
         {
-            var bar = (await barServices.GetDTO(id));
+            var bar = (await barServices.GetDetailedDTO(id));
             var barVM = bar.MapToViewModel();
 
             return View(barVM);
+        }
+        public async Task<IActionResult> EditCocktails(int id)
+        {
+            var barVM = new EditCocktailsViewModel();
+            barVM.BarName = await barServices.GetName(id);
+
+            barVM.PresentCocktails = (await barServices.GetPresentCocktails(id))
+                .Select(c => new SelectListItem(c.Name, c.Id.ToString()));
+
+            barVM.NotPresentCocktails = (await barServices.NotPresentCocktails(id))
+                .Select(c => new SelectListItem(c.Name, c.Id.ToString()));
+
+            return View(barVM);
+        }
+        [HttpPost]
+        public async Task<IActionResult> EditCocktails(int id, EditCocktailsViewModel vm)
+        {
+            var barCocktailDTO = new EditCocktailsDTO()
+            {
+                BarId = id,
+                CocktailsToAdd = vm.CocktailsToAdd,
+                CocktailsToRemove = vm.CocktailsToRemove
+            };
+            await barServices.EditCocktails(barCocktailDTO);
+
+            return RedirectToAction("Details", new { id = id });
         }
     }
 }

@@ -34,7 +34,7 @@
                 {
                     <div class="m-3">
                         <div class="row">
-                            <div class="col-sm-1">
+                            <div class="col-sm-2">
                                 <img src=@cocktail.ImageURL height="50" />
                             </div>
                             <div class="col-sm-8">
@@ -50,8 +50,7 @@
         <div>
             @if (User.IsInRole("admin"))
             {
-                <a asp-action="AddCocktails" asp-controller="Bars" asp-route-id="@Model.Id" class="btn btn-outline-info">Add cocktail</a>
-                <a asp-action="RemoveCocktails" asp-controller="Bars" asp-route-id="@Model.Id" class="btn btn-outline-info">Remove cocktal</a>
+                <a asp-action="EditCocktails" asp-controller="Bars" asp-route-id="@Model.Id" class="btn btn-outline-info">Edit cocktails</a>
             }
         </div>
     </div>

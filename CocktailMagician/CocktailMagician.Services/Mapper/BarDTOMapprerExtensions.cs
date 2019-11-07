@@ -46,7 +46,7 @@ namespace CocktailMagician.Services.Mapper
                 Name = bar.Name,
                 ImageURL = bar.ImageUrl,
                 Address = bar.Address.MapToDTO() ,
-                Cocktails = bar.BarCocktails.Select(bc => bc.Cocktail.MapToDTO())
+                Cocktails = bar.BarCocktails.Where(b => b.IsDeleted == false).Select(bc => bc.Cocktail.MapToDTO())
             };
             return dto;
         }
