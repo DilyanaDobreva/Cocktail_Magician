@@ -146,7 +146,6 @@ namespace CocktailMagician.Services
 
             return presentCocktails;
         }
-
         public async Task<List<CocktailBasicDTO>> NotPresentCocktails(int id)
         {
             if (id == 0)
@@ -212,6 +211,19 @@ namespace CocktailMagician.Services
             bar.Address.Longitude = newBarInfo.Address.Longitude;
             bar.Address.CityId = newBarInfo.Address.CityId;
 
+            await context.SaveChangesAsync();
+        }
+
+        public async Task Delete(int id)
+        {
+            var bar = await context.Bars
+                .Include(b => b.BarCocktails)
+                .FirstAsync(b => b.Id == id && b.IsDeleted == false);
+            foreach (var bc in bar.BarCocktails)
+            {
+                bc.IsDeleted = true;
+            }
+            bar.IsDeleted = true;
             await context.SaveChangesAsync();
         }
     }

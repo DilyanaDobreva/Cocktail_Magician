@@ -18,5 +18,6 @@ namespace CocktailMagician.Services.Contracts
         Task EditCocktails(EditCocktailsDTO editCocktails);
         Task<BarToEditDTO> GetBarToEditDTO(int id);
         Task Edit(BarToEditDTO newBarInfo);
+        Task Delete(int id);
     }
 }

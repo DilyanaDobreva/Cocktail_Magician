@@ -38,13 +38,13 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
 
             return View(barVM);
         }
-
         [HttpPost]
         public async Task<IActionResult> Add(AddBarViewModel bar)
         {
             await barServices.Add(bar.Name, bar.ImageURL, bar.Address.MapToDTO());
             return RedirectToAction("Index");
         }
+
         public async Task<IActionResult> Details(int id)
         {
             var bar = (await barServices.GetDetailedDTO(id));
@@ -52,6 +52,7 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
 
             return View(barVM);
         }
+
         public async Task<IActionResult> EditCocktails(int id)
         {
             var barVM = new EditCocktailsViewModel();
@@ -78,6 +79,7 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
 
             return RedirectToAction("Details", new { id = id });
         }
+
         public async Task<IActionResult> Edit(int id)
         {
             var barToEditDTO = await barServices.GetBarToEditDTO(id);
@@ -96,6 +98,13 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
 
             await barServices.Edit(barToEdit);
             return RedirectToAction("Details", new { id = id });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete (int id)
+        {
+            await barServices.Delete(id);
+            return RedirectToAction("Index");
         }
     }
 }
