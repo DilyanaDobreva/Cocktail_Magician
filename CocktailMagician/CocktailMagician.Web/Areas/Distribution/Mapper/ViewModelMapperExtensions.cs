@@ -1,5 +1,4 @@
 ﻿using CocktailMagician.Services.DTOs;
-using CocktailMagician.Web.Areas.Distribution.Models;
 using CocktailMagician.Web.Areas.Distribution.Models.Bars;
 using CocktailMagician.Web.Areas.Distribution.Models.City;
 using CocktailMagician.Web.Areas.Distribution.Models.Cocktails;
@@ -52,7 +51,7 @@ namespace CocktailMagician.Web.Areas.Distribution.Mapper
             };
             return dto;
         }
-        public static CocktailDetailsViewModel MapToViewModel(this CocktailDetailsDTO cocktail)
+        public static CocktailDetailsViewModel MapToViewModel (this CocktailDetailsDTO cocktail)
         {
             var vm = new CocktailDetailsViewModel
             {
@@ -87,27 +86,14 @@ namespace CocktailMagician.Web.Areas.Distribution.Mapper
             };
             return vm;
         }
-        public static BarDetailsViewModel MapToViewModel(this BarDetailsDTO bar)
+        public static CocktailReviewDTO MapToViewModel(this CocktailReviewDTO review)
         {
-            var vm = new BarDetailsViewModel
+            var vm = new CocktailReviewDTO()
             {
-                Id = bar.Id,
-                Name = bar.Name,
-                ImageURL = bar.ImageURL,
-                Address = bar.Address.MapToViewModel(),
-                Cocktails = bar.Cocktails.Select(c => c.MapToViewModel())
-            };
-            return vm;
-        }
-        public static AddressViewModel MapToViewModel(this AddressDTO address)
-        {
-            var vm = new AddressViewModel
-            {
-                Address = address.Name,
-                CityId = address.CityId,
-                CityName = address.CityName,
-                Latitude = address.Latitude,
-                Longitude = address.Longitude
+                Comment = review.Comment,
+                Rating = review.Rating,
+                UserName = review.UserName,
+                IsDeleted = review.IsDeleted
             };
             return vm;
         }

@@ -1,5 +1,6 @@
 ﻿namespace CocktailMagician.Services.DTOs
 {
+    //Didi check
     public class CocktailInListDTO
     {
         public int Id { get; set; }

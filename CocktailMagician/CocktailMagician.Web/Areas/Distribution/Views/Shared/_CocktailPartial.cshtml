@@ -1,0 +1,16 @@
+﻿@model CocktailDetailsViewModel
+
+<div class="row">
+    <div class="col-md-6">
+        @if (Model.ImageURL != null)
+        {
+            <img src="@Model.ImageURL" alt="missing image" height="200" align="right">
+        }
+    </div>
+    <div class="col-md-" 6 align="left">
+        <div class="justify-content-md-center">
+            <h5>Cocktail Name: @Model.Name<br /></h5>
+            Ingredients: @Model.ListedIngredients<br />
+        </div>
+    </div>
+</div>

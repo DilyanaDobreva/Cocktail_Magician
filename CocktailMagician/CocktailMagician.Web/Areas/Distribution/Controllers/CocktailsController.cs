@@ -12,12 +12,14 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
     [Area("Distribution")]
     public class CocktailsController : Controller
     {
+        private readonly ICocktailReviewServices cocktailReview;
         private readonly ICocktailServices cocktailServices;
         private readonly IIngredientServices ingredientServices;
         private readonly IBarServices barServices;
 
-        public CocktailsController(ICocktailServices cocktailServices, IIngredientServices ingredientServices, IBarServices barServices)
+        public CocktailsController(ICocktailReviewServices cocktailReview,ICocktailServices cocktailServices, IIngredientServices ingredientServices, IBarServices barServices)
         {
+            this.cocktailReview = cocktailReview;
             this.cocktailServices = cocktailServices;
             this.ingredientServices = ingredientServices;
             this.barServices = barServices;
@@ -154,6 +156,18 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
         {
             await cocktailServices.Delete(id);
             return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> CocktailReview(int id)
+        {
+            var cocktail = await cocktailServices.GetDTO(id);
+            var cocktailVM = cocktail.MapToViewModel();
+
+            var vm = new CocktailReviewViewModel
+            {
+                Cocktail = cocktailVM
+            };
+            return View(vm);
         }
     }
 }
