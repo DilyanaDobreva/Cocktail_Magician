@@ -10,7 +10,7 @@
                 Address: @Model.Address, @Model.City
             </p>
             <p>
-                More info
+                <a asp-controller="Bars" asp-action="Details" asp-route-id="@Model.Id"> More info</a>
             </p>
             @if (User.IsInRole("admin"))
             {

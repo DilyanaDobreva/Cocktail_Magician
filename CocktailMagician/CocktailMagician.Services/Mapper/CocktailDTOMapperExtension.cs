@@ -11,7 +11,8 @@ namespace CocktailMagician.Services.Mapper
             var dto = new CocktailInListDTO
             {
                 Id = cocktail.Id,
-                Name = cocktail.Name
+                Name = cocktail.Name,
+                ImageURL = cocktail.ImageUrl
             };
 
             return dto;

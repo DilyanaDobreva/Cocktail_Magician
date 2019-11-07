@@ -44,5 +44,12 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
             await barServices.Add(bar.Name, bar.ImageURL, bar.Address.MapToDTO());
             return RedirectToAction("Index");
         }
+        public async Task<IActionResult> Details(int id)
+        {
+            var bar = (await barServices.GetDTO(id));
+            var barVM = bar.MapToViewModel();
+
+            return View(barVM);
+        }
     }
 }

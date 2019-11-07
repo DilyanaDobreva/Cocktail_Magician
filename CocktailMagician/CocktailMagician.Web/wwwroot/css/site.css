@@ -64,8 +64,11 @@ body {
     padding: 5px;
 }
 .details-image{
-    height: 500px;
-    width: auto;
+    max-height: 500px;
+    max-width: 500px;
 }
-
+.details-bar-image{
+    max-height:750px;
+    max-width:750px;
+}
 

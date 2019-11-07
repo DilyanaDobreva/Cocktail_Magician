@@ -52,8 +52,12 @@ namespace CocktailMagician.Services
         }
         public async Task Delete(int id)
         {
-            var cocktail = await context.Cocktails.Include(c => c.CocktailIngredients).FirstOrDefaultAsync(c => c.Id == id && c.IsDeleted == false);
+            var cocktail = await context.Cocktails
+                .Include(c => c.CocktailIngredients)
+                .Include(c => c.BarCocktails)
+                .FirstOrDefaultAsync(c => c.Id == id && c.IsDeleted == false);
             cocktail.CocktailIngredients.Select(i => i.IsDeleted = true);
+            cocktail.BarCocktails.Select(bc => bc.IsDeleted = true);
             cocktail.IsDeleted = true;
             await context.SaveChangesAsync();
         }

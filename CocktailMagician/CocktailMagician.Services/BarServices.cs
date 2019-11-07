@@ -1,4 +1,5 @@
-﻿using CocktailMagician.Data;
+﻿using System;
+using CocktailMagician.Data;
 using CocktailMagician.Services.Contracts;
 using CocktailMagician.Services.Contracts.Factories;
 using CocktailMagician.Services.DTOs;
@@ -79,5 +80,31 @@ namespace CocktailMagician.Services
 
         }
 
+        public async Task<BarDetailsDTO> GetDTO(int id)
+        {
+            if(id == 0)
+            {
+                throw new InvalidOperationException(OutputConstants.InvalidId);
+            }
+
+            var bar = await context.Bars
+                .Include(b => b.BarCocktails)
+                    .ThenInclude(bc => bc.Cocktail)
+                .Include(b => b.Address)
+                    .ThenInclude(b => b.City)
+                .Where(b => b.Id == id && b.IsDeleted == false)
+                //.Select(b => new BarDetailsDTO
+                //{
+                //    Id = b.Id,
+                //    Name = b.Name,
+                //    ImageURL = b.ImageUrl,
+                //    Address = b.Address.MapToDTO(),
+                //    Cocktails = b.BarCocktails.Select(bc => bc.Cocktail.MapToDTO())
+                //})
+                .FirstOrDefaultAsync();
+            var barDTO = bar.MapToDetailsDTO();
+
+            return barDTO;
+        }
     }
 }
