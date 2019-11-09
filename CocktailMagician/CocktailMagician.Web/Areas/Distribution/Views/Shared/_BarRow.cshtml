@@ -9,6 +9,12 @@
             <p>
                 Address: @Model.Address, @Model.City
             </p>
+            @if (Model.AverageRating != null)
+            {
+                <span>Rating: &#11088;</span>
+                @String.Format("{0:0.0}", Model.AverageRating)
+                <br />
+            }
             <p>
                 <a asp-controller="Bars" asp-action="Details" asp-route-id="@Model.Id"> More info</a>
             </p>

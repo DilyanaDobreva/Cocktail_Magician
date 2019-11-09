@@ -43,6 +43,7 @@ namespace CocktailMagician.Web.Areas.Distribution.Mapper
                 Address = bar.Address,
                 City = bar.City
             };
+            vm.AverageRating = bar.AverageRating;
             return vm;
         }
         public static CityViewModel MapToViewModel(this CityDTO city)

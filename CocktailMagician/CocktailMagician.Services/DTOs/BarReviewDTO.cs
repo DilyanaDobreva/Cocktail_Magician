@@ -4,12 +4,12 @@ using System.Text;
 
 namespace CocktailMagician.Services.DTOs
 {
-    public class CocktailReviewDTO
+    public class BarReviewDTO
     {
         public string Comment { get; set; }
         public int? Rating { get; set; }
         public string UserName { get; set; }
-        public CocktailInListDTO Cocktail { get; set; }
+        public BarBasicDTO Bar { get; set; }
         public bool IsDeleted { get; set; }
     }
 }

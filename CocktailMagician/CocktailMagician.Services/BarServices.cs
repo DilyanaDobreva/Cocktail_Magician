@@ -15,12 +15,14 @@ namespace CocktailMagician.Services
     public class BarServices : IBarServices
     {
         private readonly CocktailMagicianDb context;
+        private readonly IBarReviewServices barReviewServices;
         private readonly IBarFactory barFactory;
         private readonly IBarCocktailFactory barCocktailFactory;
 
-        public BarServices(CocktailMagicianDb context, IBarFactory barFactory, IBarCocktailFactory barCocktailFactory)
+        public BarServices(CocktailMagicianDb context,IBarReviewServices barReviewServices , IBarFactory barFactory, IBarCocktailFactory barCocktailFactory)
         {
             this.context = context;
+            this.barReviewServices = barReviewServices;
             this.barFactory = barFactory;
             this.barCocktailFactory = barCocktailFactory;
         }
@@ -49,7 +51,11 @@ namespace CocktailMagician.Services
                     City = b.Address.City.Name
                 })
                 .ToListAsync();
-
+            //To Check K.
+            foreach (var item in allBars)
+            {
+                item.AverageRating = await barReviewServices.GetMidRatingAsync(item.Id);
+            }
             return allBars;
         }
         public async Task<List<BarBasicDTO>> GetAllNotIncludedDTO(int cocktailId)

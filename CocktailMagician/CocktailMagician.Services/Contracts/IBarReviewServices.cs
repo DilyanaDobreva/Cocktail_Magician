@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CocktailMagician.Services.Contracts
 {
-    public interface ICocktailReviewServices
+    public interface IBarReviewServices
     {
         Task AddReviewAsync(string comment, int? rating, string userName, int cocktailId);
         Task<double?> GetMidRatingAsync(int cocktailId);

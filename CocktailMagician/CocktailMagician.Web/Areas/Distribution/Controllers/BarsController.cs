@@ -14,11 +14,13 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
     [Area("Distribution")]
     public class BarsController : Controller
     {
+        private readonly IBarReviewServices barReviewServices;
         private readonly IBarServices barServices;
         private readonly ICityServices cityServices;
 
-        public BarsController(IBarServices barServices, ICityServices cityServices)
+        public BarsController(IBarReviewServices barReviewServices, IBarServices barServices, ICityServices cityServices)
         {
+            this.barReviewServices = barReviewServices;
             this.barServices = barServices;
             this.cityServices = cityServices;
         }
@@ -140,6 +142,30 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
                 .Select(b => b.MapToViewModel());
 
             return View(vm);
+        }
+
+        public async Task<IActionResult> BarReview(int id)
+        {
+            var bar = await barServices.GetDetailedDTO(id);
+            var barViewModel = bar.MapToViewModel();
+
+            var vm = new BarReviewViewModel
+            {
+                Bar = barViewModel,
+            };
+            return View(vm);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> BarReview(int id, BarReviewViewModel vm)
+        {
+            if (vm.Rating != null || !string.IsNullOrWhiteSpace(vm.Comment))
+            {
+                var memberName = User.Identity.Name;
+                await barReviewServices.AddReviewAsync(vm.Comment, vm.Rating, memberName, id);
+            }
+
+            return RedirectToAction("Details", "Bars", new { id = id });
         }
     }
 }

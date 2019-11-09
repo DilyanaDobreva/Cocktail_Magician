@@ -11,32 +11,26 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CocktailMagician.Services
 {
-    public class CocktailReviewServices : ICocktailReviewServices
+    public class BarReviewServices : IBarReviewServices
     {
-        private readonly ICocktailReviewFactory reviewCocktailFactory;
+        private readonly IBarReviewFactory barReviewFactory;
         private readonly IUserServices userServices;
         private readonly CocktailMagicianDb context;
 
-        public CocktailReviewServices(ICocktailReviewFactory reviewCocktailFactory, IUserServices userServices, CocktailMagicianDb context)
+        public BarReviewServices(IBarReviewFactory barReviewFactory, IUserServices userServices, CocktailMagicianDb context)
         {
-            this.reviewCocktailFactory = reviewCocktailFactory;
+            this.barReviewFactory = barReviewFactory;
             this.userServices = userServices;
             this.context = context;
         }
 
-        public async Task AddReviewAsync(string comment, int? rating, string userName, int cocktailId)
+        public async Task AddReviewAsync(string comment, int? rating, string userName, int barId)
         {
             string[] rudeWords ={ "ass", "arse", "asshole", "bastard", "bitch", "bollocks", "child-fucker", "Christ on a bike", "Christ on a cracker", "crap", "cunt", "damn", "frigger", "fuck", "goddamn", "godsdamn", "hell", "holy shit", "horseshit", "Jesus Christ", "Jesus fuck", "Jesus H. Christ", "Jesus Harold Christ", "Jesus wept", "Jesus, Mary and Joseph", "Judas Priest", "motherfucker", "nigga", "nigger", "prick", "shit", "shit ass", "shitass", "slut", "son of a bitch", "son of a motherless goat", "son of a whore", "sweet Jesus" };
 
             var user = await userServices.FindUserAsync(userName);
-            var cocktail = await context.Cocktails
-                .Include(c => c.CocktailIngredients)
-                    .ThenInclude(i => i.Ingredient)
-                .Include(c => c.BarCocktails)
-                    .ThenInclude(b => b.Bar)
-                        .ThenInclude(b => b.Address)
-                            .ThenInclude(a => a.City)
-                .FirstOrDefaultAsync(c => c.Id == cocktailId && c.IsDeleted == false);
+            var bar = await context.Bars
+                .FirstOrDefaultAsync(c => c.Id == barId && c.IsDeleted == false);
 
             //TODO K better way for replace.
             var newComment = comment.Split(' ');
@@ -52,9 +46,9 @@ namespace CocktailMagician.Services
                 }
             }
             comment = string.Join(' ', newComment);
-            var review = reviewCocktailFactory.Create(comment, rating, user, cocktail);
+            var review = barReviewFactory.Create(comment, rating, user, bar);
 
-            context.CocktailReviews.Add(review);
+            context.BarReviews.Add(review);
             await context.SaveChangesAsync();
         }
 
