@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CocktailMagician.Data;
-using CocktailMagician.Data.Models;
 using CocktailMagician.Services.Contracts;
 using CocktailMagician.Services.Contracts.Factories;
 using CocktailMagician.Services.DTOs;
@@ -14,16 +14,21 @@ namespace CocktailMagician.Services
     public class CocktailReviewServices : ICocktailReviewServices
     {
         private readonly ICocktailReviewFactory reviewCocktailFactory;
+        private readonly IUserServices userServices;
         private readonly CocktailMagicianDb context;
 
-        public CocktailReviewServices(ICocktailReviewFactory reviewCocktailFactory, CocktailMagicianDb context)
+        public CocktailReviewServices(ICocktailReviewFactory reviewCocktailFactory, IUserServices userServices, CocktailMagicianDb context)
         {
             this.reviewCocktailFactory = reviewCocktailFactory;
+            this.userServices = userServices;
             this.context = context;
         }
 
-        public async Task AddReviewAsync(string comment, int? rating, User member, int cocktailId)
+        public async Task AddReviewAsync(string comment, int? rating, string userName, int cocktailId)
         {
+            string[] rudeWords ={ "ass", "arse", "asshole", "bastard", "bitch", "bollocks", "child-fucker", "Christ on a bike", "Christ on a cracker", "crap", "cunt", "damn", "frigger", "fuck", "goddamn", "godsdamn", "hell", "holy shit", "horseshit", "Jesus Christ", "Jesus fuck", "Jesus H. Christ", "Jesus Harold Christ", "Jesus wept", "Jesus, Mary and Joseph", "Judas Priest", "motherfucker", "nigga", "nigger", "prick", "shit", "shit ass", "shitass", "slut", "son of a bitch", "son of a motherless goat", "son of a whore", "sweet Jesus" };
+
+            var user = await userServices.FindUserAsync(userName);
             var cocktail = await context.Cocktails
                 .Include(c => c.CocktailIngredients)
                     .ThenInclude(i => i.Ingredient)
@@ -33,7 +38,21 @@ namespace CocktailMagician.Services
                             .ThenInclude(a => a.City)
                 .FirstOrDefaultAsync(c => c.Id == cocktailId && c.IsDeleted == false);
 
-            var review = reviewCocktailFactory.Create(comment, rating, member, cocktail);
+            //TODO K better way for replace.
+            var newComment = comment.Split(' ');
+
+            for (int i = 0; i < newComment.Length; i++)
+            {
+                for (int j = 0; j < rudeWords.Length; j++)
+                {
+                    if (newComment[i].Contains(rudeWords[j],StringComparison.OrdinalIgnoreCase))
+                    {
+                        newComment[i] = "I'm happy";
+                    }
+                }
+            }
+            comment = string.Join(' ', newComment);
+            var review = reviewCocktailFactory.Create(comment, rating, user, cocktail);
 
             context.CocktailReviews.Add(review);
             await context.SaveChangesAsync();

@@ -17,14 +17,16 @@ namespace CocktailMagician.Services
         private readonly CocktailMagicianDb context;
         private readonly ICocktailFactory cocktailFactory;
         private readonly ICocktailIngredientFactory cocktailIngredientFactory;
+        private readonly ICocktailReviewServices cocktailReviewServices;
         private readonly IBarCocktailFactory barCocktailFactory;
 
-        public CocktailServices(CocktailMagicianDb context, ICocktailFactory cocktailFactory, ICocktailIngredientFactory cocktailIngredientFactory,
+        public CocktailServices(CocktailMagicianDb context, ICocktailFactory cocktailFactory, ICocktailIngredientFactory cocktailIngredientFactory, ICocktailReviewServices cocktailReviewServices,
             IBarCocktailFactory barCocktailFactory)
         {
             this.context = context;
             this.cocktailFactory = cocktailFactory;
             this.cocktailIngredientFactory = cocktailIngredientFactory;
+            this.cocktailReviewServices = cocktailReviewServices;
             this.barCocktailFactory = barCocktailFactory;
         }
 
@@ -85,6 +87,11 @@ namespace CocktailMagician.Services
                     ImageURL = c.ImageUrl
                 })
                 .ToListAsync();
+            //To Check K.
+            foreach (var item in list)
+            {
+                item.AverageRating = await cocktailReviewServices.GetMidRatingAsync(item.Id);
+            }
             return list;
         }
         public async Task AddIngredient(int cocktailId, int ingredientId, int quantity)

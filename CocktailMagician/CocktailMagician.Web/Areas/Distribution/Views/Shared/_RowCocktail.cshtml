@@ -1,16 +1,21 @@
 ﻿@model CocktailInListViewModel
 
 
-    <div class="col-md-3 " align="center">
-        <div class="card-deck margin-card shadow">
-            <h5 class="card-title" >@Model.Name</h5>
-            <img class="card-img-top image-cocktail-index" src="@Model.ImageURL" alt="Card image cap">
-            <div class="card-body">
-                <div>
-                    <a asp-action="Details" asp-route-id="@Model.Id" >Show Details</a>
-                </div>
-                <a asp-action="CockTailReview" asp-route-id="@Model.Id">Add Review</a>
+<div class="col-md-3 " align="center">
+    <div class="card-deck margin-card shadow">
+        <h5 class="card-title">@Model.Name</h5>
+        <img class="card-img-top image-cocktail-index" src="@Model.ImageURL" alt="Card image cap">
+        <div class="card-body">
+            <div>
+                @if (Model.AverageRating != null)
+                {
+                    <span>Rating: &#11088;</span>
+                    @String.Format("{0:0.0}", Model.AverageRating)
+                    <br />
+                }
+                <a asp-action="Details" asp-route-id="@Model.Id">Show Details</a>
             </div>
         </div>
     </div>
+</div>
 

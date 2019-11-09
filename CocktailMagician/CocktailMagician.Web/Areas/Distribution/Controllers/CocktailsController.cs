@@ -169,5 +169,17 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
             };
             return View(vm);
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CocktailReview(int id, CocktailReviewViewModel vm)
+        {
+            if (vm.Rating != null || !string.IsNullOrWhiteSpace(vm.Comment))
+            {
+                var memberName = User.Identity.Name;
+                await cocktailReview.AddReviewAsync(vm.Comment, vm.Rating, memberName, id);
+            }
+
+            return RedirectToAction("Details", "Cocktails", new {id = id });
+        }
     }
 }

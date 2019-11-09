@@ -64,7 +64,7 @@
                     <h5>Bars:</h5>
                     @foreach (var bar in Model.Bars)
                     {
-                        <div @*class="m-4"*@ >
+                        <div @*class="m-4"*@>
                             <div class="row">
                                 <div class="col-sm-4">
                                     <img src=@bar.ImageURL height="50" />
@@ -90,6 +90,10 @@
                 <a asp-action="RemoveBars" asp-controller="Cocktails" asp-route-id="@Model.Id">Remove bar</a>
             }
         </div>
+        <a asp-action="CockTailReview" asp-route-id="@Model.Id">Add Review</a>
     </div>
+</div>
+<div>
+
 </div>
 

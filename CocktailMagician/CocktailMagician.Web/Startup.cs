@@ -41,7 +41,6 @@ namespace CocktailMagician.Web
 
             services.AddScoped<ICocktailServices, CocktailServices>();
             services.AddScoped<IIngredientServices, IngredientServices>();
-            services.AddScoped<IReviewServices, ReviewServices>();
             services.AddScoped<IUserServices, UserServices>();
             services.AddScoped<IBannFactory, BannFactory>();
             services.AddScoped<IIngredientFactory, IngredientFactory>();

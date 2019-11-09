@@ -18,6 +18,7 @@ namespace CocktailMagician.Web.Areas.Distribution.Mapper
                 Name = cocktail.Name,
                 ImageURL = cocktail.ImageURL
             };
+            vm.AverageRating = cocktail.AverageRating;
             return vm;
         }
         public static IngredientBasicViewModel MapToViewModel(this IngredientBasicDTO ingredient)
