@@ -1,0 +1,29 @@
+﻿@model IngredientsListViewModel
+@{
+    ViewData["Title"] = "Ingredients";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+    <div align="center">
+        <h3>Ingredients</h3>
+        @*<a href="/Distribution/Cocktails/Add">Add cocktail</a> TODO D Add Ingredient *@
+        <hr />
+        <div>
+            @if (Model.Ingredients.Count() == 0)
+            {
+                <div>
+                    No ingredients in list!
+                </div>
+            }
+        </div>
+    </div>
+<div align="center">
+    <div class="col-md-6">
+        <table class="table table-hover">
+
+            @foreach (var ingr in Model.Ingredients)
+            {
+                <partial name="_RowIngredient" model="@ingr" />
+            }
+        </table>
+    </div>
+</div>
