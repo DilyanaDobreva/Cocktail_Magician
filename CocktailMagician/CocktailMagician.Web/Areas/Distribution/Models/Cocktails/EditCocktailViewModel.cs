@@ -12,6 +12,8 @@ namespace CocktailMagician.Web.Areas.Distribution.Models.Cocktails
         public EditCocktailViewModel()
         {
             this.IngredientsQuantity = new List<CocktailIngredientViewModel>();
+            this.CocktilNewIngredients = new List<string>();
+            this.IngredientsToRemove = new List<string>();
         }
         public int Id { get; set; }
         [Required]

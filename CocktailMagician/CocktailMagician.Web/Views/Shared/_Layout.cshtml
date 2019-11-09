@@ -29,13 +29,15 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <span>
-                    <span class="glyphicon">&#127864;</span>
                     <a class="navbar-brand" asp-area="Distribution" asp-controller="Cocktails" asp-action="Index">Cocktails</a>
                 </span>
                 <span>
-                    @*<span class="glyphicon">&#127864;</span>*@
                     <a class="navbar-brand" asp-area="Distribution" asp-controller="Bars" asp-action="Index">Bars</a>
                 </span>
+                <span>
+                    <a class="navbar-brand" asp-area="Distribution" asp-controller="Ingredients" asp-action="Index">Ingredients</a>
+                </span>
+
 
                 @if (User.Identity.IsAuthenticated)
                 {

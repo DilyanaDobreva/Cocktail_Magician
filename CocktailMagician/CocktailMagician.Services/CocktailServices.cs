@@ -8,6 +8,7 @@ using CocktailMagician.Services.Contracts;
 using CocktailMagician.Services.Contracts.Factories;
 using CocktailMagician.Services.DTOs;
 using CocktailMagician.Services.Mapper;
+using CocktailMagician.Services.SearchFilter;
 using Microsoft.EntityFrameworkCore;
 
 namespace CocktailMagician.Services
@@ -207,6 +208,19 @@ namespace CocktailMagician.Services
                 }
             }
             await context.SaveChangesAsync();
+        }
+        public async Task<List<CocktailInListDTO>> Search(string name, int? ingredientId, int? minRating)
+        {
+            var result = await context.Cocktails
+                .Include(b => b.CocktailIngredients)
+                .Include(b => b.CocktailReviews)
+                .FilterByName(name)
+                .FilterByIngredient(ingredientId)
+                .FilterByRating(minRating)
+                .ToListAsync();
+
+            var resultDTO = result.Select(b => b.MapToDTO()).ToList();
+            return resultDTO;
         }
     }
 }

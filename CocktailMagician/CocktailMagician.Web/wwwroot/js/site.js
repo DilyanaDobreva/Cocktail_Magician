@@ -50,7 +50,7 @@ $('#ingrediens-to-db').click(function () {
 
     $.ajax({
         type: "POST",
-        url: "/Distribution/Ingredient/Add",
+        url: "/Distribution/Ingredients/Add",
         data: JSON.stringify(data),
         headers: {
             RequestVerificationToken:
@@ -106,3 +106,5 @@ $('#city-to-db').click(function () {
 $(document).ready(function () {
     $('.multiple-select2').select2();
 });
+
+

@@ -1,0 +1,18 @@
+﻿@model IngredientBasicViewModel
+
+<tr>
+    <td align="left" width="300px">
+        @Model.Name
+    </td>
+    <td align="center" width="100px">
+        @Model.Unit
+    </td>
+    <td align="center" width="100px">
+        @if (Model.CanDelete)
+        {
+        <form asp-action="Delete" asp-route-id="@Model.Id">
+            <input type="submit" class="btn btn-outline-info" value="Delete" />
+        </form>
+        }
+    </td>
+</tr>

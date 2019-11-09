@@ -1,21 +1,23 @@
 ﻿@model CocktailsListViewModel
 @{
     ViewData["Title"] = "Cocktails";
-        Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h1>Cocktails</h1>
 <a href="/Distribution/Cocktails/Add">Add cocktail</a>
+<a href="/Distribution/Cocktails/Search">Search</a>
+
 <hr />
 <div class="container">
-    @if(Model.AllCocktails.Count() == 0)
+    @if (Model.AllCocktails.Count() == 0)
     {
         <div>
             No cocktails in list!
         </div>
     }
     <div class="row">
-        @foreach(var cocktail in Model.AllCocktails )
+        @foreach (var cocktail in Model.AllCocktails)
         {
             <partial name="_RowCocktail" model="@cocktail" />
         }

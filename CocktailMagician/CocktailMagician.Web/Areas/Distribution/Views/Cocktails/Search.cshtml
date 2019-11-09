@@ -1,0 +1,50 @@
+﻿@model CocktailSearchViewModel
+@{
+    ViewData["Title"] = "Search for Cocktail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div align="center">
+    <h1>Search</h1>
+    <div class="search-container" align="center">
+        <form asp-action="/Distribution/Cocktails/Search" method="get">
+            <div class="m-3">
+                <label asp-for="@Model.NameKey" class="control-label">Name:</label>
+                <input asp-for="@Model.NameKey" class="form-control" />
+                <span asp-validation-for="@Model.NameKey" class="text-danger"></span>
+            </div>
+            <div class="m-3">
+                <div>Minimal Rating:</div>
+                <input type="radio" asp-for="@Model.MinRating" id="no-rating" value="null" checked />
+                <label for="no-rating"><span>none</span></label>
+                <input type="radio" asp-for="@Model.MinRating" id="rating-3" value="3" />
+                <label for="rating-3">3<span>&#11088;</span></label>
+                <input type="radio" asp-for="@Model.MinRating" id="rating-4" value="4" />
+                <label for="rating-4">4<span>&#11088;</span></label>
+                <input type="radio" asp-for="@Model.MinRating" id="rating-5" value="5" />
+                <label for="rating-5">5<span>&#11088;</span></label>
+            </div>
+            <div class="m-3">
+                <div>Ingredient:</div>
+                <select asp-for="@Model.IngredientId" asp-items="@Model.AllIngredients" class="form-control">
+                    @*<option value="">Select...</option>*@
+                </select>
+            </div>
+            <div class="m-3">
+                <input type="submit" class="btn btn-outline-info" />
+            </div>
+        </form>
+    </div>
+    <hr />
+    <div class="container">
+        @if (Model.Result != null)
+        {
+            <div class="row">
+                @foreach (var cocktail in Model.Result)
+                {
+                    <partial name="_RowCocktail" model="@cocktail" />
+                }
+            </div>
+        }
+    </div>
+</div>

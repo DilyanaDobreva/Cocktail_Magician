@@ -1,20 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using CocktailMagician.Services.Contracts;
 using CocktailMagician.Web.Areas.Distribution.Mapper;
 using CocktailMagician.Web.Areas.Distribution.Models.Ingredients;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CocktailMagician.Web.Areas.Distribution.Controllers
 {
     [Area("Distribution")]
-    public class IngredientController : Controller
+    public class IngredientsController : Controller
     {
         private readonly IIngredientServices ingredientServices;
 
-        public IngredientController(IIngredientServices ingredientServices)
+        public IngredientsController(IIngredientServices ingredientServices)
         {
             this.ingredientServices = ingredientServices;
         }
@@ -26,5 +25,22 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
 
             return Json(ingredient);
         }
+        public async Task<IActionResult> Index()
+        {
+            var listOfIngredients = new IngredientsListViewModel();
+            listOfIngredients.Ingredients = (await ingredientServices.GetAllDTO())
+                .Select(c => c.MapToViewModel());
+
+            return View(listOfIngredients);
+        }
+        [HttpPost]
+        [Authorize(Roles = "admin")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(int id)
+        {
+            await ingredientServices.Delete(id);
+            return RedirectToAction("Index");
+        }
+
     }
 }

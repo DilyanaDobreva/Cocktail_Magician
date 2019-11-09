@@ -5,7 +5,7 @@
 }
 
 <h3>Edit Ingredients</h3>
-@if (Model.IngredientsToRemove == null && Model.CocktilNewIngredients == null)
+@if (Model.IngredientsToRemove.Count() == 0 && Model.CocktilNewIngredients.Count() == 0)
 {
     <div>
         Cocktail recepie:

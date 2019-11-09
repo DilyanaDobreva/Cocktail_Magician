@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using CocktailMagician.Web.Areas.Distribution.Mapper;
 using CocktailMagician.Web.Areas.Distribution.Models.Cocktails;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CocktailMagician.Web.Areas.Cocktails.Controllers
 {
@@ -17,7 +18,7 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
         private readonly IIngredientServices ingredientServices;
         private readonly IBarServices barServices;
 
-        public CocktailsController(ICocktailReviewServices cocktailReview,ICocktailServices cocktailServices, IIngredientServices ingredientServices, IBarServices barServices)
+        public CocktailsController(ICocktailReviewServices cocktailReview, ICocktailServices cocktailServices, IIngredientServices ingredientServices, IBarServices barServices)
         {
             this.cocktailReview = cocktailReview;
             this.cocktailServices = cocktailServices;
@@ -34,7 +35,7 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
             return View(listOfCocktail);
         }
 
-        [HttpGet]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Add([FromQuery]AddCocktailViewModel cocktailVM)
         {
 
@@ -53,6 +54,8 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
             return View(cocktailVM);
         }
         [HttpPost, ActionName("Add")]
+        [Authorize(Roles = "admin")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> FinalAdd(AddCocktailViewModel cocktailVM)
         {
             if (ModelState.IsValid)
@@ -71,6 +74,8 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
 
             return View(cocktailVM);
         }
+
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> AddBars(int id)
         {
             var vm = new AddBarsViewModel();
@@ -80,11 +85,15 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
             return View(vm);
         }
         [HttpPost]
+        [Authorize(Roles = "admin")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddBars(int id, AddBarsViewModel vm)
         {
             await cocktailServices.AddBarsAsync(id, vm.SelectedBars);
             return RedirectToAction("Details", new { id = id });
         }
+
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> RemoveBars(int id)
         {
             var vm = new RemoveBarsViewModel();
@@ -93,16 +102,21 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
 
             return View(vm);
         }
+
         [HttpPost]
+        [Authorize(Roles = "admin")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> RemoveBars(int id, RemoveBarsViewModel vm)
         {
             await cocktailServices.RemoveBarsAsync(id, vm.BarsToRemove);
             return RedirectToAction("Details", new { id = id });
         }
+
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> EditIngredients(int id, [FromQuery]EditCocktailViewModel cocktailToEdit)
         {
 
-            if (cocktailToEdit.CocktilNewIngredients == null && cocktailToEdit.IngredientsToRemove == null)
+            if (cocktailToEdit.CocktilNewIngredients.Count() == 0 && cocktailToEdit.IngredientsToRemove.Count() == 0)
             {
                 cocktailToEdit = (await cocktailServices.GetDTO(id)).MapToEditViewModel();
 
@@ -133,13 +147,14 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
                     cocktailToEdit.IngredientsQuantity.Remove(iq);
                 }
             }
-            
+
             return View(cocktailToEdit);
 
         }
 
-
         [HttpPost, ActionName("EditIngredients")]
+        [Authorize(Roles = "admin")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditQuanities(int id, EditCocktailViewModel cocktailToEdit)
         {
             if (ModelState.IsValid)
@@ -151,13 +166,34 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
             ModelState.AddModelError("", "Something went wrong...");
             return View(cocktailToEdit);
         }
+
         [HttpPost]
+        [Authorize(Roles = "admin")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
             await cocktailServices.Delete(id);
             return RedirectToAction("Index");
         }
+        public async Task<IActionResult> Search([FromQuery] CocktailSearchViewModel vm)
+        {
+            var allIngredients = (await ingredientServices.GetAllDTO());
+            vm.AllIngredients = new List<SelectListItem>();
+            vm.AllIngredients.Add(new SelectListItem("Select...", ""));
 
+            allIngredients.ForEach(c => vm.AllIngredients.Add(new SelectListItem(c.Name, c.Id.ToString())));
+
+            if (string.IsNullOrEmpty(vm.NameKey) && vm.MinRating == null && vm.IngredientId == null)
+            {
+                return View(vm);
+            }
+
+            vm.Result = (await cocktailServices.Search(vm.NameKey, vm.IngredientId, vm.MinRating))
+                .Select(b => b.MapToViewModel());
+
+            return View(vm);
+
+        }
         public async Task<IActionResult> CocktailReview(int id)
         {
             var cocktail = await cocktailServices.GetDTO(id);

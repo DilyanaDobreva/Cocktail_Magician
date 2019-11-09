@@ -27,7 +27,8 @@ namespace CocktailMagician.Web.Areas.Distribution.Mapper
             {
                 Id = ingredient.Id,
                 Name = ingredient.Name,
-                Unit = ingredient.Unit
+                Unit = ingredient.Unit,
+                CanDelete = ingredient.CanDelete
             };
 
             return vm;
