@@ -21,9 +21,15 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
         [HttpPost]
         public async Task<IActionResult> Add([FromBody]IngredientBasicViewModel vm)
         {
-            var ingredient = (await ingredientServices.Add(vm.Name, vm.Unit)).MapToViewModel();
+            if (ModelState.IsValid)
+            {
+                var ingredient = (await ingredientServices.Add(vm.Name, vm.Unit)).MapToViewModel();
 
-            return Json(ingredient);
+                return Json(ingredient);
+            }
+            TempData["Message"] = "Fileds are required!";
+            return View("~/Views/Cocktails/Add.cshtml");
+
         }
         public async Task<IActionResult> Index()
         {

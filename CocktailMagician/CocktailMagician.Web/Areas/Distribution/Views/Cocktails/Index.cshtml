@@ -22,5 +22,26 @@
             <partial name="_RowCocktail" model="@cocktail" />
         }
     </div>
+    <ul class="pagination">
+        @if (Model.Paging.HasPrevious)
+        {
+            <li class="page-item"><a class="page-link" href="/Distribution/Cocktails/Index/@Model.Paging.PreviousPage">Previous</a></li>
+        }
+        @for (int i = 1; i <= Model.Paging.LastPage; i++)
+        {
+            @if (Model.Paging.CurrentPage == i)
+            {
+                <li class="page-item active"><a class="page-link" href="/Distribution/Cocktails/Index/@i">@i</a></li>
+            }
+            else
+            {
+                <li class="page-item"><a class="page-link" href="/Distribution/Cocktails/Index/@i">@i</a></li>
+            }
+        }
+        @if (Model.Paging.HasNext)
+        {
+            <li class="page-item"><a class="page-link" href="/Distribution/Cocktails/Index/@Model.Paging.NextPage">Next</a></li>
+        }
+    </ul>
 </div>
 
