@@ -61,6 +61,17 @@ namespace CocktailMagician.Services
 
             return avgRating;
         }
+        public async Task<List<BarReviewDTO>> AllReviewsAsync(int barId)
+        {
 
+            var allReviews = await context.BarReviews
+                .Include(c => c.Bar)
+                .Include(u => u.User)
+                .Where(r => r.BarId == barId)
+                .ToListAsync();
+
+            var allReviewsDTO = allReviews.Select(b => b.MapToDTO()).ToList();
+            return allReviewsDTO;
+        }
     }
 }

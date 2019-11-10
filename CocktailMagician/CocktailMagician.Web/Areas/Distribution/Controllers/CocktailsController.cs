@@ -78,11 +78,11 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
         }
         public async Task<IActionResult> Details(int id)
         {
-            var list = await cocktailReview.AllReviewsAsync(id);
+            var listWithReviews = await cocktailReview.AllReviewsAsync(id);
             var cocktail = (await cocktailServices.GetDTO(id));
             var cocktailVM = cocktail.MapToViewModel();
 
-            cocktailVM.CocktailReviews = list.Select(r => r.MapToViewModel());
+            cocktailVM.CocktailReviews = listWithReviews.Select(r => r.MapToViewModel());
 
             return View(cocktailVM);
         }

@@ -75,7 +75,7 @@ namespace CocktailMagician.Services
                 .Where(r => r.CocktailId == cocktailId)
                 .ToListAsync();
 
-            var allReviewsDTO = allReviews.Select(b => b.MapToDTO()).ToList();
+            var allReviewsDTO = allReviews.Select(c => c.MapToDTO()).ToList();
             return allReviewsDTO;
         }
 

@@ -23,16 +23,29 @@
 //$('#list-of-ingredients').multiselect({
        
 //    });
-let isFormLoaded = true;
-$('#load-show-comments-form').click(function () {
+let isFormLoadedForCocktailReview = true;
+$('#load-show-comments-form-cocktail').click(function () {
     let div = $('#cocktailReview-div');
-    if (isFormLoaded) {
+    if (isFormLoadedForCocktailReview) {
         div.show();
-        isFormLoaded = false;
+        isFormLoadedForCocktailReview = false;
     }
     else {
         div.hide();
-        isFormLoaded = true;
+        isFormLoadedForCocktailReview = true;
+    }
+});
+
+let isFormLoadedForBarReview = true;
+$('#load-show-comments-form-bar').click(function () {
+    let div = $('#barReview-div');
+    if (isFormLoadedForBarReview) {
+        div.show();
+        isFormLoadedForBarReview = false;
+    }
+    else {
+        div.hide();
+        isFormLoadedForBarReview = true;
     }
 });
 

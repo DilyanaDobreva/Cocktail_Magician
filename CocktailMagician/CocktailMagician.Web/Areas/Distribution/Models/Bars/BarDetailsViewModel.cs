@@ -10,5 +10,6 @@ namespace CocktailMagician.Web.Areas.Distribution.Models.Bars
         public string ImageURL { get; set; }
         public AddressViewModel Address { get; set; }
         public IEnumerable<CocktailInListViewModel> Cocktails { get; set; }
+        public IEnumerable<BarReviewViewModel> BarReviews { get; set; }
     }
 }
