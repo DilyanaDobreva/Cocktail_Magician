@@ -86,8 +86,7 @@
         <div>
             @if (User.IsInRole("admin"))
             {
-                <a asp-action="AddBars" asp-controller="Cocktails" asp-route-id="@Model.Id">Add bar</a>
-                <a asp-action="RemoveBars" asp-controller="Cocktails" asp-route-id="@Model.Id">Remove bar</a>
+                <a asp-action="EditBars" asp-controller="Cocktails" asp-route-id="@Model.Id">Edit bars</a>
             }
         </div>
         <a asp-action="CockTailReview" asp-route-id="@Model.Id">Add Review</a>

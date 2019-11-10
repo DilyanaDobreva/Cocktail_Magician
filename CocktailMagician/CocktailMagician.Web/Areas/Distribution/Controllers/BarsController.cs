@@ -81,13 +81,8 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditCocktails(int id, EditCocktailsViewModel vm)
         {
-            var barCocktailDTO = new EditCocktailsDTO()
-            {
-                BarId = id,
-                CocktailsToAdd = vm.CocktailsToAdd,
-                CocktailsToRemove = vm.CocktailsToRemove
-            };
-            await barServices.EditCocktails(barCocktailDTO);
+            await barServices.AddCocktails(id, vm.CocktailsToAdd);
+            await barServices.RemoveCocktails(id, vm.CocktailsToRemove);
 
             return RedirectToAction("Details", new { id = id });
         }

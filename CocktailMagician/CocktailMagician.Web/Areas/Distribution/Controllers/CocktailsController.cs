@@ -76,41 +76,42 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
         }
 
         [Authorize(Roles = "admin")]
-        public async Task<IActionResult> AddBars(int id)
+        public async Task<IActionResult> EditBars(int id)
         {
-            var vm = new AddBarsViewModel();
+            var vm = new EditBarsViewModel();
             vm.CocktailName = await cocktailServices.GetName(id);
-            vm.AllBars = (await barServices.GetAllNotIncludedDTO(id)).Select(b => new SelectListItem(b.Name, b.Id.ToString())).ToList();
-
-            return View(vm);
-        }
-        [HttpPost]
-        [Authorize(Roles = "admin")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddBars(int id, AddBarsViewModel vm)
-        {
-            await cocktailServices.AddBarsAsync(id, vm.SelectedBars);
-            return RedirectToAction("Details", new { id = id });
-        }
-
-        [Authorize(Roles = "admin")]
-        public async Task<IActionResult> RemoveBars(int id)
-        {
-            var vm = new RemoveBarsViewModel();
-            vm.CocktailName = await cocktailServices.GetName(id);
+            vm.AllOtherBars = (await barServices.GetAllNotIncludedDTO(id)).Select(b => new SelectListItem(b.Name, b.Id.ToString())).ToList();
             vm.BarsOfCocktail = (await barServices.GetBarsOfCocktail(id)).Select(b => new SelectListItem(b.Name, b.Id.ToString())).ToList();
-
             return View(vm);
         }
-
         [HttpPost]
         [Authorize(Roles = "admin")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> RemoveBars(int id, RemoveBarsViewModel vm)
+        public async Task<IActionResult> EditBars(int id, EditBarsViewModel vm)
         {
+            await cocktailServices.AddBarsAsync(id, vm.BarsToAdd);
             await cocktailServices.RemoveBarsAsync(id, vm.BarsToRemove);
+
             return RedirectToAction("Details", new { id = id });
         }
+
+        //[Authorize(Roles = "admin")]
+        //public async Task<IActionResult> RemoveBars(int id)
+        //{
+        //    var vm = new RemoveBarsViewModel();
+        //    vm.CocktailName = await cocktailServices.GetName(id);
+        //    vm.BarsOfCocktail = (await barServices.GetBarsOfCocktail(id)).Select(b => new SelectListItem(b.Name, b.Id.ToString())).ToList();
+
+        //    return View(vm);
+        //}
+
+        //[HttpPost]
+        //[Authorize(Roles = "admin")]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> RemoveBars(int id, RemoveBarsViewModel vm)
+        //{
+        //    return RedirectToAction("Details", new { id = id });
+        //}
 
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> EditIngredients(int id, [FromQuery]EditCocktailViewModel cocktailToEdit)
