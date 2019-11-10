@@ -62,10 +62,9 @@ namespace CocktailMagician.Services
         {
             var allRatings = context.CocktailReviews
                 .Where(c => c.Id == cocktailId)
-                .Where(c => c.Rating != null).Select(r => r.Rating);
-            var avgRating = allRatings.AverageAsync();
+                .Where(c => c.Rating != null).AverageAsync(r => r.Rating);
 
-            return avgRating;
+            return allRatings;
         }
 
     }

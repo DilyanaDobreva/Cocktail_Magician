@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CocktailMagician.Services.UnitTests.ServiceTests.User
+namespace CocktailMagician.Services.UnitTests.ServiceTests
 {
     [TestClass]
     public class Register_Should
