@@ -23,18 +23,18 @@
 //$('#list-of-ingredients').multiselect({
        
 //    });
-//let isFormLoaded = true;
-//$('#load-modify-user-form').click(function () {
-//    let div = $('#modify-user-div');
-//    if (isFormLoaded) {
-//        div.show();
-//        isFormLoaded = false;
-//    }
-//    else {
-//        div.hide();
-//        isFormLoaded = true;
-//    }
-//});
+let isFormLoaded = true;
+$('#load-show-comments-form').click(function () {
+    let div = $('#cocktailReview-div');
+    if (isFormLoaded) {
+        div.show();
+        isFormLoaded = false;
+    }
+    else {
+        div.hide();
+        isFormLoaded = true;
+    }
+});
 
 $('#load-add-ingredient-form').click(function () {
     let div = $('#ingrediens-div');

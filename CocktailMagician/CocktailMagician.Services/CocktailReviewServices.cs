@@ -72,7 +72,7 @@ namespace CocktailMagician.Services
             var allReviews = await context.CocktailReviews
                 .Include(c => c.Cocktail)
                 .Include(u => u.User)
-                .Where(r => r.Id == cocktailId)
+                .Where(r => r.CocktailId == cocktailId)
                 .ToListAsync();
 
             var allReviewsDTO = allReviews.Select(b => b.MapToDTO()).ToList();

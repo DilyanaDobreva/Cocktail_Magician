@@ -1,11 +1,12 @@
-﻿@model ShowReviewsCocktailViewModel
+﻿@model CocktailDetailsViewModel
 @{
     ViewData["Title"] = "ShowReviews";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h3>All Reviews</h3>
 
-<h5>Title: <a asp-action="Details" asp-route-id="@Model.CocktailId">@Model.CocktailName</a></h5>
+<h5>Cocktail: <a asp-action="Details" asp-route-id="@Model.Id">@Model.Name</a></h5>
 <div>
     @foreach(var cocktail in Model.CocktailReviews)
     {
