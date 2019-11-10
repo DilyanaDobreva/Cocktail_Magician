@@ -11,5 +11,6 @@ namespace CocktailMagician.Web.Areas.Distribution.Models.Cocktails
         public IEnumerable<CocktailIngredientViewModel> Ingredients { get; set; }
         public IEnumerable<BarInListViewModel> Bars { get; set; }
         public string ListedIngredients { get; set; }
+        public IEnumerable<CocktailReviewViewModel> CocktailReviews { get; set; }
     }
 }

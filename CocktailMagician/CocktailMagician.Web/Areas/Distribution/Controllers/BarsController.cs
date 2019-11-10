@@ -62,8 +62,12 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
 
         public async Task<IActionResult> Details(int id)
         {
+
+            var listWithReviews = await barReviewServices.AllReviewsAsync(id);
             var bar = (await barServices.GetDetailedDTO(id));
             var barVM = bar.MapToViewModel();
+
+            barVM.BarReviews = listWithReviews.Select(r => r.MapToViewModel());
 
             return View(barVM);
         }

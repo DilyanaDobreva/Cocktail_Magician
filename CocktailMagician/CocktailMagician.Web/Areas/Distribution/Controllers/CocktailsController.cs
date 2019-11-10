@@ -78,8 +78,11 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
         }
         public async Task<IActionResult> Details(int id)
         {
+            var listWithReviews = await cocktailReview.AllReviewsAsync(id);
             var cocktail = (await cocktailServices.GetDTO(id));
             var cocktailVM = cocktail.MapToViewModel();
+
+            cocktailVM.CocktailReviews = listWithReviews.Select(r => r.MapToViewModel());
 
             return View(cocktailVM);
         }
@@ -227,5 +230,19 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
 
             return RedirectToAction("Details", "Cocktails", new {id = id });
         }
+
+        //public async Task<IActionResult> ShowReviews(int id)
+        //{
+        //    var list = await cocktailReview.AllReviewsAsync(id);
+        //    var cocktail = (await cocktailServices.GetDTO(id));
+        //    var vm = new CocktailDetailsViewModel()
+        //    {
+        //        CocktailReviews = list.Select(r => r.MapToViewModel()),
+        //        Name = cocktail.Name,
+        //        Id = id
+        //    };
+
+        //    return View(vm);
+        //}
     }
 }

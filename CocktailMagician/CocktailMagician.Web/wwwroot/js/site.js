@@ -23,18 +23,31 @@
 //$('#list-of-ingredients').multiselect({
        
 //    });
-//let isFormLoaded = true;
-//$('#load-modify-user-form').click(function () {
-//    let div = $('#modify-user-div');
-//    if (isFormLoaded) {
-//        div.show();
-//        isFormLoaded = false;
-//    }
-//    else {
-//        div.hide();
-//        isFormLoaded = true;
-//    }
-//});
+let isFormLoadedForCocktailReview = true;
+$('#load-show-comments-form-cocktail').click(function () {
+    let div = $('#cocktailReview-div');
+    if (isFormLoadedForCocktailReview) {
+        div.show();
+        isFormLoadedForCocktailReview = false;
+    }
+    else {
+        div.hide();
+        isFormLoadedForCocktailReview = true;
+    }
+});
+
+let isFormLoadedForBarReview = true;
+$('#load-show-comments-form-bar').click(function () {
+    let div = $('#barReview-div');
+    if (isFormLoadedForBarReview) {
+        div.show();
+        isFormLoadedForBarReview = false;
+    }
+    else {
+        div.hide();
+        isFormLoadedForBarReview = true;
+    }
+});
 
 $('#load-add-ingredient-form').click(function () {
     let div = $('#ingrediens-div');

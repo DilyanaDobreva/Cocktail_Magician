@@ -11,5 +11,6 @@ namespace CocktailMagician.Services.Contracts
     {
         Task AddReviewAsync(string comment, int? rating, string userName, int cocktailId);
         Task<double?> GetMidRatingAsync(int cocktailId);
+        Task<List<BarReviewDTO>> AllReviewsAsync(int barId);
     }
 }
