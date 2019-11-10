@@ -36,7 +36,7 @@ namespace CocktailMagician.Services
                 throw new ArgumentException(OutputConstants.CocktailWithNoIngredients);
             }
             var cocktail = this.cocktailFactory.Create(name, imageURL);
-            cocktail.Quantity = ingredientsAndQuantities.Sum(i => i.Value);
+            //cocktail.Quantity = ingredientsAndQuantities.Sum(i => i.Value);
             context.Cocktails.Add(cocktail);
             await context.SaveChangesAsync();
 

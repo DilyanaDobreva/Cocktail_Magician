@@ -8,13 +8,16 @@ namespace CocktailMagician.Data.Models
     {
         public int Id { get; set; }
         [Required]
+        [MaxLength(50, ErrorMessage = "Cocktail name must be less than 50 symbols")]
         public string Name { get; set; }
-        public CocktailType CocktailType { get; set; }
+        //public CocktailType CocktailType { get; set; }
         public ICollection<BarCocktail> BarCocktails { get; set; }
         public ICollection<CocktailIngredient> CocktailIngredients { get; set; }
         public ICollection<CocktailReview> CocktailReviews { get; set; }
+        [Required]
+        [Url]
         public string ImageUrl { get; set; }
-        public int Quantity { get; set; }
+        ///public int Quantity { get; set; }
         public bool IsDeleted { get; set; }
     }
 }
