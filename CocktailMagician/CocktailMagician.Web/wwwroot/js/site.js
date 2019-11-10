@@ -43,9 +43,11 @@ $('#load-add-ingredient-form').click(function () {
 
 
 $('#ingrediens-to-db').click(function () {
-    let name = $('#ingrediens-input').val();
+    let name = $('#ingredient-name').val();
+    let unit = $('#ingredient-unit').val();
     let data = {
-        'Name': name
+        'Name': name,
+        'Unit' : unit
     }
 
     $.ajax({
@@ -61,6 +63,9 @@ $('#ingrediens-to-db').click(function () {
         dataType: 'json',
         success: function (response) {
             $('#list-of-ingredients').append(new Option(response.name, response.id))
+            let div = $('#ingrediens-div');
+            div.hide();
+
         },
         error: function (msg) {
             console.dir(msg);
