@@ -22,7 +22,7 @@ namespace CocktailMagician.Services
             this.context = context;
             this.cityFactory = cityFactory;
         }
-        public async Task<CityDTO> Add(string name)
+        public async Task<CityDTO> AddAsync(string name)
         {
             var doesCityExist = await context.Cities.AnyAsync(c => c.Name == name);
             if (doesCityExist)
@@ -35,14 +35,7 @@ namespace CocktailMagician.Services
             var cityDTO = (await context.Cities.FirstAsync(c => c.Name == name)).MapToDTO();
             return cityDTO;
         }
-
-        public Task<City> Get(int id)
-        {
-            var city = context.Cities.FirstOrDefaultAsync(c => c.Id == id);
-            return city;
-        }
-
-        public async Task<List<CityDTO>> GetAllDTO()
+        public async Task<List<CityDTO>> GetAllDTOsync()
         {
             var allCities = (await context.Cities.Where(c => c.IsDeleted == false).ToListAsync()).Select(c => c.MapToDTO()).ToList();
             return allCities;

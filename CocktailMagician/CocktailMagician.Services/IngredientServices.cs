@@ -23,7 +23,7 @@ namespace CocktailMagician.Services
             this.ingredientFactory = ingredientFactory;
         }
 
-        public async Task<IngredientBasicDTO> Add(string name, string unit)
+        public async Task<IngredientBasicDTO> AddAsync(string name, string unit)
         {
             var ingredient = ingredientFactory.Create(name, unit);
             context.Ingredients.Add(ingredient);
@@ -33,18 +33,18 @@ namespace CocktailMagician.Services
             return dbIngredient.MapToDTO();
         }
 
-        public async Task Edit(int id, string newName)
-        {
-            var ingredient = await context.Ingredients.FirstOrDefaultAsync(i => i.Id == id && i.IsDeleted == false);
-            if (ingredient == null)
-            {
-                throw new ArgumentException(OutputConstants.IngredientNotFound);
-            }
+        //public async Task EditAsync(int id, string newName)
+        //{
+        //    var ingredient = await context.Ingredients.FirstOrDefaultAsync(i => i.Id == id && i.IsDeleted == false);
+        //    if (ingredient == null)
+        //    {
+        //        throw new ArgumentException(OutputConstants.IngredientNotFound);
+        //    }
 
-            ingredient.Name = newName;
-            await context.SaveChangesAsync();
-        }
-        public async Task Delete(int id)
+        //    ingredient.Name = newName;
+        //    await context.SaveChangesAsync();
+        //}
+        public async Task DeleteAsync(int id)
         {
             var ingredient = await context.Ingredients.Include(i => i.CocktailIngredients).FirstOrDefaultAsync(i => i.Id == id && i.IsDeleted == false);
             if (ingredient == null)
@@ -60,13 +60,13 @@ namespace CocktailMagician.Services
             await context.SaveChangesAsync();
         }
 
-        public async Task<Ingredient> Get(int id)
-        {
-            var ingredient = await context.Ingredients.FirstOrDefaultAsync(i => i.Id == id && i.IsDeleted == false);
-            return ingredient;
-        }
+        //public async Task<Ingredient> GetAsync(int id)
+        //{
+        //    var ingredient = await context.Ingredients.FirstOrDefaultAsync(i => i.Id == id && i.IsDeleted == false);
+        //    return ingredient;
+        //}
 
-        public async Task<List<IngredientBasicDTO>> GetAllNotIncludedDTO(int cocktailId)
+        public async Task<List<IngredientBasicDTO>> GetAllNotIncludedDTOAsync(int cocktailId)
         {
             var ingredients = await context.Ingredients
                 .Include(i => i.CocktailIngredients)
@@ -81,7 +81,7 @@ namespace CocktailMagician.Services
 
             return ingredients;
         }
-        public async Task<List<IngredientBasicDTO>> GetAllDTO()
+        public async Task<List<IngredientBasicDTO>> GetAllDTOAsync()
         {
             var allIngredients = await context.Ingredients
                 .Where(i => i.IsDeleted == false)
@@ -97,7 +97,7 @@ namespace CocktailMagician.Services
             allIngredients.ForEach(i => i.CanDelete = CanDelete(i.Id));
             return allIngredients;
         }
-        public async Task<List<IngredientBasicDTO>> GetAllPagedDTO(int itemsPerPage, int currentPage)
+        public async Task<List<IngredientBasicDTO>> GetAllPagedDTOAsync(int itemsPerPage, int currentPage)
         {
             var allIngredients = await context.Ingredients
                 .Where(i => i.IsDeleted == false)
@@ -122,7 +122,7 @@ namespace CocktailMagician.Services
             var canDelete = !context.CocktailIngredients.Any(b => b.IsDeleted == false && b.IngredientId == id);
             return canDelete;
         }
-        public async Task<int> AllIngredientsCount()
+        public async Task<int> AllIngredientsCountAsync()
         {
             var count = await context.Ingredients.Where(c => c.IsDeleted == false).CountAsync();
             return count;

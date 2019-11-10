@@ -30,11 +30,11 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
         {
             var listOfBars = new BarsListViewModel();
 
-            listOfBars.Paging.Count = await barServices.AllBarsCount();
+            listOfBars.Paging.Count = await barServices.AllBarsCountAsync();
             listOfBars.Paging.ItemsPerPage = itemsPerPage;
             listOfBars.Paging.CurrentPage = id;
 
-            listOfBars.AllBars = (await barServices.GetAllDTO(listOfBars.Paging.ItemsPerPage, listOfBars.Paging.CurrentPage))
+            listOfBars.AllBars = (await barServices.GetAllDTOAsync(listOfBars.Paging.ItemsPerPage, listOfBars.Paging.CurrentPage))
                 .Select(c => c.MapToViewModel());
 
             return View(listOfBars);
@@ -45,7 +45,7 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
         {
             var barVM = new AddBarViewModel();
 
-            var cities = await cityServices.GetAllDTO();
+            var cities = await cityServices.GetAllDTOsync();
             barVM.AllCities = cities.Select(c => new SelectListItem(c.Name, c.Id.ToString())).ToList();
 
             return View(barVM);
@@ -64,7 +64,7 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
         {
 
             var listWithReviews = await barReviewServices.AllReviewsAsync(id);
-            var bar = (await barServices.GetDetailedDTO(id));
+            var bar = (await barServices.GetDetailedDTOAsync(id));
             var barVM = bar.MapToViewModel();
 
             barVM.BarReviews = listWithReviews.Select(r => r.MapToViewModel());
@@ -76,12 +76,12 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
         public async Task<IActionResult> EditCocktails(int id)
         {
             var barVM = new EditCocktailsViewModel();
-            barVM.BarName = await barServices.GetName(id);
+            barVM.BarName = await barServices.GetNameAsync(id);
 
-            barVM.PresentCocktails = (await barServices.GetPresentCocktails(id))
+            barVM.PresentCocktails = (await barServices.GetPresentCocktailsAsync(id))
                 .Select(c => new SelectListItem(c.Name, c.Id.ToString()));
 
-            barVM.NotPresentCocktails = (await barServices.NotPresentCocktails(id))
+            barVM.NotPresentCocktails = (await barServices.NotPresentCocktailsAsync(id))
                 .Select(c => new SelectListItem(c.Name, c.Id.ToString()));
 
             return View(barVM);
@@ -92,8 +92,8 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditCocktails(int id, EditCocktailsViewModel vm)
         {
-            await barServices.AddCocktails(id, vm.CocktailsToAdd);
-            await barServices.RemoveCocktails(id, vm.CocktailsToRemove);
+            await barServices.AddCocktailsAsync(id, vm.CocktailsToAdd);
+            await barServices.RemoveCocktailsAsync(id, vm.CocktailsToRemove);
 
             return RedirectToAction("Details", new { id = id });
         }
@@ -101,10 +101,10 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> Edit(int id)
         {
-            var barToEditDTO = await barServices.GetBarToEditDTO(id);
+            var barToEditDTO = await barServices.GetBarToEditDTOAsync(id);
             var barToEditVM = barToEditDTO.MapToViewModel();
 
-            var cities = await cityServices.GetAllDTO();
+            var cities = await cityServices.GetAllDTOsync();
             barToEditVM.AllCities = cities.Select(c => new SelectListItem(c.Name, c.Id.ToString())).ToList();
 
             return View(barToEditVM);
@@ -118,7 +118,7 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
             var barToEdit = vm.MapToDTO();
             barToEdit.Id = id;
 
-            await barServices.Edit(barToEdit);
+            await barServices.EditAsync(barToEdit);
             return RedirectToAction("Details", new { id = id });
         }
 
@@ -127,13 +127,13 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete (int id)
         {
-            await barServices.Delete(id);
+            await barServices.DeleteAsync(id);
             return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> Search([FromQuery] BarSearchViewModel vm)
         {
-            var allCities = (await cityServices.GetAllDTO());
+            var allCities = (await cityServices.GetAllDTOsync());
             vm.AllCities = new List<SelectListItem>();
             vm.AllCities.Add(new SelectListItem("Select...", ""));
 
@@ -144,7 +144,7 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
                 return View(vm);
             }
 
-            vm.Result = (await barServices.Search(vm.NameKey, vm.CityId, vm.MinRating))
+            vm.Result = (await barServices.SearchAsync(vm.NameKey, vm.CityId, vm.MinRating))
                 .Select(b => b.MapToViewModel());
 
             return View(vm);
@@ -152,7 +152,7 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
 
         public async Task<IActionResult> BarReview(int id)
         {
-            var bar = await barServices.GetDetailedDTO(id);
+            var bar = await barServices.GetDetailedDTOAsync(id);
             var barViewModel = bar.MapToViewModel();
 
             var vm = new BarReviewViewModel

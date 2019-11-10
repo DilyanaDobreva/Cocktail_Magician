@@ -24,7 +24,7 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
         {
             if (ModelState.IsValid)
             {
-                var ingredient = (await ingredientServices.Add(vm.Name, vm.Unit)).MapToViewModel();
+                var ingredient = (await ingredientServices.AddAsync(vm.Name, vm.Unit)).MapToViewModel();
 
                 return Json(ingredient);
             }
@@ -36,11 +36,11 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
         {
             var listOfIngredients = new IngredientsListViewModel();
 
-            listOfIngredients.Paging.Count = await ingredientServices.AllIngredientsCount();
+            listOfIngredients.Paging.Count = await ingredientServices.AllIngredientsCountAsync();
             listOfIngredients.Paging.ItemsPerPage = itemsPerPage;
             listOfIngredients.Paging.CurrentPage = id;
 
-            listOfIngredients.Ingredients = (await ingredientServices.GetAllPagedDTO(listOfIngredients.Paging.ItemsPerPage, listOfIngredients.Paging.CurrentPage))
+            listOfIngredients.Ingredients = (await ingredientServices.GetAllPagedDTOAsync(listOfIngredients.Paging.ItemsPerPage, listOfIngredients.Paging.CurrentPage))
                 .Select(c => c.MapToViewModel());
 
             return View(listOfIngredients);
@@ -50,7 +50,7 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
-            await ingredientServices.Delete(id);
+            await ingredientServices.DeleteAsync(id);
             return RedirectToAction("Index");
         }
 

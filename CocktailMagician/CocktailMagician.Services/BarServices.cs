@@ -15,14 +15,12 @@ namespace CocktailMagician.Services
     public class BarServices : IBarServices
     {
         private readonly CocktailMagicianDb context;
-        private readonly IBarReviewServices barReviewServices;
         private readonly IBarFactory barFactory;
         private readonly IBarCocktailFactory barCocktailFactory;
 
-        public BarServices(CocktailMagicianDb context,IBarReviewServices barReviewServices , IBarFactory barFactory, IBarCocktailFactory barCocktailFactory)
+        public BarServices(CocktailMagicianDb context, IBarFactory barFactory, IBarCocktailFactory barCocktailFactory)
         {
             this.context = context;
-            this.barReviewServices = barReviewServices;
             this.barFactory = barFactory;
             this.barCocktailFactory = barCocktailFactory;
         }
@@ -36,7 +34,7 @@ namespace CocktailMagician.Services
             context.Bars.Add(bar);
             await context.SaveChangesAsync();
         }
-        public async Task<List<BarInListDTO>> GetAllDTO(int itemsPerPage, int currentPage)
+        public async Task<List<BarInListDTO>> GetAllDTOAsync(int itemsPerPage, int currentPage)
         {
             var allBars = await context.Bars
                 .Include(b => b.Address)
@@ -64,7 +62,7 @@ namespace CocktailMagician.Services
             //}
             return allBars;
         }
-        public async Task<List<BarBasicDTO>> GetAllNotIncludedDTO(int cocktailId)
+        public async Task<List<BarBasicDTO>> GetAllNotIncludedDTOAsync(int cocktailId)
         {
             var allBars = await context.Bars
                 .Include(b => b.BarCocktails)
@@ -79,7 +77,7 @@ namespace CocktailMagician.Services
 
             return allBars;
         }
-        public async Task<List<BarBasicDTO>> GetBarsOfCocktail(int cocktailId)
+        public async Task<List<BarBasicDTO>> GetBarsOfCocktailAsync(int cocktailId)
         {
             var allBars = await context.Bars
                 .Include(b => b.BarCocktails)
@@ -95,7 +93,7 @@ namespace CocktailMagician.Services
             return allBars;
 
         }
-        public async Task<BarDetailsDTO> GetDetailedDTO(int id)
+        public async Task<BarDetailsDTO> GetDetailedDTOAsync(int id)
         {
             if (id == 0)
             {
@@ -121,7 +119,7 @@ namespace CocktailMagician.Services
 
             return barDTO;
         }
-        public async Task<BarToEditDTO> GetBarToEditDTO(int id)
+        public async Task<BarToEditDTO> GetBarToEditDTOAsync(int id)
         {
             var barToEdit = await context.Bars
                 .Include(b => b.Address)
@@ -132,7 +130,7 @@ namespace CocktailMagician.Services
             var barToEditDTO = barToEdit.MapToEditDTO();
             return barToEditDTO;
         }
-        public Task<string> GetName(int id)
+        public Task<string> GetNameAsync(int id)
         {
             if (id == 0)
             {
@@ -145,7 +143,7 @@ namespace CocktailMagician.Services
                 .FirstOrDefaultAsync();
             return name;
         }
-        public async Task<List<CocktailBasicDTO>> GetPresentCocktails(int id)
+        public async Task<List<CocktailBasicDTO>> GetPresentCocktailsAsync(int id)
         {
             var presentCocktails = await context.BarCocktails
                 .Include(c => c.Cocktail)
@@ -159,7 +157,7 @@ namespace CocktailMagician.Services
 
             return presentCocktails;
         }
-        public async Task<List<CocktailBasicDTO>> NotPresentCocktails(int id)
+        public async Task<List<CocktailBasicDTO>> NotPresentCocktailsAsync(int id)
         {
             if (id == 0)
             {
@@ -178,7 +176,7 @@ namespace CocktailMagician.Services
 
             return cocktails;
         }
-        public async Task AddCocktails(int barId, List<int> cocktailsToAdd)
+        public async Task AddCocktailsAsync(int barId, List<int> cocktailsToAdd)
         {
             if (barId == 0)
             {
@@ -200,7 +198,7 @@ namespace CocktailMagician.Services
             }
             await context.SaveChangesAsync();
         }
-        public async Task RemoveCocktails(int barId, List<int> cocktailsToRemove)
+        public async Task RemoveCocktailsAsync(int barId, List<int> cocktailsToRemove)
         {
             if (barId == 0)
             {
@@ -219,8 +217,7 @@ namespace CocktailMagician.Services
             }
             await context.SaveChangesAsync();
         }
-
-        public async Task Edit(BarToEditDTO newBarInfo)
+        public async Task EditAsync(BarToEditDTO newBarInfo)
         {
             var bar = await context.Bars
                 .Include(b => b.Address)
@@ -236,7 +233,7 @@ namespace CocktailMagician.Services
 
             await context.SaveChangesAsync();
         }
-        public async Task Delete(int id)
+        public async Task DeleteAsync(int id)
         {
             var bar = await context.Bars
                 .Include(b => b.BarCocktails)
@@ -248,7 +245,7 @@ namespace CocktailMagician.Services
             bar.IsDeleted = true;
             await context.SaveChangesAsync();
         }
-        public async Task<List<BarInListDTO>> Search(string name, int? cityId, int? minRating)
+        public async Task<List<BarInListDTO>> SearchAsync(string name, int? cityId, int? minRating)
         {
             var result = await context.Bars
                 .Include(b => b.Address)
@@ -261,11 +258,10 @@ namespace CocktailMagician.Services
             var resultDTO = result.Select(b => b.MapToDTO()).ToList();
             return resultDTO;
         }
-        public async Task<int> AllBarsCount()
+        public async Task<int> AllBarsCountAsync()
         {
             var count = await context.Bars.Where(c => c.IsDeleted == false).CountAsync();
             return count;
         }
-
     }
 }

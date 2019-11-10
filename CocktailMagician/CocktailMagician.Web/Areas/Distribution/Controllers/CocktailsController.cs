@@ -33,11 +33,11 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
         {
             var listOfCocktail = new CocktailsListViewModel();
             
-            listOfCocktail.Paging.Count = await cocktailServices.AllCocktailsCount();
+            listOfCocktail.Paging.Count = await cocktailServices.AllCocktailsCountAsync();
             listOfCocktail.Paging.ItemsPerPage = itemsPerPage;
             listOfCocktail.Paging.CurrentPage = id;
 
-            listOfCocktail.AllCocktails = (await cocktailServices.GetAllDTO(listOfCocktail.Paging.ItemsPerPage, listOfCocktail.Paging.CurrentPage))
+            listOfCocktail.AllCocktails = (await cocktailServices.GetAllDTOAsync(listOfCocktail.Paging.ItemsPerPage, listOfCocktail.Paging.CurrentPage))
                 .Select(c => c.MapToViewModel());
 
 
@@ -50,7 +50,7 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
 
             if (cocktailVM.CocktilIngredients == null)
             {
-                var ingredients = await ingredientServices.GetAllDTO();
+                var ingredients = await ingredientServices.GetAllDTOAsync();
                 cocktailVM.AllIngredients = ingredients.Select(b => new SelectListItem(b.Name, b.Name)).ToList();
 
                 return View(cocktailVM);
@@ -70,7 +70,7 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
             if (ModelState.IsValid)
             {
                 var ingredientsQuantityDTO = cocktailVM.IngredientsQuantity.Select(i => i.MapToDTO()).ToList();
-                await cocktailServices.Add(cocktailVM.Name, cocktailVM.ImageURL, ingredientsQuantityDTO);
+                await cocktailServices.AddAsync(cocktailVM.Name, cocktailVM.ImageURL, ingredientsQuantityDTO);
                 return RedirectToAction("Index");
             }
             ModelState.AddModelError("", "Something went wrong...");
@@ -79,7 +79,7 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
         public async Task<IActionResult> Details(int id)
         {
             var listWithReviews = await cocktailReview.AllReviewsAsync(id);
-            var cocktail = (await cocktailServices.GetDTO(id));
+            var cocktail = (await cocktailServices.GetDTOAsync(id));
             var cocktailVM = cocktail.MapToViewModel();
 
             cocktailVM.CocktailReviews = listWithReviews.Select(r => r.MapToViewModel());
@@ -91,9 +91,9 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
         public async Task<IActionResult> EditBars(int id)
         {
             var vm = new EditBarsViewModel();
-            vm.CocktailName = await cocktailServices.GetName(id);
-            vm.AllOtherBars = (await barServices.GetAllNotIncludedDTO(id)).Select(b => new SelectListItem(b.Name, b.Id.ToString())).ToList();
-            vm.BarsOfCocktail = (await barServices.GetBarsOfCocktail(id)).Select(b => new SelectListItem(b.Name, b.Id.ToString())).ToList();
+            vm.CocktailName = await cocktailServices.GetNameAsync(id);
+            vm.AllOtherBars = (await barServices.GetAllNotIncludedDTOAsync(id)).Select(b => new SelectListItem(b.Name, b.Id.ToString())).ToList();
+            vm.BarsOfCocktail = (await barServices.GetBarsOfCocktailAsync(id)).Select(b => new SelectListItem(b.Name, b.Id.ToString())).ToList();
             return View(vm);
         }
         [HttpPost]
@@ -131,13 +131,13 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
 
             if (cocktailToEdit.CocktilNewIngredients.Count() == 0 && cocktailToEdit.IngredientsToRemove.Count() == 0)
             {
-                cocktailToEdit = (await cocktailServices.GetDTO(id)).MapToEditViewModel();
+                cocktailToEdit = (await cocktailServices.GetDTOAsync(id)).MapToEditViewModel();
 
                 cocktailToEdit.ListCurrentIngredients = cocktailToEdit.IngredientsQuantity
                     .Select(i => i.Value + i.Unit + " " + i.Name)
                     .ToList();
 
-                var ingredients = await ingredientServices.GetAllNotIncludedDTO(id);
+                var ingredients = await ingredientServices.GetAllNotIncludedDTOAsync(id);
 
                 cocktailToEdit.AllNotIncludedIngredients = ingredients
                     .Select(b => new SelectListItem(b.Name, b.Name)).ToList();
@@ -173,7 +173,7 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
             if (ModelState.IsValid)
             {
                 var ingredientsQuantityDTO = cocktailToEdit.IngredientsQuantity.Select(i => i.MapToDTO()).ToList();
-                await cocktailServices.EditIngredients(id, ingredientsQuantityDTO, cocktailToEdit.IngredientsToRemove);
+                await cocktailServices.EditIngredientsAsync(id, ingredientsQuantityDTO, cocktailToEdit.IngredientsToRemove);
                 return RedirectToAction("Details", new { id = cocktailToEdit.Id });
             }
             ModelState.AddModelError("", "Something went wrong...");
@@ -185,12 +185,12 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
-            await cocktailServices.Delete(id);
+            await cocktailServices.DeleteAsync(id);
             return RedirectToAction("Index");
         }
         public async Task<IActionResult> Search([FromQuery] CocktailSearchViewModel vm)
         {
-            var allIngredients = (await ingredientServices.GetAllDTO());
+            var allIngredients = (await ingredientServices.GetAllDTOAsync());
             vm.AllIngredients = new List<SelectListItem>();
             vm.AllIngredients.Add(new SelectListItem("Select...", ""));
 
@@ -201,7 +201,7 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
                 return View(vm);
             }
 
-            vm.Result = (await cocktailServices.Search(vm.NameKey, vm.IngredientId, vm.MinRating))
+            vm.Result = (await cocktailServices.SearchAsync(vm.NameKey, vm.IngredientId, vm.MinRating))
                 .Select(b => b.MapToViewModel());
 
             return View(vm);
@@ -209,7 +209,7 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
         }
         public async Task<IActionResult> CocktailReview(int id)
         {
-            var cocktail = await cocktailServices.GetDTO(id);
+            var cocktail = await cocktailServices.GetDTOAsync(id);
             var cocktailVM = cocktail.MapToViewModel();
 
             var vm = new CocktailReviewViewModel

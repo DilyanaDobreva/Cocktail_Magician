@@ -8,13 +8,13 @@ namespace CocktailMagician.Services.Contracts
 {
     public interface IIngredientServices
     {
-        Task<IngredientBasicDTO> Add(string name, string unit);
-        Task<Ingredient> Get(int id);
-        Task Edit(int id, string newName);
-        Task Delete(int id);
-        Task<List<IngredientBasicDTO>> GetAllDTO();
-        Task<List<IngredientBasicDTO>> GetAllPagedDTO(int itemsPerPage, int currentPage);
-        Task<List<IngredientBasicDTO>> GetAllNotIncludedDTO(int cocktailId);
-        Task<int> AllIngredientsCount();
+        Task<IngredientBasicDTO> AddAsync(string name, string unit);
+        //Task<Ingredient> GetAsync(int id);
+        //Task EditAsync(int id, string newName);
+        Task DeleteAsync(int id);
+        Task<List<IngredientBasicDTO>> GetAllDTOAsync();
+        Task<List<IngredientBasicDTO>> GetAllPagedDTOAsync(int itemsPerPage, int currentPage);
+        Task<List<IngredientBasicDTO>> GetAllNotIncludedDTOAsync(int cocktailId);
+        Task<int> AllIngredientsCountAsync();
     }
 }

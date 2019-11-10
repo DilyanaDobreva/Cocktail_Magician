@@ -19,7 +19,7 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
         [HttpPost]
         public async Task<IActionResult> Add([FromBody]CityViewModel vm)
         {
-            var city = (await cityServices.Add(vm.Name)).MapToViewModel();
+            var city = (await cityServices.AddAsync(vm.Name)).MapToViewModel();
 
             return Json(city);
         }
