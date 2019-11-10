@@ -36,7 +36,7 @@ namespace CocktailMagician.Services
         public async Task Edit(int id, string newName)
         {
             var ingredient = await context.Ingredients.FirstOrDefaultAsync(i => i.Id == id && i.IsDeleted == false);
-            if(ingredient == null)
+            if (ingredient == null)
             {
                 throw new ArgumentException(OutputConstants.IngredientNotFound);
             }
@@ -52,7 +52,7 @@ namespace CocktailMagician.Services
                 throw new ArgumentException(OutputConstants.IngredientNotFound);
             }
             //TODO Why cannot use AnyAsync
-            if(ingredient.CocktailIngredients.Any(ci => ci.IsDeleted == false))
+            if (ingredient.CocktailIngredients.Any(ci => ci.IsDeleted == false))
             {
                 throw new ArgumentException(OutputConstants.CoctailIncludeIngredient);
             }
@@ -90,16 +90,43 @@ namespace CocktailMagician.Services
                     Id = i.Id,
                     Name = i.Name,
                     Unit = i.Unit,
-                }).ToListAsync();
+                })
+                .OrderBy(i => i.Name)
+                .ToListAsync();
 
             allIngredients.ForEach(i => i.CanDelete = CanDelete(i.Id));
             return allIngredients;
         }
+        public async Task<List<IngredientBasicDTO>> GetAllPagedDTO(int itemsPerPage, int currentPage)
+        {
+            var allIngredients = await context.Ingredients
+                .Where(i => i.IsDeleted == false)
+                .Select(i => new IngredientBasicDTO
+                {
+                    Id = i.Id,
+                    Name = i.Name,
+                    Unit = i.Unit,
+                })
+                .OrderBy(i => i.Name)
+                .Skip((currentPage - 1) * itemsPerPage)
+                .Take(itemsPerPage)
+                .ToListAsync();
+
+            allIngredients.ForEach(i => i.CanDelete = CanDelete(i.Id));
+            return allIngredients;
+        }
+
 
         private bool CanDelete(int id)
         {
             var canDelete = !context.CocktailIngredients.Any(b => b.IsDeleted == false && b.IngredientId == id);
             return canDelete;
         }
+        public async Task<int> AllIngredientsCount()
+        {
+            var count = await context.Ingredients.Where(c => c.IsDeleted == false).CountAsync();
+            return count;
+        }
+
     }
 }

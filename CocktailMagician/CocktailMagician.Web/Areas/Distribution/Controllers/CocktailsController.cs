@@ -19,7 +19,7 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
         private readonly IIngredientServices ingredientServices;
         private readonly IBarServices barServices;
 
-        private const int itemsPerPage = 3;
+        private const int itemsPerPage = 4;
 
         public CocktailsController(ICocktailReviewServices cocktailReview, ICocktailServices cocktailServices, IIngredientServices ingredientServices, IBarServices barServices)
         {

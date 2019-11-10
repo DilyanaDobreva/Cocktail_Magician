@@ -18,16 +18,23 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
         private readonly IBarServices barServices;
         private readonly ICityServices cityServices;
 
+        private const int itemsPerPage = 3;
+
         public BarsController(IBarReviewServices barReviewServices, IBarServices barServices, ICityServices cityServices)
         {
             this.barReviewServices = barReviewServices;
             this.barServices = barServices;
             this.cityServices = cityServices;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int id = 1)
         {
             var listOfBars = new BarsListViewModel();
-            listOfBars.AllBars = (await barServices.GetAllDTO())
+
+            listOfBars.Paging.Count = await barServices.AllBarsCount();
+            listOfBars.Paging.ItemsPerPage = itemsPerPage;
+            listOfBars.Paging.CurrentPage = id;
+
+            listOfBars.AllBars = (await barServices.GetAllDTO(listOfBars.Paging.ItemsPerPage, listOfBars.Paging.CurrentPage))
                 .Select(c => c.MapToViewModel());
 
             return View(listOfBars);

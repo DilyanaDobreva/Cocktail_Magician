@@ -1,4 +1,6 @@
-﻿namespace CocktailMagician.Web.Areas.Distribution.Models
+﻿using System;
+
+namespace CocktailMagician.Web.Areas.Distribution.Models
 {
     public class Paging
     {
@@ -9,7 +11,7 @@
         {
             get
             {
-                return Count / this.ItemsPerPage + 1;
+                return (int)Math.Ceiling(Count/(double)ItemsPerPage);
             }
         }
         public bool HasPrevious

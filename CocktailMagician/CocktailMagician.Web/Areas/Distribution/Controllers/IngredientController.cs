@@ -12,6 +12,7 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
     public class IngredientsController : Controller
     {
         private readonly IIngredientServices ingredientServices;
+        private const int itemsPerPage = 9;
 
         public IngredientsController(IIngredientServices ingredientServices)
         {
@@ -31,10 +32,15 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
             return View("~/Views/Cocktails/Add.cshtml");
 
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int id = 1)
         {
             var listOfIngredients = new IngredientsListViewModel();
-            listOfIngredients.Ingredients = (await ingredientServices.GetAllDTO())
+
+            listOfIngredients.Paging.Count = await ingredientServices.AllIngredientsCount();
+            listOfIngredients.Paging.ItemsPerPage = itemsPerPage;
+            listOfIngredients.Paging.CurrentPage = id;
+
+            listOfIngredients.Ingredients = (await ingredientServices.GetAllPagedDTO(listOfIngredients.Paging.ItemsPerPage, listOfIngredients.Paging.CurrentPage))
                 .Select(c => c.MapToViewModel());
 
             return View(listOfIngredients);

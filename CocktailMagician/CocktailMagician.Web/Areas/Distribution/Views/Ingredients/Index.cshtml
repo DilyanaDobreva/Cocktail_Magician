@@ -3,20 +3,18 @@
     ViewData["Title"] = "Ingredients";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-    <div align="center">
-        <h3>Ingredients</h3>
-        @*<a href="/Distribution/Cocktails/Add">Add cocktail</a> TODO D Add Ingredient *@
-        <hr />
-        <div>
-            @if (Model.Ingredients.Count() == 0)
-            {
-                <div>
-                    No ingredients in list!
-                </div>
-            }
-        </div>
-    </div>
 <div align="center">
+    <h3>Ingredients</h3>
+    @*<a href="/Distribution/Cocktails/Add">Add cocktail</a> TODO D Add Ingredient *@
+    <hr />
+    <div>
+        @if (Model.Ingredients.Count() == 0)
+        {
+            <div>
+                No ingredients in list!
+            </div>
+        }
+    </div>
     <div class="col-md-6">
         <table class="table table-hover">
 
@@ -26,4 +24,28 @@
             }
         </table>
     </div>
+    <ul class="pagination">
+        @if (Model.Paging.HasPrevious)
+        {
+            <li class="page-item"><a class="page-link" href="/Distribution/Ingredients/Index/@Model.Paging.PreviousPage">Previous</a></li>
+        }
+        @for (int i = 1; i <= Model.Paging.LastPage; i++)
+        {
+            @if (Model.Paging.CurrentPage == i)
+            {
+                <li class="page-item active"><a class="page-link" href="/Distribution/Ingredients/Index/@i">@i</a></li>
+            }
+            else
+            {
+                <li class="page-item"><a class="page-link" href="/Distribution/Ingredients/Index/@i">@i</a></li>
+            }
+        }
+        @if (Model.Paging.HasNext)
+        {
+            <li class="page-item"><a class="page-link" href="/Distribution/Ingredients/Index/@Model.Paging.NextPage">Next</a></li>
+        }
+    </ul>
 </div>
+
+
+
