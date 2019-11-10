@@ -15,7 +15,8 @@ namespace CocktailMagician.Services.Contracts
         Task<string> GetName(int id);
         Task<List<CocktailBasicDTO>> GetPresentCocktails(int id);
         Task<List<CocktailBasicDTO>> NotPresentCocktails(int id);
-        Task EditCocktails(EditCocktailsDTO editCocktails);
+        Task AddCocktails(int barId, List<int> cocktailsToAdd);
+        Task RemoveCocktails(int barId, List<int> cocktailsToRemove);
         Task<BarToEditDTO> GetBarToEditDTO(int id);
         Task Edit(BarToEditDTO newBarInfo);
         Task Delete(int id);

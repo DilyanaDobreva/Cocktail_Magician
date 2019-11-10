@@ -80,19 +80,24 @@ namespace CocktailMagician.Services
         public async Task<List<CocktailInListDTO>> GetAllDTO()
         {
             var list = await context.Cocktails
+                .Include(c => c.CocktailReviews)
                 .Where(c => c.IsDeleted == false)
                 .Select(c => new CocktailInListDTO
                 {
                     Id = c.Id,
                     Name = c.Name,
-                    ImageURL = c.ImageUrl
+                    ImageURL = c.ImageUrl,
+                    AverageRating = c.CocktailReviews
+                        .Where(r => r.Rating != null)
+                        .Select(r=>r.Rating)
+                        .Average()
                 })
                 .ToListAsync();
             //To Check K.
-            foreach (var item in list)
-            {
-                item.AverageRating = await cocktailReviewServices.GetMidRatingAsync(item.Id);
-            }
+            //foreach (var item in list)
+            //{
+            //    item.AverageRating = await cocktailReviewServices.GetMidRatingAsync(item.Id);
+            //}
             return list;
         }
         public async Task AddIngredient(int cocktailId, int ingredientId, int quantity)

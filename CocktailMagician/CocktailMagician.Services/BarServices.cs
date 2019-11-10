@@ -48,14 +48,18 @@ namespace CocktailMagician.Services
                     Name = b.Name,
                     ImageURL = b.ImageUrl,
                     Address = b.Address.Name,
-                    City = b.Address.City.Name
+                    City = b.Address.City.Name,
+                    AverageRating = b.BarReviews
+                        .Where(r => r.Rating != null)
+                        .Select(r => r.Rating)
+                        .Average()
                 })
                 .ToListAsync();
             //To Check K.
-            foreach (var item in allBars)
-            {
-                item.AverageRating = await barReviewServices.GetMidRatingAsync(item.Id);
-            }
+            //foreach (var item in allBars)
+            //{
+            //    item.AverageRating = await barReviewServices.GetMidRatingAsync(item.Id);
+            //}
             return allBars;
         }
         public async Task<List<BarBasicDTO>> GetAllNotIncludedDTO(int cocktailId)
@@ -172,38 +176,48 @@ namespace CocktailMagician.Services
 
             return cocktails;
         }
-        public async Task EditCocktails(EditCocktailsDTO editCocktails)
+        public async Task AddCocktails(int barId, List<int> cocktailsToAdd)
         {
-            if (editCocktails.BarId == 0)
+            if (barId == 0)
             {
                 throw new InvalidOperationException(OutputConstants.InvalidId);
             }
 
-            foreach (var cocktailId in editCocktails.CocktailsToAdd)
+            foreach (var cocktailId in cocktailsToAdd)
             {
-                var barCocktail = await context.BarCocktails.FirstOrDefaultAsync(b => b.BarId == editCocktails.BarId && b.CocktailId == cocktailId);
+                var barCocktail = await context.BarCocktails.FirstOrDefaultAsync(b => b.BarId == barId && b.CocktailId == cocktailId);
                 if (barCocktail != null)
                 {
                     barCocktail.IsDeleted = false;
                 }
                 else
                 {
-                    barCocktail = barCocktailFactory.Create(editCocktails.BarId, cocktailId);
+                    barCocktail = barCocktailFactory.Create(barId, cocktailId);
                     context.BarCocktails.Add(barCocktail);
-                }
-            }
-            foreach (var cocktailId in editCocktails.CocktailsToRemove)
-            {
-                var barCocktail = await context.BarCocktails
-                    .FirstOrDefaultAsync(b => b.BarId == editCocktails.BarId && b.CocktailId == cocktailId && b.IsDeleted == false);
-
-                if (barCocktail != null)
-                {
-                    barCocktail.IsDeleted = true;
                 }
             }
             await context.SaveChangesAsync();
         }
+        public async Task RemoveCocktails(int barId, List<int> cocktailsToRemove)
+        {
+            if (barId == 0)
+            {
+                throw new InvalidOperationException(OutputConstants.InvalidId);
+            }
+
+            foreach (var cocktailId in cocktailsToRemove)
+            {
+                var barCocktail = await context.BarCocktails
+                    .FirstOrDefaultAsync(b => b.BarId == barId && b.CocktailId == cocktailId && b.IsDeleted == false);
+
+                if (barCocktail != null)
+                {
+                    context.BarCocktails.Remove(barCocktail);
+                }
+            }
+            await context.SaveChangesAsync();
+        }
+
         public async Task Edit(BarToEditDTO newBarInfo)
         {
             var bar = await context.Bars
