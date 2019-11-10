@@ -1,0 +1,17 @@
+﻿@model ShowReviewsCocktailViewModel
+@{
+    ViewData["Title"] = "ShowReviews";
+}
+
+<h3>All Reviews</h3>
+
+<h5>Title: <a asp-action="Details" asp-route-id="@Model.CocktailId">@Model.CocktailName</a></h5>
+<div>
+    @foreach(var cocktail in Model.CocktailReviews)
+    {
+    <div class="margin-container">
+        <partial name="_CocktailReviewPartial" model="@cocktail" />
+    </div>
+    }
+</div>
+

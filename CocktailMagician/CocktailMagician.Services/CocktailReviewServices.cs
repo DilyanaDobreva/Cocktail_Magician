@@ -66,6 +66,18 @@ namespace CocktailMagician.Services
 
             return allRatings;
         }
+        public async Task<List<CocktailReviewDTO>> AllReviewsAsync(int cocktailId)
+        {
+
+            var allReviews = await context.CocktailReviews
+                .Include(c => c.Cocktail)
+                .Include(u => u.User)
+                .Where(r => r.Id == cocktailId)
+                .ToListAsync();
+
+            var allReviewsDTO = allReviews.Select(b => b.MapToDTO()).ToList();
+            return allReviewsDTO;
+        }
 
     }
 }

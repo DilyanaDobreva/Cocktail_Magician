@@ -90,9 +90,9 @@ namespace CocktailMagician.Web.Areas.Distribution.Mapper
             };
             return vm;
         }
-        public static CocktailReviewDTO MapToViewModel(this CocktailReviewDTO review)
+        public static CocktailReviewViewModel MapToViewModel(this CocktailReviewDTO review)
         {
-            var vm = new CocktailReviewDTO()
+            var vm = new CocktailReviewViewModel()
             {
                 Comment = review.Comment,
                 Rating = review.Rating,

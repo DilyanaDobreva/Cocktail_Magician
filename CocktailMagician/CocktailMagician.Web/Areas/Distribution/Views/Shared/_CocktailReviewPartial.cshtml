@@ -1,0 +1,20 @@
+﻿@model CocktailReviewViewModel
+
+<div class="comment-box">
+    <div align="left">
+        By: @Model.UserName<span class="float-right">
+            Raiting:
+            @for (var i = 1; i <= Model.Rating; i++)
+            {
+                <span>&#11088;</span>
+            }
+            @Model.Rating
+        </span>
+    </div>
+    <hr />
+    @if (Model.Comment != null)
+    {
+        <div>@Model.Comment</div>
+    }
+</div>
+
