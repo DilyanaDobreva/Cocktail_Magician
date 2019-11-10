@@ -7,6 +7,7 @@ using CocktailMagician.Web.Areas.Distribution.Mapper;
 using CocktailMagician.Web.Areas.Distribution.Models.Cocktails;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Authorization;
+using CocktailMagician.Web.Areas.Distribution.Models;
 
 namespace CocktailMagician.Web.Areas.Cocktails.Controllers
 {
@@ -18,6 +19,8 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
         private readonly IIngredientServices ingredientServices;
         private readonly IBarServices barServices;
 
+        private const int itemsPerPage = 3;
+
         public CocktailsController(ICocktailReviewServices cocktailReview, ICocktailServices cocktailServices, IIngredientServices ingredientServices, IBarServices barServices)
         {
             this.cocktailReview = cocktailReview;
@@ -26,11 +29,17 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
             this.barServices = barServices;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int id = 1)
         {
             var listOfCocktail = new CocktailsListViewModel();
-            listOfCocktail.AllCocktails = (await cocktailServices.GetAllDTO())
+            
+            listOfCocktail.Paging.Count = await cocktailServices.AllCocktailsCount();
+            listOfCocktail.Paging.ItemsPerPage = itemsPerPage;
+            listOfCocktail.Paging.CurrentPage = id;
+
+            listOfCocktail.AllCocktails = (await cocktailServices.GetAllDTO(listOfCocktail.Paging.ItemsPerPage, listOfCocktail.Paging.CurrentPage))
                 .Select(c => c.MapToViewModel());
+
 
             return View(listOfCocktail);
         }

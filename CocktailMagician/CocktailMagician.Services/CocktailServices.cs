@@ -77,8 +77,9 @@ namespace CocktailMagician.Services
             var cocktailDTO = cocktail.MapToDetailsDTO();
             return cocktailDTO;
         }
-        public async Task<List<CocktailInListDTO>> GetAllDTO()
+        public async Task<List<CocktailInListDTO>> GetAllDTO(int itemsPerPage, int currentPage)
         {
+
             var list = await context.Cocktails
                 .Include(c => c.CocktailReviews)
                 .Where(c => c.IsDeleted == false)
@@ -92,6 +93,8 @@ namespace CocktailMagician.Services
                         .Select(r=>r.Rating)
                         .Average()
                 })
+                .Skip((currentPage -1) * itemsPerPage)
+                .Take(itemsPerPage)
                 .ToListAsync();
             //To Check K.
             //foreach (var item in list)
@@ -226,6 +229,11 @@ namespace CocktailMagician.Services
 
             var resultDTO = result.Select(b => b.MapToDTO()).ToList();
             return resultDTO;
+        }
+        public async Task<int> AllCocktailsCount()
+        {
+            var count = await context.Cocktails.Where(c => c.IsDeleted == false).CountAsync();
+            return count;
         }
     }
 }
