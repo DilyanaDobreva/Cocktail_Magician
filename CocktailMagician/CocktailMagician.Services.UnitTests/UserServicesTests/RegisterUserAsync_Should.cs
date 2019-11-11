@@ -11,34 +11,34 @@ using System.Threading.Tasks;
 namespace CocktailMagician.Services.UnitTests.ServiceTests
 {
     [TestClass]
-    public class RegisterAdminAsync_Should
+    public class RegisterUserAsync_Should
     {
         [TestMethod]
-        public async Task RegisterAdminAsync()
+        public async Task RegisterUserAsync()
         {
-            var adminName = "user";
-            var adminPassword = "user";
-            var roleId = 2;
-            var roleName = "admin";
+            var userName = "user";
+            var userpassword = "user";
+            var roleId = 1;
+            var roleName = "user";
             var hashedPassword = "!HASHED!";
 
             var userFactoryMock = new Mock<IUserFactory>();
             var bannFactoryMock = new Mock<IBannFactory>();
             var hasherMock = new Mock<IHasher>();
 
-            var options = TestUtilities.GetOptions(nameof(RegisterAdminAsync));
+            var options = TestUtilities.GetOptions(nameof(RegisterUserAsync));
             var role = new Role();
 
             role.Id = roleId;
             role.Name = roleName;
 
-            var user = new User(adminName, adminPassword, roleId);
+            var user = new User(userName, userpassword, roleId);
             hasherMock
-                .Setup(h => h.Hasher(adminPassword))
+                .Setup(h => h.Hasher(userpassword))
                 .Returns(hashedPassword);
 
             userFactoryMock
-                .Setup(u => u.CreateUser(adminName, adminPassword, roleId))
+                .Setup(u => u.CreateUser(userName, userpassword, roleId))
                 .Returns(user);
 
             user.Role = role;
@@ -46,31 +46,31 @@ namespace CocktailMagician.Services.UnitTests.ServiceTests
             using (var actContext = new CocktailMagicianDb(options))
             {
                 var sut = new UserServices(actContext, userFactoryMock.Object, bannFactoryMock.Object, hasherMock.Object);
-                await sut.RegisterAdminAsync(adminName, adminPassword);
+                await sut.RegisterUserAsync(userName, userpassword);
             }
 
             using (var assertContext = new CocktailMagicianDb(options))
             {
                 Assert.AreEqual(1, assertContext.Users.Count());
-                var testAdmin = assertContext.Users.FirstOrDefault(u => u.UserName == adminName);
+                var testAdmin = assertContext.Users.FirstOrDefault(u => u.UserName == userName);
                 Assert.IsNotNull(testAdmin);
                 Assert.AreEqual(hashedPassword, testAdmin.Password);
             }
         }
         [TestMethod]
-        public async Task ThrowsExceptionWhen_RegisterAdminAsync()
+        public async Task ThrowsExceptionWhen_RegisterUserAsync()
         {
-            var adminName = "user";
-            var adminPassword = "user";
-            var roleId = 2;
+            var userName = "user";
+            var userPassword = "user";
+            var roleId = 1;
 
             var userFactoryMock = new Mock<IUserFactory>();
             var bannFactoryMock = new Mock<IBannFactory>();
             var hasherMock = new Mock<IHasher>();
 
-            var user = new User(adminName, adminPassword, roleId);
+            var user = new User(userName, userPassword, roleId);
 
-            var options = TestUtilities.GetOptions(nameof(ThrowsExceptionWhen_RegisterAdminAsync));
+            var options = TestUtilities.GetOptions(nameof(ThrowsExceptionWhen_RegisterUserAsync));
 
             using (var arrangeContext = new CocktailMagicianDb(options))
             {
@@ -82,7 +82,7 @@ namespace CocktailMagician.Services.UnitTests.ServiceTests
             {
                 var sut = new UserServices(assertContext, userFactoryMock.Object, bannFactoryMock.Object, hasherMock.Object);
 
-                await Assert.ThrowsExceptionAsync<ArgumentException>(() => sut.RegisterAdminAsync(adminName, adminPassword));
+                await Assert.ThrowsExceptionAsync<ArgumentException>(() => sut.RegisterUserAsync(userName,userPassword));
             };
         }
     }

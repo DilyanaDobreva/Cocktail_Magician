@@ -128,7 +128,6 @@ namespace CocktailMagician.Services
                 throw new ArgumentException("Invalid Username or Password");
 
             return user;
-
         }
         public async Task DeleteUserAsync(string id)
         {
