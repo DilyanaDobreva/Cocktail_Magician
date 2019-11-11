@@ -1,29 +1,4 @@
-﻿//const serverResponseHandler = (serverData) => {
-//    if (serverData) {
-//        $('#add-ingredients-form').html(serverData);
-//    }
-//};
-
-
-//$('#load-add-ingredient-form').click(function () {
-//    $.get('/distribution/ingredient/add', serverResponseHandler)
-//});
-
-//$('#add-ingredient').on('submit', function (event) {
-//    event.preventDefault();
-
-//    const data = $(this).serialize();
-//    const url = $(this).attr('action');
-
-//    $.post(url, data)
-//        .done(function () {
-//            console.log('success')
-//        })
-//});
-//$('#list-of-ingredients').multiselect({
-       
-//    });
-let isFormLoadedForCocktailReview = true;
+﻿let isFormLoadedForCocktailReview = true;
 $('#load-show-comments-form-cocktail').click(function () {
     let div = $('#cocktailReview-div');
     if (isFormLoadedForCocktailReview) {

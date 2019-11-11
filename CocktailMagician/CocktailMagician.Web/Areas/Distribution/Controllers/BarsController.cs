@@ -8,6 +8,7 @@ using CocktailMagician.Web.Areas.Distribution.Models.Bars;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 
 namespace CocktailMagician.Web.Areas.Distribution.Controllers
 {
@@ -62,14 +63,20 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
 
         public async Task<IActionResult> Details(int id)
         {
+            try
+            {
+                var listWithReviews = await barReviewServices.AllReviewsAsync(id);
+                var bar = (await barServices.GetDetailedDTOAsync(id));
+                var barVM = bar.MapToViewModel();
 
-            var listWithReviews = await barReviewServices.AllReviewsAsync(id);
-            var bar = (await barServices.GetDetailedDTOAsync(id));
-            var barVM = bar.MapToViewModel();
+                barVM.BarReviews = listWithReviews.Select(r => r.MapToViewModel());
 
-            barVM.BarReviews = listWithReviews.Select(r => r.MapToViewModel());
-
-            return View(barVM);
+                return View(barVM);
+            }
+            catch(InvalidOperationException)
+            {
+                return BadRequest();
+            }
         }
 
         [Authorize(Roles = "admin")]
@@ -101,13 +108,20 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> Edit(int id)
         {
-            var barToEditDTO = await barServices.GetBarToEditDTOAsync(id);
-            var barToEditVM = barToEditDTO.MapToViewModel();
+            try
+            {
+                var barToEditDTO = await barServices.GetBarToEditDTOAsync(id);
+                var barToEditVM = barToEditDTO.MapToViewModel();
 
-            var cities = await cityServices.GetAllDTOsync();
-            barToEditVM.AllCities = cities.Select(c => new SelectListItem(c.Name, c.Id.ToString())).ToList();
+                var cities = await cityServices.GetAllDTOsync();
+                barToEditVM.AllCities = cities.Select(c => new SelectListItem(c.Name, c.Id.ToString())).ToList();
 
-            return View(barToEditVM);
+                return View(barToEditVM);
+            }
+            catch(InvalidOperationException)
+            {
+                return BadRequest();
+            }
         }
 
         [HttpPost]

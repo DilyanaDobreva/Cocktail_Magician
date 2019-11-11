@@ -32,12 +32,28 @@ namespace CocktailMagician.Services
             context.Cities.Add(city);
             await context.SaveChangesAsync();
 
-            var cityDTO = (await context.Cities.FirstAsync(c => c.Name == name)).MapToDTO();
+            var cityDTO = await context.Cities
+                .Where(c => c.Name == name && c.IsDeleted == false)
+                .Select(c => new CityDTO
+                {
+                    Id = city.Id,
+                    Name = city.Name
+                })
+                .FirstAsync();
+
             return cityDTO;
         }
         public async Task<List<CityDTO>> GetAllDTOsync()
         {
-            var allCities = (await context.Cities.Where(c => c.IsDeleted == false).ToListAsync()).Select(c => c.MapToDTO()).ToList();
+            var allCities = await context.Cities
+                .Where(c => c.IsDeleted == false)
+                .Select(c => new CityDTO
+                {
+                    Id = c.Id,
+                    Name = c.Name
+                })
+                .ToListAsync();
+
             return allCities;
         }
     }

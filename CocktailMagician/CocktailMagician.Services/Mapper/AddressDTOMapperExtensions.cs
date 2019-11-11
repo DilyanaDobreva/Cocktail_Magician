@@ -11,7 +11,7 @@ namespace CocktailMagician.Services.Mapper
             {
                 Name = address.Name,
                 CityId = address.CityId,
-                CityName = address.City.Name,
+                CityName = address.City?.Name,
                 Latitude = address.Latitude,
                 Longitude = address.Longitude
             };

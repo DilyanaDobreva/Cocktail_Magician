@@ -25,7 +25,6 @@ namespace CocktailMagician.Services
             this.barCocktailFactory = barCocktailFactory;
         }
 
-        //TODO D: Check if found elemnt is deleted and if it is not allow to send it to controller
         public async Task AddAsync(string name, string imageURL, AddressDTO address)
         {
             var bar = barFactory.Create(name, imageURL, address);
@@ -56,77 +55,66 @@ namespace CocktailMagician.Services
                 .ToListAsync();
             return allBars;
         }
-        public async Task<List<BarBasicDTO>> GetAllNotIncludedDTOAsync(int cocktailId)
-        {
-            var allBars = await context.Bars
-                .Include(b => b.BarCocktails)
-                    .ThenInclude(c => c.Cocktail)
-                .Where(b => b.IsDeleted == false && !(b.BarCocktails.Any(c => c.CocktailId == cocktailId)))
-                .Select(b => new BarBasicDTO
-                {
-                    Id = b.Id,
-                    Name = b.Name,
-                })
-                .ToListAsync();
-
-            return allBars;
-        }
-        public async Task<List<BarBasicDTO>> GetBarsOfCocktailAsync(int cocktailId)
-        {
-            var allBars = await context.Bars
-                .Include(b => b.BarCocktails)
-                    .ThenInclude(c => c.Cocktail)
-                .Where(b => b.IsDeleted == false && b.BarCocktails.Any(c => c.CocktailId == cocktailId))
-                .Select(b => new BarBasicDTO
-                {
-                    Id = b.Id,
-                    Name = b.Name,
-                })
-                .ToListAsync();
-
-            return allBars;
-
-        }
         public async Task<BarDetailsDTO> GetDetailedDTOAsync(int id)
         {
-            if (id == 0)
+            if (!await context.Bars.AnyAsync(b => b.Id == id && b.IsDeleted == false))
             {
                 throw new InvalidOperationException(OutputConstants.InvalidId);
             }
 
-            var bar = await context.Bars
+            var barDTO = await context.Bars
                 .Include(b => b.BarCocktails)
                     .ThenInclude(bc => bc.Cocktail)
                 .Include(b => b.Address)
                     .ThenInclude(b => b.City)
                 .Where(b => b.Id == id && b.IsDeleted == false)
-                //.Select(b => new BarDetailsDTO
-                //{
-                //    Id = b.Id,
-                //    Name = b.Name,
-                //    ImageURL = b.ImageUrl,
-                //    Address = b.Address.MapToDTO(),
-                //    Cocktails = b.BarCocktails.Select(bc => bc.Cocktail.MapToDTO())
-                //})
-                .FirstOrDefaultAsync();
-            var barDTO = bar.MapToDetailsDTO();
+                .Select(bar => new BarDetailsDTO
+                {
+                    Id = bar.Id,
+                    Name = bar.Name,
+                    ImageURL = bar.ImageUrl,
+                    Address = bar.Address.MapToDTO() ,
+                    Cocktails = bar.BarCocktails.Select(bc => new CocktailInListDTO
+                    {
+                        Id = bc.Cocktail.Id,
+                        Name = bc.Cocktail.Name,
+                        ImageURL = bc.Cocktail.ImageUrl
+                    })
+                })
+                .FirstAsync();
+
+            barDTO.Address.CityName = await context.Cities
+                .Where(c => c.Id == barDTO.Address.CityId)
+                .Select(c => c.Name)
+                .FirstAsync();
 
             return barDTO;
         }
         public async Task<BarToEditDTO> GetBarToEditDTOAsync(int id)
         {
-            var barToEdit = await context.Bars
+            if (!await context.Bars.AnyAsync(b => b.Id == id && b.IsDeleted == false))
+            {
+                throw new InvalidOperationException(OutputConstants.InvalidId);
+            }
+
+            var barToEditDTO = await context.Bars
                 .Include(b => b.Address)
                 .ThenInclude(a => a.City)
                 .Where(b => b.Id == id && b.IsDeleted == false)
+                .Select(bar => new BarToEditDTO
+                {
+                    Name = bar.Name,
+                    ImageURL = bar.ImageUrl,
+                    Id = bar.Id,
+                    Address = bar.Address.MapToDTO()
+                })
                 .FirstOrDefaultAsync();
 
-            var barToEditDTO = barToEdit.MapToEditDTO();
             return barToEditDTO;
         }
-        public Task<string> GetNameAsync(int id)
+        public async Task<string> GetNameAsync(int id)
         {
-            if (id == 0)
+            if (!await context.Bars.AnyAsync(b => b.Id == id && b.IsDeleted == false))
             {
                 throw new InvalidOperationException(OutputConstants.InvalidId);
             }
@@ -135,7 +123,7 @@ namespace CocktailMagician.Services
                 .Where(b => b.Id == id && b.IsDeleted == false)
                 .Select(b => b.Name)
                 .FirstOrDefaultAsync();
-            return name;
+            return await name;
         }
         public async Task<List<CocktailBasicDTO>> GetPresentCocktailsAsync(int id)
         {
@@ -235,15 +223,23 @@ namespace CocktailMagician.Services
         }
         public async Task<List<BarInListDTO>> SearchAsync(string name, int? cityId, int? minRating)
         {
-            var result = await context.Bars
+            var resultDTO = await context.Bars
                 .Include(b => b.Address)
+                    .ThenInclude(a => a.City)
                 .Include(b => b.BarReviews)
                 .FilterBuName(name)
                 .FilterByCity(cityId)
                 .FilterByRating(minRating)
+                .Select(bar => new BarInListDTO
+                {
+                    Id = bar.Id,
+                    Name = bar.Name,
+                    ImageURL = bar.ImageUrl,
+                    Address = bar.Address.Name,
+                    City = bar.Address.City.Name
+                })
                 .ToListAsync();
 
-            var resultDTO = result.Select(b => b.MapToDTO()).ToList();
             return resultDTO;
         }
         public async Task<int> AllBarsCountAsync()

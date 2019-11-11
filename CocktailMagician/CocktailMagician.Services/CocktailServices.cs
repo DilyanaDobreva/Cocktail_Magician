@@ -67,15 +67,39 @@ namespace CocktailMagician.Services
         }
         public async Task<CocktailDetailsDTO> GetDTOAsync(int id)
         {
-            var cocktail = await context.Cocktails
-                .Include(c => c.CocktailIngredients)
-                    .ThenInclude(i => i.Ingredient)
+            var cocktailDTO = await context.Cocktails
                 .Include(c => c.BarCocktails)
                     .ThenInclude(b => b.Bar)
                         .ThenInclude(b => b.Address)
                             .ThenInclude(a => a.City)
-                .FirstOrDefaultAsync(c => c.Id == id && c.IsDeleted == false);
-            var cocktailDTO = cocktail.MapToDetailsDTO();
+                .Where(c => c.Id == id && c.IsDeleted == false)
+                .Select( c => new CocktailDetailsDTO
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    ImageURL = c.ImageUrl,
+                    Bars = c.BarCocktails.Select(b => new BarInListDTO
+                    {
+                        Id = b.Bar.Id,
+                        Name = b.Bar.Name,
+                        ImageURL = b.Bar.ImageUrl,
+                        Address = b.Bar.Address.Name,
+                        City = b.Bar.Address.City.Name
+                    })
+                })
+                .FirstOrDefaultAsync();
+
+            cocktailDTO.Ingredients = await context.CocktailIngredients
+                .Include(c => c.Ingredient)
+                .Where(c => c.CocktailId == id)
+                .Select(ci => new CocktailIngredientDTO
+                {
+                    Name = ci.Ingredient.Name,
+                    Unit = ci.Ingredient.Unit,
+                    Value = ci.Quatity
+                })
+                .ToListAsync();
+
             return cocktailDTO;
         }
         public async Task<List<CocktailInListDTO>> GetAllDTOAsync(int itemsPerPage, int currentPage)
@@ -207,15 +231,21 @@ namespace CocktailMagician.Services
         }
         public async Task<List<CocktailInListDTO>> SearchAsync(string name, int? ingredientId, int? minRating)
         {
-            var result = await context.Cocktails
-                .Include(b => b.CocktailIngredients)
-                .Include(b => b.CocktailReviews)
+            var resultDTO = await context.Cocktails
+                .Include(c => c.CocktailIngredients)
+                .Include(c => c.CocktailReviews)
+                .Where(c => c.IsDeleted == false)
                 .FilterByName(name)
                 .FilterByIngredient(ingredientId)
                 .FilterByRating(minRating)
+                .Select(c => new CocktailInListDTO
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    ImageURL = c.ImageUrl
+                })
                 .ToListAsync();
 
-            var resultDTO = result.Select(b => b.MapToDTO()).ToList();
             return resultDTO;
         }
         public async Task<int> AllCocktailsCountAsync()
@@ -223,5 +253,36 @@ namespace CocktailMagician.Services
             var count = await context.Cocktails.Where(c => c.IsDeleted == false).CountAsync();
             return count;
         }
+
+                public async Task<List<BarBasicDTO>> GetAllNotIncludedDTOAsync(int cocktailId)
+        {
+            var allBars = await context.Bars
+                .Include(b => b.BarCocktails)
+                .Where(b => b.IsDeleted == false && !(b.BarCocktails.Any(c => c.CocktailId == cocktailId)))
+                .Select(b => new BarBasicDTO
+                {
+                    Id = b.Id,
+                    Name = b.Name,
+                })
+                .ToListAsync();
+
+            return allBars;
+        }
+        public async Task<List<BarBasicDTO>> GetBarsOfCocktailAsync(int cocktailId)
+        {
+            var allBars = await context.Bars
+                .Include(b => b.BarCocktails)
+                .Where(b => b.IsDeleted == false && b.BarCocktails.Any(c => c.CocktailId == cocktailId))
+                .Select(b => new BarBasicDTO
+                {
+                    Id = b.Id,
+                    Name = b.Name,
+                })
+                .ToListAsync();
+
+            return allBars;
+
+        }
+
     }
 }

@@ -17,16 +17,14 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
         private readonly ICocktailReviewServices cocktailReview;
         private readonly ICocktailServices cocktailServices;
         private readonly IIngredientServices ingredientServices;
-        private readonly IBarServices barServices;
 
         private const int itemsPerPage = 4;
 
-        public CocktailsController(ICocktailReviewServices cocktailReview, ICocktailServices cocktailServices, IIngredientServices ingredientServices, IBarServices barServices)
+        public CocktailsController(ICocktailReviewServices cocktailReview, ICocktailServices cocktailServices, IIngredientServices ingredientServices)
         {
             this.cocktailReview = cocktailReview;
             this.cocktailServices = cocktailServices;
             this.ingredientServices = ingredientServices;
-            this.barServices = barServices;
         }
 
         public async Task<IActionResult> Index(int id = 1)
@@ -92,8 +90,8 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
         {
             var vm = new EditBarsViewModel();
             vm.CocktailName = await cocktailServices.GetNameAsync(id);
-            vm.AllOtherBars = (await barServices.GetAllNotIncludedDTOAsync(id)).Select(b => new SelectListItem(b.Name, b.Id.ToString())).ToList();
-            vm.BarsOfCocktail = (await barServices.GetBarsOfCocktailAsync(id)).Select(b => new SelectListItem(b.Name, b.Id.ToString())).ToList();
+            vm.AllOtherBars = (await cocktailServices.GetAllNotIncludedDTOAsync(id)).Select(b => new SelectListItem(b.Name, b.Id.ToString())).ToList();
+            vm.BarsOfCocktail = (await cocktailServices.GetBarsOfCocktailAsync(id)).Select(b => new SelectListItem(b.Name, b.Id.ToString())).ToList();
             return View(vm);
         }
         [HttpPost]

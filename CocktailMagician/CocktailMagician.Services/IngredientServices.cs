@@ -29,8 +29,17 @@ namespace CocktailMagician.Services
             context.Ingredients.Add(ingredient);
             await context.SaveChangesAsync();
 
-            var dbIngredient = await context.Ingredients.SingleAsync(i => i.Name == name);
-            return dbIngredient.MapToDTO();
+            var dbIngredient = await context.Ingredients
+                .Select(i => new IngredientBasicDTO
+                {
+                    Id = ingredient.Id,
+                    Name = ingredient.Name,
+                    Unit = ingredient.Unit
+
+                })
+                .SingleAsync(i => i.Name == name);
+
+            return dbIngredient;
         }
 
         //public async Task EditAsync(int id, string newName)
