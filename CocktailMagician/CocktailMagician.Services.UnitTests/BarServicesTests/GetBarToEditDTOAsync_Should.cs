@@ -6,9 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace CocktailMagician.Services.UnitTests.BarServicesTests
@@ -80,7 +78,7 @@ namespace CocktailMagician.Services.UnitTests.BarServicesTests
                 IsDeleted = true
             };
 
-            var options = TestUtilities.GetOptions(nameof(ThrowException_WhenIdIsInvalid));
+            var options = TestUtilities.GetOptions(nameof(ThrowsExceptionWhen_BarIsDeleted));
 
             using (var arrangeContext = new CocktailMagicianDb(options))
             {
@@ -120,7 +118,7 @@ namespace CocktailMagician.Services.UnitTests.BarServicesTests
                 Address = addressTest,
             };
 
-            var options = TestUtilities.GetOptions(nameof(ThrowException_WhenIdIsInvalid));
+            var options = TestUtilities.GetOptions(nameof(ReturnExactCocktail));
 
             using (var arrangeContext = new CocktailMagicianDb(options))
             {

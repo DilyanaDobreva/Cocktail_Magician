@@ -1,18 +1,19 @@
 ﻿using CocktailMagician.Data;
 using CocktailMagician.Data.Models;
 using CocktailMagician.Services.Contracts.Factories;
-using CocktailMagician.Services.DTOs;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace CocktailMagician.Services.UnitTests.BarServicesTests
 {
     [TestClass]
-    public class GetDetailedDTOAsync_Should
+    public class AddCocktailsAsync_Should
     {
         [TestMethod]
         public async Task ThrowException_WhenIdIsInvalid()
@@ -50,7 +51,7 @@ namespace CocktailMagician.Services.UnitTests.BarServicesTests
             using (var assertContext = new CocktailMagicianDb(options))
             {
                 var sut = new BarServices(assertContext, barFactoryMock.Object, barCocktailFactoryMock.Object);
-                await Assert.ThrowsExceptionAsync<InvalidOperationException>(() => sut.GetDetailedDTOAsync(invalidId));
+                await Assert.ThrowsExceptionAsync<InvalidOperationException>(() => sut.AddCocktailsAsync(invalidId, new List<int>()));
             };
         }
 
@@ -91,53 +92,11 @@ namespace CocktailMagician.Services.UnitTests.BarServicesTests
                 var barId = await assertContext.Bars.Where(b => b.Name == barTestName).Select(b => b.Id).FirstAsync();
 
                 var sut = new BarServices(assertContext, barFactoryMock.Object, barCocktailFactoryMock.Object);
-                await Assert.ThrowsExceptionAsync<InvalidOperationException>(() => sut.GetDetailedDTOAsync(barId));
+                await Assert.ThrowsExceptionAsync<InvalidOperationException>(() => sut.AddCocktailsAsync(barId, new List<int>()));
             };
         }
 
-        [TestMethod]
-        public async Task ReturnExactCocktail()
-        {
-            var barFactoryMock = new Mock<IBarFactory>();
-            var barCocktailFactoryMock = new Mock<IBarCocktailFactory>();
+        //TODO D One more test
 
-            var imagaUrlTest = "https://www.google.com/";
-            var barTestName = "NameTest";
-
-            var addressTest = new Address
-            {
-                Name = "AddressTest",
-                City = new City { Name = "SofiaTest" },
-                Latitude = 1.1,
-                Longitude = 1.1
-            };
-
-            var barTest = new Bar
-            {
-                Name = barTestName,
-                ImageUrl = imagaUrlTest,
-                Address = addressTest,
-
-            };
-
-            var options = TestUtilities.GetOptions(nameof(ReturnExactCocktail));
-
-            using (var arrangeContext = new CocktailMagicianDb(options))
-            {
-                arrangeContext.Bars.Add(barTest);
-                await arrangeContext.SaveChangesAsync();
-            }
-            using (var assertContext = new CocktailMagicianDb(options))
-            {
-                var barId = await assertContext.Bars.Where(b => b.Name == barTestName).Select(b => b.Id).FirstAsync();
-
-                var sut = new BarServices(assertContext, barFactoryMock.Object, barCocktailFactoryMock.Object);
-                var foundBar = await sut.GetDetailedDTOAsync(barId);
-
-                Assert.IsInstanceOfType(foundBar, typeof(BarDetailsDTO));
-                Assert.AreEqual(barTestName, foundBar.Name);
-            };
-
-        }
     }
 }

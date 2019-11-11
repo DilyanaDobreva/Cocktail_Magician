@@ -82,16 +82,23 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> EditCocktails(int id)
         {
-            var barVM = new EditCocktailsViewModel();
-            barVM.BarName = await barServices.GetNameAsync(id);
+            try
+            {
+                var barVM = new EditCocktailsViewModel();
+                barVM.BarName = await barServices.GetNameAsync(id);
 
-            barVM.PresentCocktails = (await barServices.GetPresentCocktailsAsync(id))
-                .Select(c => new SelectListItem(c.Name, c.Id.ToString()));
+                barVM.PresentCocktails = (await barServices.GetPresentCocktailsAsync(id))
+                    .Select(c => new SelectListItem(c.Name, c.Id.ToString()));
 
-            barVM.NotPresentCocktails = (await barServices.NotPresentCocktailsAsync(id))
-                .Select(c => new SelectListItem(c.Name, c.Id.ToString()));
+                barVM.NotPresentCocktails = (await barServices.NotPresentCocktailsAsync(id))
+                    .Select(c => new SelectListItem(c.Name, c.Id.ToString()));
 
-            return View(barVM);
+                return View(barVM);
+            }
+            catch(InvalidCastException)
+            {
+                return BadRequest();
+            }
         }
 
         [HttpPost]

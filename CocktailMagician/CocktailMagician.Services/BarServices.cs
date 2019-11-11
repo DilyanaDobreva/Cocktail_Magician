@@ -123,10 +123,16 @@ namespace CocktailMagician.Services
                 .Where(b => b.Id == id && b.IsDeleted == false)
                 .Select(b => b.Name)
                 .FirstOrDefaultAsync();
+
             return await name;
         }
         public async Task<List<CocktailBasicDTO>> GetPresentCocktailsAsync(int id)
         {
+            if (!await context.Bars.AnyAsync(b => b.Id == id && b.IsDeleted == false))
+            {
+                throw new InvalidOperationException(OutputConstants.InvalidId);
+            }
+
             var presentCocktails = await context.BarCocktails
                 .Include(c => c.Cocktail)
                 .Where(b => b.BarId == id)
@@ -141,7 +147,7 @@ namespace CocktailMagician.Services
         }
         public async Task<List<CocktailBasicDTO>> NotPresentCocktailsAsync(int id)
         {
-            if (id == 0)
+            if (!await context.Bars.AnyAsync(b => b.Id == id && b.IsDeleted == false))
             {
                 throw new InvalidOperationException(OutputConstants.InvalidId);
             }
@@ -160,7 +166,7 @@ namespace CocktailMagician.Services
         }
         public async Task AddCocktailsAsync(int barId, List<int> cocktailsToAdd)
         {
-            if (barId == 0)
+            if (!await context.Bars.AnyAsync(b => b.Id == barId && b.IsDeleted == false))
             {
                 throw new InvalidOperationException(OutputConstants.InvalidId);
             }
