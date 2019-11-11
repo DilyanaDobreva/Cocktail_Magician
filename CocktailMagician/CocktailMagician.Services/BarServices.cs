@@ -61,7 +61,7 @@ namespace CocktailMagician.Services
             var allBars = await context.Bars
                 .Include(b => b.BarCocktails)
                     .ThenInclude(c => c.Cocktail)
-                .Where(b => b.IsDeleted == false && !(b.BarCocktails.Any(c => c.CocktailId == cocktailId && c.IsDeleted == false)))
+                .Where(b => b.IsDeleted == false && !(b.BarCocktails.Any(c => c.CocktailId == cocktailId)))
                 .Select(b => new BarBasicDTO
                 {
                     Id = b.Id,
@@ -76,7 +76,7 @@ namespace CocktailMagician.Services
             var allBars = await context.Bars
                 .Include(b => b.BarCocktails)
                     .ThenInclude(c => c.Cocktail)
-                .Where(b => b.IsDeleted == false && b.BarCocktails.Any(c => c.CocktailId == cocktailId && c.IsDeleted == false))
+                .Where(b => b.IsDeleted == false && b.BarCocktails.Any(c => c.CocktailId == cocktailId))
                 .Select(b => new BarBasicDTO
                 {
                     Id = b.Id,
@@ -141,7 +141,7 @@ namespace CocktailMagician.Services
         {
             var presentCocktails = await context.BarCocktails
                 .Include(c => c.Cocktail)
-                .Where(b => b.BarId == id && b.IsDeleted == false)
+                .Where(b => b.BarId == id)
                 .Select(b => new CocktailBasicDTO
                 {
                     Id = b.CocktailId,
@@ -160,7 +160,7 @@ namespace CocktailMagician.Services
 
             var cocktails = await context.Cocktails
                 .Include(c => c.BarCocktails)
-                .Where(b => b.IsDeleted == false && !b.BarCocktails.Any(bc => bc.BarId == id && bc.IsDeleted == false))
+                .Where(b => b.IsDeleted == false && !b.BarCocktails.Any(bc => bc.BarId == id))
                 .Select(c => new CocktailBasicDTO
                 {
                     Id = c.Id,
@@ -180,15 +180,10 @@ namespace CocktailMagician.Services
             foreach (var cocktailId in cocktailsToAdd)
             {
                 var barCocktail = await context.BarCocktails.FirstOrDefaultAsync(b => b.BarId == barId && b.CocktailId == cocktailId);
-                if (barCocktail != null)
-                {
-                    barCocktail.IsDeleted = false;
-                }
-                else
-                {
-                    barCocktail = barCocktailFactory.Create(barId, cocktailId);
-                    context.BarCocktails.Add(barCocktail);
-                }
+
+                barCocktail = barCocktailFactory.Create(barId, cocktailId);
+                context.BarCocktails.Add(barCocktail);
+
             }
             await context.SaveChangesAsync();
         }
@@ -202,7 +197,7 @@ namespace CocktailMagician.Services
             foreach (var cocktailId in cocktailsToRemove)
             {
                 var barCocktail = await context.BarCocktails
-                    .FirstOrDefaultAsync(b => b.BarId == barId && b.CocktailId == cocktailId && b.IsDeleted == false);
+                    .FirstOrDefaultAsync(b => b.BarId == barId && b.CocktailId == cocktailId);
 
                 if (barCocktail != null)
                 {
@@ -232,10 +227,9 @@ namespace CocktailMagician.Services
             var bar = await context.Bars
                 .Include(b => b.BarCocktails)
                 .FirstAsync(b => b.Id == id && b.IsDeleted == false);
-            foreach (var bc in bar.BarCocktails)
-            {
-                bc.IsDeleted = true;
-            }
+
+            context.BarCocktails.RemoveRange(bar.BarCocktails);
+
             bar.IsDeleted = true;
             await context.SaveChangesAsync();
         }

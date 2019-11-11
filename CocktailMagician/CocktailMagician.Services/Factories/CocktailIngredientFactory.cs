@@ -5,7 +5,7 @@ namespace CocktailMagician.Services.Factories
 {
     public class CocktailIngredientFactory : ICocktailIngredientFactory
     {
-        public CocktailIngredient Create(int cocktailId, int ingredientId, int quantity)
+        public CocktailIngredient Create(int cocktailId, int ingredientId, double quantity)
         {
             var ci = new CocktailIngredient
             {

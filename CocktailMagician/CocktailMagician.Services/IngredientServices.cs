@@ -52,10 +52,7 @@ namespace CocktailMagician.Services
                 throw new ArgumentException(OutputConstants.IngredientNotFound);
             }
             //TODO Why cannot use AnyAsync
-            if (ingredient.CocktailIngredients.Any(ci => ci.IsDeleted == false))
-            {
-                throw new ArgumentException(OutputConstants.CoctailIncludeIngredient);
-            }
+            
             ingredient.IsDeleted = true;
             await context.SaveChangesAsync();
         }
@@ -70,7 +67,7 @@ namespace CocktailMagician.Services
         {
             var ingredients = await context.Ingredients
                 .Include(i => i.CocktailIngredients)
-                .Where(i => i.IsDeleted == false && !(i.CocktailIngredients.Any(ingr => ingr.IsDeleted == false && ingr.CocktailId == cocktailId)))
+                .Where(i => i.IsDeleted == false && !(i.CocktailIngredients.Any(ingr => ingr.CocktailId == cocktailId)))
                 .Select(i => new IngredientBasicDTO
                 {
                     Id = i.Id,
@@ -119,7 +116,7 @@ namespace CocktailMagician.Services
 
         private bool CanDelete(int id)
         {
-            var canDelete = !context.CocktailIngredients.Any(b => b.IsDeleted == false && b.IngredientId == id);
+            var canDelete = !context.CocktailIngredients.Any(b => b.IngredientId == id);
             return canDelete;
         }
         public async Task<int> AllIngredientsCountAsync()

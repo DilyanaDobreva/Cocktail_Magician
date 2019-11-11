@@ -24,8 +24,8 @@ namespace CocktailMagician.Services.Mapper
                 Id = cocktail.Id,
                 Name = cocktail.Name,
                 ImageURL = cocktail.ImageUrl,
-                Ingredients = cocktail.CocktailIngredients.Where(i => i.IsDeleted == false).Select(i => i.MapToDTO()),
-                Bars = cocktail.BarCocktails?.Where(b => b.IsDeleted == false).Select(b => b.Bar.MapToDTO())
+                Ingredients = cocktail.CocktailIngredients.Select(i => i.MapToDTO()),
+                Bars = cocktail.BarCocktails?.Select(b => b.Bar.MapToDTO())
             };
             return dto;
         }

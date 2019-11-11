@@ -17,6 +17,8 @@ namespace CocktailMagician.Data.Models
         [Url]
         [Required]
         public string ImageUrl { get; set; }
+        [Phone]
+        public string PhoneNumber { get; set; }
         public ICollection<BarReview> BarReviews { get; set; }
         public bool IsDeleted { get; set; }
     }

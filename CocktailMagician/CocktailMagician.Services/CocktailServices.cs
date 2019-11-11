@@ -57,9 +57,12 @@ namespace CocktailMagician.Services
                 .Include(c => c.CocktailIngredients)
                 .Include(c => c.BarCocktails)
                 .FirstOrDefaultAsync(c => c.Id == id && c.IsDeleted == false);
-            cocktail.CocktailIngredients.Select(i => i.IsDeleted = true);
-            cocktail.BarCocktails.Select(bc => bc.IsDeleted = true);
+
+            context.BarCocktails.RemoveRange(cocktail.BarCocktails);
+            context.CocktailIngredients.RemoveRange(cocktail.CocktailIngredients);
+
             cocktail.IsDeleted = true;
+
             await context.SaveChangesAsync();
         }
         public async Task<CocktailDetailsDTO> GetDTOAsync(int id)
@@ -106,10 +109,6 @@ namespace CocktailMagician.Services
             var existing = await context.CocktailIngredients.FirstOrDefaultAsync(ci => ci.IngredientId == ingredientId && ci.CocktailId == cocktailId);
             if (existing != null)
             {
-                if (existing.IsDeleted == true)
-                {
-                    existing.IsDeleted = false;
-                }
                 existing.Quatity = quantity;
             }
             else
@@ -148,11 +147,7 @@ namespace CocktailMagician.Services
             foreach (var id in barsId)
             {
                 var barCocktail = await context.BarCocktails.FirstOrDefaultAsync(bc => bc.CocktailId == cocktailID && bc.BarId == id);
-                if (barCocktail != null)
-                {
-                    barCocktail.IsDeleted = false;
-                }
-                else
+                if (barCocktail == null)
                 {
                     barCocktail = barCocktailFactory.Create(id, cocktailID);
                     context.BarCocktails.Add(barCocktail);
@@ -189,12 +184,7 @@ namespace CocktailMagician.Services
             {
                 var cocktailIngredient = currentIngredients.FirstOrDefault(i => i.Ingredient.Name == ingr.Name);
 
-                if (cocktailIngredient != null)
-                {
-                    cocktailIngredient.Quatity = ingr.Value;
-                    cocktailIngredient.IsDeleted = false;
-                }
-                else
+                if (cocktailIngredient == null)
                 {
                     var singleIngredientId = await context.Ingredients.Where(i => i.Name == ingr.Name).Select(i => i.Id).FirstOrDefaultAsync();
 
@@ -210,7 +200,7 @@ namespace CocktailMagician.Services
                 var cocktailIngredient = currentIngredients.FirstOrDefault(i => i.Ingredient.Name == ingrName);
                 if(cocktailIngredient != null)
                 {
-                    cocktailIngredient.IsDeleted = true;
+                    context.CocktailIngredients.Remove(cocktailIngredient);
                 }
             }
             await context.SaveChangesAsync();

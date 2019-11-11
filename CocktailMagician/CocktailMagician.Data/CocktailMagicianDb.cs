@@ -56,6 +56,13 @@ namespace CocktailMagician.Data
 
             modelBuilder.Entity<Role>().HasData(RoleSeed.roleSeed);
             modelBuilder.Entity<User>().HasData(UserSeed.userSeed);
+            modelBuilder.Entity<City>().HasData(CitySeed.cities);
+            modelBuilder.Entity<Address>().HasData(AddressSeed.addresses);
+            modelBuilder.Entity<Bar>().HasData(BarSeed.bars);
+            modelBuilder.Entity<Ingredient>().HasData(IngredientSeed.ingredients);
+            modelBuilder.Entity<Cocktail>().HasData(CocktailSeed.cocktails);
+            modelBuilder.Entity<BarCocktail>().HasData(BarCocktailSeed.barCocktails);
+            modelBuilder.Entity<CocktailIngredient>().HasData(CocktailIngredientSeed.cocktailIngredients);
         }
     }
 }

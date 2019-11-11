@@ -4,14 +4,16 @@ using CocktailMagician.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CocktailMagician.Data.Migrations
 {
     [DbContext(typeof(CocktailMagicianDb))]
-    partial class CocktailMagicianDbModelSnapshot : ModelSnapshot
+    [Migration("20191111095922_DataSeed")]
+    partial class DataSeed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
