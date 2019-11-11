@@ -59,25 +59,51 @@ namespace CocktailMagician.Services
             var findUser = await context.Users
                 .Include(u => u.Bann)
                 .Include(u => u.Role)
+                .Select(u => new UserDTO
+                {
+                    Id = u.Id,
+                    UserName = u.UserName,
+                    RoleName = u.Role.Name,
+                    Password = u.Password,
+                    IsDeleted = u.IsDeleted
+
+                })
                 .FirstOrDefaultAsync(u => u.UserName == name);
-            return findUser.MapToDTO();
+            return findUser;
         }
         public async Task<List<UserDTO>> GetListOfUsersDTO()
         {
             var users = await context.Users
                 .Include(u => u.Role)
                 .Include(u => u.Bann)
+                .Select(u => new UserDTO
+                {
+                    Id = u.Id,
+                    UserName = u.UserName,
+                    RoleName = u.Role.Name,
+                    Password = u.Password,
+                    IsDeleted = u.IsDeleted
+
+                })
                 .ToListAsync();
-            var listOfDTO = users.Select(m => m.MapToDTO()).ToList();
-            return listOfDTO;
+            return users;
         }
         public async Task<UserDTO> GetUserInfoAsync(string id)
         {
             var users = await context.Users
-                .Include(m => m.Role)
-                .Include(m => m.Bann)
-                .FirstAsync(m => m.Id == id);
-            return users.MapToDTO();
+                .Include(u => u.Role)
+                .Include(u => u.Bann)
+                .Select(u => new UserDTO
+                {
+                    Id = u.Id,
+                    UserName = u.UserName,
+                    RoleName = u.Role.Name,
+                    Password = u.Password,
+                    IsDeleted = u.IsDeleted
+
+                })
+                .FirstAsync(u => u.Id == id);
+            return users;
         }
         public async Task<UserDTO> LoginAsync(string username, string password)
         {
@@ -85,6 +111,15 @@ namespace CocktailMagician.Services
             var user = await context.Users
                 .Include(u => u.Role)
                 .Include(b => b.Bann)
+                 .Select(u => new UserDTO
+                 {
+                     Id = u.Id,
+                     UserName = u.UserName,
+                     RoleName = u.Role.Name,
+                     Password = u.Password,
+                     IsDeleted = u.IsDeleted
+
+                 })
                 .FirstOrDefaultAsync(u => u.UserName == username && u.Password == password);
 
             if (user == null)
@@ -92,10 +127,10 @@ namespace CocktailMagician.Services
             if (user.IsDeleted == true)
                 throw new ArgumentException("Invalid Username or Password");
 
-            return user.MapToDTO();
+            return user;
 
         }
-        public async Task DeleteUserAsync(string id )
+        public async Task DeleteUserAsync(string id)
         {
             var user = await context.Users
                 .Include(m => m.Role)
@@ -113,6 +148,7 @@ namespace CocktailMagician.Services
             this.context.Users.Update(user);
             await context.SaveChangesAsync();
         }
+        //Please check
         public async Task<UserDTO> RegisterAdminAsync(string username, string password)
         {
             var findUser = await FindUserAsync(username);
@@ -142,7 +178,7 @@ namespace CocktailMagician.Services
                 .FirstOrDefaultAsync(m => m.UserName == username);
             return member.MapToDTO();
         }
-        public async Task UpdateUserAsync(string id,string passwrod, string newPassword, int roleId)
+        public async Task UpdateUserAsync(string id, string passwrod, string newPassword, int roleId)
         {
             var user = await context.Users
                 .FirstOrDefaultAsync(u => u.Id == id);
@@ -174,10 +210,15 @@ namespace CocktailMagician.Services
         }
         public async Task<IEnumerable<RoleDTO>> GetAllRoles()
         {
-            var roles = await context.Roles.ToListAsync();
+            var roles = await context.Roles
+                .Select(r => new RoleDTO
+                {
+                    Id = r.Id,
+                    RoleName = r.Name
+                })
+                .ToListAsync();
 
-            var rolesDTO = roles.Select(r => r.MapToDTO());
-            return rolesDTO;
+            return roles;
         }
     }
 }

@@ -67,11 +67,16 @@ namespace CocktailMagician.Services
             var allReviews = await context.BarReviews
                 .Include(c => c.Bar)
                 .Include(u => u.User)
-                .Where(r => r.BarId == barId)
+                .Where(b => b.BarId == barId)
+                .Select(b => new BarReviewDTO
+                {
+                    Comment = b.Comment,
+                    Rating = b.Rating,
+                    UserName = b.User.UserName,
+                    IsDeleted = b.IsDeleted
+                })
                 .ToListAsync();
-
-            var allReviewsDTO = allReviews.Select(b => b.MapToDTO()).ToList();
-            return allReviewsDTO;
+            return allReviews;
         }
     }
 }

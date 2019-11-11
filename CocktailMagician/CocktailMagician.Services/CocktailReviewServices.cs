@@ -73,10 +73,15 @@ namespace CocktailMagician.Services
                 .Include(c => c.Cocktail)
                 .Include(u => u.User)
                 .Where(r => r.CocktailId == cocktailId)
+                .Select(r => new CocktailReviewDTO
+                {
+                    Comment = r.Comment,
+                    Rating = r.Rating,
+                    UserName = r.User.UserName,
+                    IsDeleted = r.IsDeleted
+                })
                 .ToListAsync();
-
-            var allReviewsDTO = allReviews.Select(c => c.MapToDTO()).ToList();
-            return allReviewsDTO;
+            return allReviews;
         }
 
     }
