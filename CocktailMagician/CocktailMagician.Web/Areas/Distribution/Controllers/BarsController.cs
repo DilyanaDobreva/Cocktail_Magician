@@ -56,7 +56,7 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Add(AddBarViewModel bar)
         {
-            await barServices.Add(bar.Name, bar.ImageURL, bar.Address.MapToDTO());
+            await barServices.AddAsync(bar.Name, bar.ImageURL, bar.Address.MapToDTO());
             return RedirectToAction("Index");
         }
 

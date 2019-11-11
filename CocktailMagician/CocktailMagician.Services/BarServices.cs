@@ -25,11 +25,10 @@ namespace CocktailMagician.Services
             this.barCocktailFactory = barCocktailFactory;
         }
 
-        //TODO D: Check if found elemnt is deleted and if it is not alowing to send it to controller
-        public async Task Add(string name, string imageURL, AddressDTO address)
+        //TODO D: Check if found elemnt is deleted and if it is not allow to send it to controller
+        public async Task AddAsync(string name, string imageURL, AddressDTO address)
         {
-            var barAddress = address.MapFromDTO();
-            var bar = barFactory.Create(name, imageURL, barAddress);
+            var bar = barFactory.Create(name, imageURL, address);
 
             context.Bars.Add(bar);
             await context.SaveChangesAsync();
@@ -55,11 +54,6 @@ namespace CocktailMagician.Services
                 .Skip((currentPage - 1) * itemsPerPage)
                 .Take(itemsPerPage)
                 .ToListAsync();
-            //To Check K.
-            //foreach (var item in allBars)
-            //{
-            //    item.AverageRating = await barReviewServices.GetMidRatingAsync(item.Id);
-            //}
             return allBars;
         }
         public async Task<List<BarBasicDTO>> GetAllNotIncludedDTOAsync(int cocktailId)

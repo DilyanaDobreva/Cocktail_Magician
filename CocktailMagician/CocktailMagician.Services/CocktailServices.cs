@@ -123,14 +123,14 @@ namespace CocktailMagician.Services
         public async Task RemoveIngredientAsync(int cocktailId, int ingredientId)
         {
             var ingredient = await context.CocktailIngredients
-                .FirstOrDefaultAsync(ci => ci.IngredientId == ingredientId && ci.CocktailId == cocktailId && ci.IsDeleted == false);
+                .FirstOrDefaultAsync(ci => ci.IngredientId == ingredientId && ci.CocktailId == cocktailId);
 
             if (ingredient == null)
             {
                 throw new ArgumentException(OutputConstants.IngredientNotFound);
             }
 
-            ingredient.IsDeleted = true;
+            context.CocktailIngredients.Remove(ingredient);
             await context.SaveChangesAsync();
         }
         public Task<string> GetNameAsync(int id)
@@ -168,7 +168,7 @@ namespace CocktailMagician.Services
                 var barCocktail = await context.BarCocktails.FirstOrDefaultAsync(bc => bc.CocktailId == cocktailID && bc.BarId == id);
                 if (barCocktail != null)
                 {
-                    barCocktail.IsDeleted = true;
+                    context.BarCocktails.Remove(barCocktail);
                 }
             }
             await context.SaveChangesAsync();
