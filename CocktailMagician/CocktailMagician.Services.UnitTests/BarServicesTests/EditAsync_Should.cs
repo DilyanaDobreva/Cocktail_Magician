@@ -1,18 +1,18 @@
 ﻿using CocktailMagician.Data;
 using CocktailMagician.Data.Models;
 using CocktailMagician.Services.Contracts.Factories;
+using CocktailMagician.Services.DTOs;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace CocktailMagician.Services.UnitTests.BarServicesTests
 {
     [TestClass]
-    public class AddCocktailsAsync_Should
+    public class EditAsync_Should
     {
         [TestMethod]
         public async Task ThrowException_WhenIdIsInvalid()
@@ -50,7 +50,7 @@ namespace CocktailMagician.Services.UnitTests.BarServicesTests
             using (var assertContext = new CocktailMagicianDb(options))
             {
                 var sut = new BarServices(assertContext, barFactoryMock.Object, barCocktailFactoryMock.Object);
-                await Assert.ThrowsExceptionAsync<InvalidOperationException>(() => sut.AddCocktailsAsync(invalidId, new List<int>()));
+                await Assert.ThrowsExceptionAsync<InvalidOperationException>(() => sut.EditAsync(new BarToEditDTO { Id = invalidId }));
             };
         }
 
@@ -91,19 +91,23 @@ namespace CocktailMagician.Services.UnitTests.BarServicesTests
                 var barId = await assertContext.Bars.Where(b => b.Name == barTestName).Select(b => b.Id).FirstAsync();
 
                 var sut = new BarServices(assertContext, barFactoryMock.Object, barCocktailFactoryMock.Object);
-                await Assert.ThrowsExceptionAsync<InvalidOperationException>(() => sut.AddCocktailsAsync(barId, new List<int>()));
+                await Assert.ThrowsExceptionAsync<InvalidOperationException>(() => sut.EditAsync(new BarToEditDTO { Id = barId }));
             };
         }
-
         [TestMethod]
-        public async Task AddCosktailToBarList()
+        public async Task EditAllBarProperties()
         {
             var barFactoryMock = new Mock<IBarFactory>();
             var barCocktailFactoryMock = new Mock<IBarCocktailFactory>();
 
             var imagaUrlTest = "https://www.google.com/";
             var barTestName = "NameTest";
-            var cocktailTestName = "CocktailTest";
+            var barEditedName = "EditedName";
+            var addressEditedName = "New Address";
+            var editedCity = new City { Name = "SofiaEdited" };
+            var editedUrl = "https://www.gmail.com/";
+            var editedLatitude = 2.2;
+            var editedLongitude = 2.2;
 
             var addressTest = new Address
             {
@@ -120,51 +124,54 @@ namespace CocktailMagician.Services.UnitTests.BarServicesTests
                 Address = addressTest,
             };
 
-            var cocktailTest = new Cocktail
-            {
-                Name = cocktailTestName,
-                ImageUrl = imagaUrlTest,
-            };
-
-            var options = TestUtilities.GetOptions(nameof(AddCosktailToBarList));
+            var options = TestUtilities.GetOptions(nameof(EditAllBarProperties));
 
             using (var arrangeContext = new CocktailMagicianDb(options))
             {
-
                 arrangeContext.Bars.Add(barTest);
-                arrangeContext.Cocktails.Add(cocktailTest);
+                arrangeContext.Cities.Add(editedCity);
                 await arrangeContext.SaveChangesAsync();
             }
 
             using (var actContext = new CocktailMagicianDb(options))
             {
                 var barId = await actContext.Bars.Where(b => b.Name == barTestName).Select(b => b.Id).FirstAsync();
-                var cocktailId = await actContext.Cocktails.Where(c => c.Name == cocktailTestName).Select(c => c.Id).FirstAsync();
-
-                var listOfCocktails = new List<int> { cocktailId };
-
-                barCocktailFactoryMock
-                    .Setup(b => b.Create(barId, cocktailId))
-                    .Returns(new BarCocktail
+                var editedCityId = await actContext.Cities.Where(c => c.Name == editedCity.Name).Select(c => c.Id).FirstAsync();
+                var editDTO = new BarToEditDTO
+                {
+                    Id = barId,
+                    Name = barEditedName,
+                    ImageURL = editedUrl,
+                    Address = new AddressDTO
                     {
-                        BarId = barId,
-                        CocktailId = cocktailId
-                    });
+                        Name = addressEditedName,
+                        Latitude = editedLatitude,
+                        Longitude = editedLongitude,
+                        CityId = editedCityId
+                    }
+                };
 
                 var sut = new BarServices(actContext, barFactoryMock.Object, barCocktailFactoryMock.Object);
-                await sut.AddCocktailsAsync(barId, listOfCocktails);
+                await sut.EditAsync(editDTO);
             }
 
             using (var assertContext = new CocktailMagicianDb(options))
             {
-                var bar = await assertContext.Bars
-                    .Include(b => b.BarCocktails)
-                    .ThenInclude(bc => bc.Cocktail)
-                    .Where(b => b.Name == barTestName)
-                    .FirstAsync();
+                var editedBar = await assertContext.Bars
+                    .Include(b => b.Address)
+                    .ThenInclude(a => a.City)
+                    .FirstAsync(b => b.Name == barEditedName);
 
-                Assert.AreEqual(1, bar.BarCocktails.Count());
-                Assert.IsTrue(bar.BarCocktails.Any(c => c.Cocktail.Name == cocktailTestName));
+                var bar = await assertContext.Bars
+                    .FirstOrDefaultAsync(b => b.Name == barTestName);
+
+                Assert.AreEqual(barEditedName, editedBar.Name);
+                Assert.AreEqual(editedUrl, editedBar.ImageUrl);
+                Assert.AreEqual(addressEditedName, editedBar.Address.Name);
+                Assert.AreEqual(editedLatitude, editedBar.Address.Latitude);
+                Assert.AreEqual(editedLongitude, editedBar.Address.Longitude);
+                Assert.AreEqual(editedCity.Name, editedBar.Address.City.Name);
+                Assert.IsNull(bar);
             }
         }
     }

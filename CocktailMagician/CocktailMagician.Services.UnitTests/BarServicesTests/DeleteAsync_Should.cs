@@ -7,12 +7,13 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace CocktailMagician.Services.UnitTests.BarServicesTests
 {
     [TestClass]
-    public class AddCocktailsAsync_Should
+    public class DeleteAsync_Should
     {
         [TestMethod]
         public async Task ThrowException_WhenIdIsInvalid()
@@ -50,7 +51,7 @@ namespace CocktailMagician.Services.UnitTests.BarServicesTests
             using (var assertContext = new CocktailMagicianDb(options))
             {
                 var sut = new BarServices(assertContext, barFactoryMock.Object, barCocktailFactoryMock.Object);
-                await Assert.ThrowsExceptionAsync<InvalidOperationException>(() => sut.AddCocktailsAsync(invalidId, new List<int>()));
+                await Assert.ThrowsExceptionAsync<InvalidOperationException>(() => sut.DeleteAsync(invalidId));
             };
         }
 
@@ -91,19 +92,19 @@ namespace CocktailMagician.Services.UnitTests.BarServicesTests
                 var barId = await assertContext.Bars.Where(b => b.Name == barTestName).Select(b => b.Id).FirstAsync();
 
                 var sut = new BarServices(assertContext, barFactoryMock.Object, barCocktailFactoryMock.Object);
-                await Assert.ThrowsExceptionAsync<InvalidOperationException>(() => sut.AddCocktailsAsync(barId, new List<int>()));
+                await Assert.ThrowsExceptionAsync<InvalidOperationException>(() => sut.DeleteAsync(barId));
             };
         }
-
         [TestMethod]
-        public async Task AddCosktailToBarList()
+        public async Task SetBArAsDeletedAndDeletesItsBarCosktails()
         {
             var barFactoryMock = new Mock<IBarFactory>();
             var barCocktailFactoryMock = new Mock<IBarCocktailFactory>();
 
             var imagaUrlTest = "https://www.google.com/";
             var barTestName = "NameTest";
-            var cocktailTestName = "CocktailTest";
+            var cocktail1TestName = "Cocktail1Test";
+            var cocktail2TestName = "Cocktail2Test";
 
             var addressTest = new Address
             {
@@ -120,51 +121,46 @@ namespace CocktailMagician.Services.UnitTests.BarServicesTests
                 Address = addressTest,
             };
 
-            var cocktailTest = new Cocktail
+            var cocktail1Test = new Cocktail
             {
-                Name = cocktailTestName,
+                Name = cocktail1TestName,
                 ImageUrl = imagaUrlTest,
             };
 
-            var options = TestUtilities.GetOptions(nameof(AddCosktailToBarList));
+            var cocktail2Test = new Cocktail
+            {
+                Name = cocktail2TestName,
+                ImageUrl = imagaUrlTest,
+            };
+
+            var options = TestUtilities.GetOptions(nameof(SetBArAsDeletedAndDeletesItsBarCosktails));
 
             using (var arrangeContext = new CocktailMagicianDb(options))
             {
-
                 arrangeContext.Bars.Add(barTest);
-                arrangeContext.Cocktails.Add(cocktailTest);
+                await arrangeContext.SaveChangesAsync();
+
+                var bar = await arrangeContext.Bars.FirstOrDefaultAsync(b => b.Name == barTestName);
+
+                arrangeContext.BarCocktails.Add(new BarCocktail { Bar = bar, Cocktail = cocktail1Test });
+                arrangeContext.BarCocktails.Add(new BarCocktail { Bar = bar, Cocktail = cocktail2Test });
                 await arrangeContext.SaveChangesAsync();
             }
 
             using (var actContext = new CocktailMagicianDb(options))
             {
                 var barId = await actContext.Bars.Where(b => b.Name == barTestName).Select(b => b.Id).FirstAsync();
-                var cocktailId = await actContext.Cocktails.Where(c => c.Name == cocktailTestName).Select(c => c.Id).FirstAsync();
-
-                var listOfCocktails = new List<int> { cocktailId };
-
-                barCocktailFactoryMock
-                    .Setup(b => b.Create(barId, cocktailId))
-                    .Returns(new BarCocktail
-                    {
-                        BarId = barId,
-                        CocktailId = cocktailId
-                    });
 
                 var sut = new BarServices(actContext, barFactoryMock.Object, barCocktailFactoryMock.Object);
-                await sut.AddCocktailsAsync(barId, listOfCocktails);
+                await sut.DeleteAsync(barId);
             }
 
             using (var assertContext = new CocktailMagicianDb(options))
             {
-                var bar = await assertContext.Bars
-                    .Include(b => b.BarCocktails)
-                    .ThenInclude(bc => bc.Cocktail)
-                    .Where(b => b.Name == barTestName)
-                    .FirstAsync();
+                var bar = await assertContext.Bars.FirstAsync(b => b.Name == barTestName);
 
-                Assert.AreEqual(1, bar.BarCocktails.Count());
-                Assert.IsTrue(bar.BarCocktails.Any(c => c.Cocktail.Name == cocktailTestName));
+                Assert.IsTrue(bar.IsDeleted);
+                Assert.IsFalse(assertContext.BarCocktails.Any(bc => bc.BarId == bar.Id));
             }
         }
     }

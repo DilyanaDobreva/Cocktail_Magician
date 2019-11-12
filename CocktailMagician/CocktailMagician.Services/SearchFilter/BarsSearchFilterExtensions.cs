@@ -6,7 +6,7 @@ namespace CocktailMagician.Services.SearchFilter
 {
     public static class BarsSearchFilterExtensions
     {
-        public static IQueryable<Bar> FilterBuName(this IQueryable<Bar> list, string key)
+        public static IQueryable<Bar> FilterByName(this IQueryable<Bar> list, string key)
         {
             if(string.IsNullOrEmpty(key))
             {

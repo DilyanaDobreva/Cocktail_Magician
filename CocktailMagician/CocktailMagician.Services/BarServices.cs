@@ -183,7 +183,7 @@ namespace CocktailMagician.Services
         }
         public async Task RemoveCocktailsAsync(int barId, List<int> cocktailsToRemove)
         {
-            if (barId == 0)
+            if (!await context.Bars.AnyAsync(b => b.Id == barId && b.IsDeleted == false))
             {
                 throw new InvalidOperationException(OutputConstants.InvalidId);
             }
@@ -202,6 +202,11 @@ namespace CocktailMagician.Services
         }
         public async Task EditAsync(BarToEditDTO newBarInfo)
         {
+            if (!await context.Bars.AnyAsync(b => b.Id == newBarInfo.Id && b.IsDeleted == false))
+            {
+                throw new InvalidOperationException(OutputConstants.InvalidId);
+            }
+
             var bar = await context.Bars
                 .Include(b => b.Address)
                 .Where(b => b.Id == newBarInfo.Id && b.IsDeleted == false)
@@ -218,6 +223,11 @@ namespace CocktailMagician.Services
         }
         public async Task DeleteAsync(int id)
         {
+            if (!await context.Bars.AnyAsync(b => b.Id == id && b.IsDeleted == false))
+            {
+                throw new InvalidOperationException(OutputConstants.InvalidId);
+            }
+
             var bar = await context.Bars
                 .Include(b => b.BarCocktails)
                 .FirstAsync(b => b.Id == id && b.IsDeleted == false);
@@ -233,7 +243,8 @@ namespace CocktailMagician.Services
                 .Include(b => b.Address)
                     .ThenInclude(a => a.City)
                 .Include(b => b.BarReviews)
-                .FilterBuName(name)
+                .Include(b => b.BarReviews)
+                .FilterByName(name)
                 .FilterByCity(cityId)
                 .FilterByRating(minRating)
                 .Select(bar => new BarInListDTO
@@ -242,7 +253,11 @@ namespace CocktailMagician.Services
                     Name = bar.Name,
                     ImageURL = bar.ImageUrl,
                     Address = bar.Address.Name,
-                    City = bar.Address.City.Name
+                    City = bar.Address.City.Name,
+                    AverageRating = bar.BarReviews
+                        .Where(r => r.Rating != null)
+                        .Select(r => r.Rating)
+                        .Average()
                 })
                 .ToListAsync();
 

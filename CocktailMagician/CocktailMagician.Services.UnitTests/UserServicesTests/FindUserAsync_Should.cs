@@ -2,11 +2,8 @@
 using CocktailMagician.Data.Models;
 using CocktailMagician.Services.Contracts;
 using CocktailMagician.Services.Contracts.Factories;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using System;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace CocktailMagician.Services.UnitTests.ServiceTests
@@ -39,8 +36,9 @@ namespace CocktailMagician.Services.UnitTests.ServiceTests
                 var sut = new UserServices(assertContext, userFactoryMock.Object, bannFactoryMock.Object, hasherMock.Object);
 
                 var userTest = await sut.FindUserAsync(user.UserName);
-
-                Assert.AreEqual(userTest, user);
+                
+                Assert.AreEqual(userName, userTest.UserName);
+                Assert.AreEqual(userPassword, userTest.Password);
             }
         }
     }
