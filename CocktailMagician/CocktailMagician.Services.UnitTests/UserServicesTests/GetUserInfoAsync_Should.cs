@@ -12,10 +12,10 @@ using System.Threading.Tasks;
 namespace CocktailMagician.Services.UnitTests.ServiceTests
 {
     [TestClass]
-    public class FindUserDTOAsync_Should
+    public class GetUserInfoAsync_Should
     {
         [TestMethod]
-        public async Task FindUserDTOAsync()
+        public async Task FinGetUserInfoAsync()
         {
             var userName = "user";
             var userPassword = "user";
@@ -25,7 +25,7 @@ namespace CocktailMagician.Services.UnitTests.ServiceTests
             var bannFactoryMock = new Mock<IBannFactory>();
             var hasherMock = new Mock<IHasher>();
 
-            var options = TestUtilities.GetOptions(nameof(FindUserDTOAsync));
+            var options = TestUtilities.GetOptions(nameof(FinGetUserInfoAsync));
 
             var bann = new Bann();
             var role = new Role();
@@ -41,11 +41,12 @@ namespace CocktailMagician.Services.UnitTests.ServiceTests
             using (var assertContext = new CocktailMagicianDb(options))
             {
                 var sut = new UserServices(assertContext, userFactoryMock.Object, bannFactoryMock.Object, hasherMock.Object);
-                var userTest = await sut.FindUserDTOAsync(user.UserName);
+                var userTest = await sut.GetUserInfoAsync(user.Id);
 
                 Assert.AreEqual(userTest.UserName, user.UserName);
                 Assert.AreEqual(userTest.Password, user.Password);
                 Assert.AreEqual(userTest.RoleName, user.Role.Name);
+                Assert.AreEqual(userTest.IsDeleted, user.IsDeleted);
             }
         }
     }

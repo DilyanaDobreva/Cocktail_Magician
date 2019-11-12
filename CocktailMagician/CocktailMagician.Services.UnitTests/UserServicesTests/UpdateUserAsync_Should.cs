@@ -2,7 +2,6 @@
 using CocktailMagician.Data.Models;
 using CocktailMagician.Services.Contracts;
 using CocktailMagician.Services.Contracts.Factories;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
@@ -12,40 +11,47 @@ using System.Threading.Tasks;
 namespace CocktailMagician.Services.UnitTests.ServiceTests
 {
     [TestClass]
-    public class FindUserDTOAsync_Should
+    public class UpdateUserAsync_Should
     {
+        //CHECK
         [TestMethod]
-        public async Task FindUserDTOAsync()
+        public async Task UpdateUserAsync()
         {
             var userName = "user";
             var userPassword = "user";
+            var newUserPassword = "NewUser";
             var roleId = 2;
+            var hashedPassword = "!HASHED!";
 
             var userFactoryMock = new Mock<IUserFactory>();
             var bannFactoryMock = new Mock<IBannFactory>();
             var hasherMock = new Mock<IHasher>();
 
-            var options = TestUtilities.GetOptions(nameof(FindUserDTOAsync));
+            var options = TestUtilities.GetOptions(nameof(UpdateUserAsync));
 
-            var bann = new Bann();
-            var role = new Role();
-            var user = new User(userName, userPassword, roleId);
+            var user = new User(userName, hashedPassword, roleId);
+
+            hasherMock
+               .Setup(h => h.Hasher(userPassword))
+               .Returns(hashedPassword);
+
+            hasherMock
+               .Setup(h => h.Hasher(newUserPassword))
+               .Returns(newUserPassword);
 
             using (var arrangeContext = new CocktailMagicianDb(options))
             {
-                user.Bann = bann;
-                user.Role = role;
                 arrangeContext.Users.Add(user);
                 await arrangeContext.SaveChangesAsync();
             }
+
             using (var assertContext = new CocktailMagicianDb(options))
             {
                 var sut = new UserServices(assertContext, userFactoryMock.Object, bannFactoryMock.Object, hasherMock.Object);
-                var userTest = await sut.FindUserDTOAsync(user.UserName);
 
-                Assert.AreEqual(userTest.UserName, user.UserName);
-                Assert.AreEqual(userTest.Password, user.Password);
-                Assert.AreEqual(userTest.RoleName, user.Role.Name);
+                await sut.UpdateUserAsync(user.Id, userPassword, newUserPassword, roleId);
+
+                Assert.AreEqual(newUserPassword, user.Password);
             }
         }
     }

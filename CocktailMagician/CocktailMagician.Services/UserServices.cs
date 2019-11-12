@@ -26,7 +26,7 @@ namespace CocktailMagician.Services
             this.bannFactory = bannFactory;
             this.hasher = hasher;
         }
-        public async Task<BannDTO> BanAsync(string reason, UserDTO userDTO)
+        public async Task BanAsync(string reason, UserDTO userDTO)
         {
             var date = DateTime.Now;
 
@@ -38,14 +38,6 @@ namespace CocktailMagician.Services
             var user = await FindUserAsync(userDTO.UserName);
             var bann = bannFactory.CreateBan(reason, date.AddDays(30), user);
             this.context.Banns.Add(bann);
-            await this.context.SaveChangesAsync();
-            return bann.MapToDTO();
-        }
-        public async Task DeleteBan(Bann bann)
-        {
-            var findBan = context.Banns
-                .FirstOrDefault(b => b.Id == bann.Id);
-            findBan.IsDeleted = true;
             await this.context.SaveChangesAsync();
         }
         public Task<User> FindUserAsync(string name)
@@ -159,6 +151,7 @@ namespace CocktailMagician.Services
             newAdmin.Password = hasher.Hasher(newAdmin.Password);
             this.context.Users.Add(newAdmin);
             await this.context.SaveChangesAsync();
+
             return newAdmin.MapToDTO();
         }
         public async Task<UserDTO> RegisterUserAsync(string username, string password)
@@ -175,6 +168,7 @@ namespace CocktailMagician.Services
             var member = await context.Users
                 .Include(m => m.Role)
                 .FirstOrDefaultAsync(m => m.UserName == username);
+
             return member.MapToDTO();
         }
         public async Task UpdateUserAsync(string id, string passwrod, string newPassword, int roleId)

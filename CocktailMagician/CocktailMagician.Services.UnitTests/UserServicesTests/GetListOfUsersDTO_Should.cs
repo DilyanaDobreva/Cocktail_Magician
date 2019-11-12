@@ -2,50 +2,62 @@
 using CocktailMagician.Data.Models;
 using CocktailMagician.Services.Contracts;
 using CocktailMagician.Services.Contracts.Factories;
-using Microsoft.EntityFrameworkCore;
+using CocktailMagician.Services.DTOs;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace CocktailMagician.Services.UnitTests.ServiceTests
 {
     [TestClass]
-    public class FindUserDTOAsync_Should
+    public class GetListOfUsersDTO_Should
     {
         [TestMethod]
-        public async Task FindUserDTOAsync()
+        public async Task GetListOfUsersDTO()
         {
             var userName = "user";
             var userPassword = "user";
-            var roleId = 2;
+            var userName2 = "user2";
+            var userPassword2 = "user2";
+            var roleId = 1;
+            var roleName = "user";
 
             var userFactoryMock = new Mock<IUserFactory>();
             var bannFactoryMock = new Mock<IBannFactory>();
             var hasherMock = new Mock<IHasher>();
 
-            var options = TestUtilities.GetOptions(nameof(FindUserDTOAsync));
+            var options = TestUtilities.GetOptions(nameof(GetListOfUsersDTO));
+
+            var user = new User(userName, userPassword, roleId);
+            var user2 = new User(userName2, userPassword2, roleId);
 
             var bann = new Bann();
             var role = new Role();
-            var user = new User(userName, userPassword, roleId);
 
             using (var arrangeContext = new CocktailMagicianDb(options))
             {
-                user.Bann = bann;
                 user.Role = role;
+                user.Bann = bann;
+
+                user2.Role = role;
+                user2.Bann = bann;
+
+                role.Name = roleName;
+                role.Id = roleId;
+                arrangeContext.Roles.Add(role);
                 arrangeContext.Users.Add(user);
+                arrangeContext.Users.Add(user2);
                 await arrangeContext.SaveChangesAsync();
             }
+
             using (var assertContext = new CocktailMagicianDb(options))
             {
                 var sut = new UserServices(assertContext, userFactoryMock.Object, bannFactoryMock.Object, hasherMock.Object);
-                var userTest = await sut.FindUserDTOAsync(user.UserName);
+                var listTest = await sut.GetListOfUsersDTO();
 
-                Assert.AreEqual(userTest.UserName, user.UserName);
-                Assert.AreEqual(userTest.Password, user.Password);
-                Assert.AreEqual(userTest.RoleName, user.Role.Name);
+                Assert.IsTrue(listTest.Count() == 2);
+                Assert.IsTrue(assertContext.Users.Count() == 2);
             }
         }
     }

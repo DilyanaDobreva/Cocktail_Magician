@@ -12,40 +12,44 @@ using System.Threading.Tasks;
 namespace CocktailMagician.Services.UnitTests.ServiceTests
 {
     [TestClass]
-    public class FindUserDTOAsync_Should
+    public class GetAllRoles_Should
     {
         [TestMethod]
-        public async Task FindUserDTOAsync()
+        public async Task GetAllRoles()
         {
-            var userName = "user";
-            var userPassword = "user";
-            var roleId = 2;
+            var roleName1 = "user";
+            var roleId1 = 1;
+            var roleName2 = "admin";
+            var roleId2 = 2;
 
             var userFactoryMock = new Mock<IUserFactory>();
             var bannFactoryMock = new Mock<IBannFactory>();
             var hasherMock = new Mock<IHasher>();
 
-            var options = TestUtilities.GetOptions(nameof(FindUserDTOAsync));
+            var options = TestUtilities.GetOptions(nameof(GetAllRoles));
 
-            var bann = new Bann();
-            var role = new Role();
-            var user = new User(userName, userPassword, roleId);
+            var role1 = new Role();
+            var role2 = new Role();
 
             using (var arrangeContext = new CocktailMagicianDb(options))
             {
-                user.Bann = bann;
-                user.Role = role;
-                arrangeContext.Users.Add(user);
+                role1.Name = roleName1;
+                role1.Id = roleId1;
+                role2.Name = roleName2;
+                role2.Id = roleId2;
+
+                arrangeContext.Roles.Add(role1);
+                arrangeContext.Roles.Add(role2);
                 await arrangeContext.SaveChangesAsync();
             }
+
             using (var assertContext = new CocktailMagicianDb(options))
             {
                 var sut = new UserServices(assertContext, userFactoryMock.Object, bannFactoryMock.Object, hasherMock.Object);
-                var userTest = await sut.FindUserDTOAsync(user.UserName);
+                var listTest = await sut.GetAllRoles();
 
-                Assert.AreEqual(userTest.UserName, user.UserName);
-                Assert.AreEqual(userTest.Password, user.Password);
-                Assert.AreEqual(userTest.RoleName, user.Role.Name);
+                Assert.IsTrue(listTest.Count() == 2);
+                Assert.IsTrue(assertContext.Roles.Count() == 2);
             }
         }
     }
