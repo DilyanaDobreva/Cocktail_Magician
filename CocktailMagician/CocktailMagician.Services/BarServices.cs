@@ -27,6 +27,9 @@ namespace CocktailMagician.Services
 
         public async Task AddAsync(string name, string imageURL, AddressDTO address)
         {
+            if (context.Bars.Any(c => c.Name == name && c.IsDeleted == false))
+                throw new ArgumentException(OutputConstants.BarExists);
+
             var bar = barFactory.Create(name, imageURL, address);
 
             context.Bars.Add(bar);

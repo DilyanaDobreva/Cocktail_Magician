@@ -53,6 +53,13 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
 
                 return View(cocktailVM);
             }
+            if(await cocktailServices.DoesNameExist(cocktailVM.Name))
+            {
+                cocktailVM.Name = null;
+                cocktailVM.CocktilIngredients = null;
+                TempData["Status"] = "Cocktail with such name alredy exists.";
+                return View(cocktailVM);
+            }
             foreach (var ingr in cocktailVM.CocktilIngredients)
             {
 

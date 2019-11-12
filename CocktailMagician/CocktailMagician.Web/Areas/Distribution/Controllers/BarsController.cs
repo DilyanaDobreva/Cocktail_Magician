@@ -57,8 +57,22 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Add(AddBarViewModel bar)
         {
-            await barServices.AddAsync(bar.Name, bar.ImageURL, bar.Address.MapToDTO());
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    await barServices.AddAsync(bar.Name, bar.ImageURL, bar.Address.MapToDTO());
+                    return RedirectToAction("Index");
+                }
+                catch(ArgumentException ex)
+                {
+                    TempData["Status"] = ex.Message;
+                    return View(bar);
+                }
+            }
+
+            ModelState.AddModelError("", "Something went wrong...");
+            return View(bar);
         }
 
         public async Task<IActionResult> Details(int id)
@@ -106,10 +120,17 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditCocktails(int id, EditCocktailsViewModel vm)
         {
-            await barServices.AddCocktailsAsync(id, vm.CocktailsToAdd);
-            await barServices.RemoveCocktailsAsync(id, vm.CocktailsToRemove);
+            try
+            {
+                await barServices.AddCocktailsAsync(id, vm.CocktailsToAdd);
+                await barServices.RemoveCocktailsAsync(id, vm.CocktailsToRemove);
 
-            return RedirectToAction("Details", new { id = id });
+                return RedirectToAction("Details", new { id = id });
+            }
+            catch(InvalidOperationException)
+            {
+                return BadRequest();
+            }
         }
 
         [Authorize(Roles = "admin")]
@@ -136,11 +157,18 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, AddBarViewModel vm)
         {
-            var barToEdit = vm.MapToDTO();
-            barToEdit.Id = id;
+            try
+            {
+                var barToEdit = vm.MapToDTO();
+                barToEdit.Id = id;
 
-            await barServices.EditAsync(barToEdit);
-            return RedirectToAction("Details", new { id = id });
+                await barServices.EditAsync(barToEdit);
+                return RedirectToAction("Details", new { id = id });
+            }
+            catch(InvalidOperationException)
+            {
+                return BadRequest();
+            }
         }
 
         [HttpPost]
@@ -148,8 +176,15 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete (int id)
         {
-            await barServices.DeleteAsync(id);
-            return RedirectToAction("Index");
+            try
+            {
+                await barServices.DeleteAsync(id);
+                return RedirectToAction("Index");
+            }
+            catch(InvalidOperationException)
+            {
+                return BadRequest();
+            }
         }
 
         public async Task<IActionResult> Search([FromQuery] BarSearchViewModel vm)
@@ -171,17 +206,25 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
             return View(vm);
         }
 
+        [Authorize]
         public async Task<IActionResult> BarReview(int id)
         {
-            var bar = await barServices.GetDetailedDTOAsync(id);
-            var barViewModel = bar.MapToViewModel();
-
-            var vm = new BarReviewViewModel
+            try
             {
-                Bar = barViewModel,
-            };
-            return View(vm);
+                var bar = await barServices.GetDetailedDTOAsync(id);
+                var barViewModel = bar.MapToViewModel();
+
+                var vm = new BarReviewViewModel
+                {
+                    Bar = barViewModel,
+                };
+                return View(vm);
+            }catch(InvalidOperationException)
+            {
+                return BadRequest();
+            }
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> BarReview(int id, BarReviewViewModel vm)

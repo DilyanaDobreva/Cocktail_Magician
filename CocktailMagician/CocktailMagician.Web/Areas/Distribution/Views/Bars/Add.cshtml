@@ -6,6 +6,15 @@
 
 <h1>Add Bar</h1>
 
+@{ var statusMessage = TempData["Status"]?.ToString(); }
+@if (!string.IsNullOrWhiteSpace(statusMessage))
+{
+
+    <div class="alert alert-danger  ">
+        @statusMessage
+    </div>
+}
+
 <div class="row">
     <div class="col-md-6">
         <form asp-action="/Distribution/Bars/Add">

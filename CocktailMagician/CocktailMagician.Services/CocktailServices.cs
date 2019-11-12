@@ -31,28 +31,35 @@ namespace CocktailMagician.Services
 
         public async Task AddAsync(string name, string imageURL, List<CocktailIngredientDTO> ingredientsAndQuantities)
         {
-            if (ingredientsAndQuantities.Count() == 0)
-            {
-                throw new ArgumentException(OutputConstants.CocktailWithNoIngredients);
-            }
-            var cocktail = this.cocktailFactory.Create(name, imageURL);
-            //cocktail.Quantity = ingredientsAndQuantities.Sum(i => i.Value);
-            context.Cocktails.Add(cocktail);
-            await context.SaveChangesAsync();
+            //TODO To ask if it is neccessary double protection against invalid input
 
-            //TODO How to get only Cocktail Id from DB
-            cocktail = await context.Cocktails.FirstAsync(c => c.Name == name);
+            if (ingredientsAndQuantities == null || ingredientsAndQuantities.Count() == 0)
+                throw new InvalidOperationException(OutputConstants.CocktailWithNoIngredients);
+            
+            if(ingredientsAndQuantities.Any(i => i.Value == 0.0))
+                throw new InvalidOperationException(OutputConstants.NoIngredientQuantity);
+
+            if(context.Cocktails.Any(c => c.Name == name && c.IsDeleted == false))
+                throw new ArgumentException(OutputConstants.CocktailExists);
+            
+            
+            var cocktail = cocktailFactory.Create(name, imageURL);
 
             foreach (var ingredient in ingredientsAndQuantities)
             {
-                var ingrId = await context.Ingredients.FirstOrDefaultAsync(i => i.Name == ingredient.Name && i.IsDeleted == false);
-                var cocktailIngredient = this.cocktailIngredientFactory.Create(cocktail.Id, ingrId.Id, ingredient.Value);
+                var ingrId = await context.Ingredients.Where(i => i.Name == ingredient.Name).Select(i => i.Id).FirstOrDefaultAsync();
+                var cocktailIngredient = cocktailIngredientFactory.Create(cocktail, ingrId, ingredient.Value);
                 context.CocktailIngredients.Add(cocktailIngredient);
             }
             await context.SaveChangesAsync();
         }
         public async Task DeleteAsync(int id)
         {
+            if (!await context.Cocktails.AnyAsync(b => b.Id == id && b.IsDeleted == false))
+            {
+                throw new InvalidOperationException(OutputConstants.InvalidId);
+            }
+
             var cocktail = await context.Cocktails
                 .Include(c => c.CocktailIngredients)
                 .Include(c => c.BarCocktails)
@@ -73,7 +80,7 @@ namespace CocktailMagician.Services
                         .ThenInclude(b => b.Address)
                             .ThenInclude(a => a.City)
                 .Where(c => c.Id == id && c.IsDeleted == false)
-                .Select( c => new CocktailDetailsDTO
+                .Select(c => new CocktailDetailsDTO
                 {
                     Id = c.Id,
                     Name = c.Name,
@@ -115,10 +122,10 @@ namespace CocktailMagician.Services
                     ImageURL = c.ImageUrl,
                     AverageRating = c.CocktailReviews
                         .Where(r => r.Rating != null)
-                        .Select(r=>r.Rating)
+                        .Select(r => r.Rating)
                         .Average()
                 })
-                .Skip((currentPage -1) * itemsPerPage)
+                .Skip((currentPage - 1) * itemsPerPage)
                 .Take(itemsPerPage)
                 .ToListAsync();
             //To Check K.
@@ -222,7 +229,7 @@ namespace CocktailMagician.Services
             foreach (var ingrName in ingrToRemove)
             {
                 var cocktailIngredient = currentIngredients.FirstOrDefault(i => i.Ingredient.Name == ingrName);
-                if(cocktailIngredient != null)
+                if (cocktailIngredient != null)
                 {
                     context.CocktailIngredients.Remove(cocktailIngredient);
                 }
@@ -253,8 +260,7 @@ namespace CocktailMagician.Services
             var count = await context.Cocktails.Where(c => c.IsDeleted == false).CountAsync();
             return count;
         }
-
-                public async Task<List<BarBasicDTO>> GetAllNotIncludedDTOAsync(int cocktailId)
+        public async Task<List<BarBasicDTO>> GetAllNotIncludedDTOAsync(int cocktailId)
         {
             var allBars = await context.Bars
                 .Include(b => b.BarCocktails)
@@ -282,6 +288,10 @@ namespace CocktailMagician.Services
 
             return allBars;
 
+        }
+        public async Task<bool> DoesNameExist(string name)
+        {
+            return await context.Cocktails.AnyAsync(c => c.Name.ToLower() == name.ToLower() && c.IsDeleted == false);
         }
 
     }

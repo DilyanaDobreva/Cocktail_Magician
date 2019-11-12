@@ -17,6 +17,7 @@ namespace CocktailMagician.Web.Areas.Distribution.Models.Cocktails
         [Required]
         public string ImageURL { get; set; }
         public List<SelectListItem> AllIngredients { get; set; }
+        [Required]
         public List<string> CocktilIngredients { get; set; }
         public List<CocktailIngredientViewModel> IngredientsQuantity { get; set; }
     }
