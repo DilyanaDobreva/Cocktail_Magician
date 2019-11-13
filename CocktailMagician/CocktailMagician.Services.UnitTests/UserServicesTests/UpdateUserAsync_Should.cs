@@ -2,6 +2,7 @@
 using CocktailMagician.Data.Models;
 using CocktailMagician.Services.Contracts;
 using CocktailMagician.Services.Contracts.Factories;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
@@ -45,13 +46,17 @@ namespace CocktailMagician.Services.UnitTests.ServiceTests
                 await arrangeContext.SaveChangesAsync();
             }
 
+            using (var actContext = new CocktailMagicianDb(options))
+            {
+                var sut = new UserServices(actContext, userFactoryMock.Object, bannFactoryMock.Object, hasherMock.Object);
+                await sut.UpdateUserAsync(user.Id, userPassword, newUserPassword, roleId);
+            }
+
             using (var assertContext = new CocktailMagicianDb(options))
             {
-                var sut = new UserServices(assertContext, userFactoryMock.Object, bannFactoryMock.Object, hasherMock.Object);
+                var updatedUserPassword = await assertContext.Users.Where(u => u.Id == user.Id).Select(u => u.Password).FirstAsync();
 
-                await sut.UpdateUserAsync(user.Id, userPassword, newUserPassword, roleId);
-
-                Assert.AreEqual(newUserPassword, user.Password);
+                Assert.AreEqual(newUserPassword, updatedUserPassword);
             }
         }
     }

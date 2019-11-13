@@ -74,6 +74,11 @@ namespace CocktailMagician.Services
         }
         public async Task<CocktailDetailsDTO> GetDTOAsync(int id)
         {
+            if (!await context.Cocktails.AnyAsync(b => b.Id == id && b.IsDeleted == false))
+            {
+                throw new InvalidOperationException(OutputConstants.InvalidId);
+            }
+
             var cocktailDTO = await context.Cocktails
                 .Include(c => c.BarCocktails)
                     .ThenInclude(b => b.Bar)
