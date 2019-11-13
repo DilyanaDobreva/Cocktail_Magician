@@ -47,11 +47,11 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
         }
         [HttpPost]
         [Authorize(Roles = "admin")]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
             await ingredientServices.DeleteAsync(id);
-            return RedirectToAction("Index");
+            return Ok();
         }
 
     }
