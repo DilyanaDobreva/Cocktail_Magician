@@ -11,6 +11,9 @@
         public const string NoIngredientQuantity = "Missing ingredient quantity.";
         public const string CocktailExists = "Cocktail with this name already exists.";
         public const string BarExists = "Bar with this name already exists.";
+        public const string InvalidIngredient = "Invalid ingredient.";
+        public const string MissingIngredient = "Missing ingredient {0}.";
+
 
     }
 }

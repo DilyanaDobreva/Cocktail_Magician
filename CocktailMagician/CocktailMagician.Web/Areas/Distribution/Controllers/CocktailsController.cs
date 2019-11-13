@@ -8,6 +8,7 @@ using CocktailMagician.Web.Areas.Distribution.Models.Cocktails;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Authorization;
 using CocktailMagician.Web.Areas.Distribution.Models;
+using System;
 
 namespace CocktailMagician.Web.Areas.Cocktails.Controllers
 {
@@ -95,21 +96,36 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> EditBars(int id)
         {
+            try
+            {
             var vm = new EditBarsViewModel();
             vm.CocktailName = await cocktailServices.GetNameAsync(id);
             vm.AllOtherBars = (await cocktailServices.GetAllNotIncludedDTOAsync(id)).Select(b => new SelectListItem(b.Name, b.Id.ToString())).ToList();
             vm.BarsOfCocktail = (await cocktailServices.GetBarsOfCocktailAsync(id)).Select(b => new SelectListItem(b.Name, b.Id.ToString())).ToList();
             return View(vm);
+            }
+            catch(InvalidOperationException)
+            {
+                return BadRequest();
+            }
+
         }
         [HttpPost]
         [Authorize(Roles = "admin")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditBars(int id, EditBarsViewModel vm)
         {
-            await cocktailServices.AddBarsAsync(id, vm.BarsToAdd);
-            await cocktailServices.RemoveBarsAsync(id, vm.BarsToRemove);
+            try
+            {
+                await cocktailServices.AddBarsAsync(id, vm.BarsToAdd);
+                await cocktailServices.RemoveBarsAsync(id, vm.BarsToRemove);
 
-            return RedirectToAction("Details", new { id = id });
+                return RedirectToAction("Details", new { id = id });
+            }
+            catch(InvalidCastException)
+            {
+                return BadRequest();
+            }
         }
 
         //[Authorize(Roles = "admin")]

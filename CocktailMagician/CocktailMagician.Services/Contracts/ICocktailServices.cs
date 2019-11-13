@@ -11,8 +11,8 @@ namespace CocktailMagician.Services.Contracts
         Task DeleteAsync(int id);
         Task<CocktailDetailsDTO> GetDTOAsync(int id);
         Task<List<CocktailInListDTO>> GetAllDTOAsync(int itemsPerPage, int currentPage);
-        Task AddIngredientAsync(int cocktailId, int ingredientId, int quantity);
-        Task RemoveIngredientAsync(int cocktailId, int ingredientId);
+        //Task AddIngredientAsync(int cocktailId, int ingredientId, int quantity);
+        //Task RemoveIngredientAsync(int cocktailId, int ingredientId);
         Task<string> GetNameAsync(int id);
         Task AddBarsAsync(int cocktailID, List<int> barsId);
         Task RemoveBarsAsync(int cocktailID, List<int> barsId);
