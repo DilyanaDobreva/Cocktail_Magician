@@ -46,7 +46,7 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
         {
             var barVM = new AddBarViewModel();
 
-            var cities = await cityServices.GetAllDTOsync();
+            var cities = await cityServices.GetAllDTOAsync();
             barVM.AllCities = cities.Select(c => new SelectListItem(c.Name, c.Id.ToString())).ToList();
 
             return View(barVM);
@@ -141,7 +141,7 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
                 var barToEditDTO = await barServices.GetBarToEditDTOAsync(id);
                 var barToEditVM = barToEditDTO.MapToViewModel();
 
-                var cities = await cityServices.GetAllDTOsync();
+                var cities = await cityServices.GetAllDTOAsync();
                 barToEditVM.AllCities = cities.Select(c => new SelectListItem(c.Name, c.Id.ToString())).ToList();
 
                 return View(barToEditVM);
@@ -189,7 +189,7 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
 
         public async Task<IActionResult> Search([FromQuery] BarSearchViewModel vm)
         {
-            var allCities = (await cityServices.GetAllDTOsync());
+            var allCities = (await cityServices.GetAllDTOAsync());
             vm.AllCities = new List<SelectListItem>();
             vm.AllCities.Add(new SelectListItem("Select...", ""));
 

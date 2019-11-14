@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using CocktailMagician.Services.Contracts;
 using CocktailMagician.Web.Areas.Distribution.Mapper;
 using CocktailMagician.Web.Areas.Distribution.Models.City;
@@ -19,10 +20,17 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
         [HttpPost]
         public async Task<IActionResult> Add([FromBody]CityViewModel vm)
         {
-            var city = (await cityServices.AddAsync(vm.Name)).MapToViewModel();
+            try
+            {
+                var city = (await cityServices.AddAsync(vm.Name)).MapToViewModel();
 
-            return Json(city);
+                return Json(city);
+            }
+            catch ( ArgumentException ex)
+            {
+                TempData["Status"] = ex.Message;
+                return RedirectToAction("Add", "Bars");
+            }
         }
-
     }
 }

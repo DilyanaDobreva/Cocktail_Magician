@@ -24,7 +24,7 @@ namespace CocktailMagician.Services
         }
         public async Task<CityDTO> AddAsync(string name)
         {
-            var doesCityExist = await context.Cities.AnyAsync(c => c.Name == name);
+            var doesCityExist = await context.Cities.AnyAsync(c => c.Name.ToLower() == name.ToLower());
             if (doesCityExist)
                 throw new ArgumentException(OutputConstants.CityAlreadyExists);
 
@@ -43,7 +43,7 @@ namespace CocktailMagician.Services
 
             return cityDTO;
         }
-        public async Task<List<CityDTO>> GetAllDTOsync()
+        public async Task<List<CityDTO>> GetAllDTOAsync()
         {
             var allCities = await context.Cities
                 .Where(c => c.IsDeleted == false)

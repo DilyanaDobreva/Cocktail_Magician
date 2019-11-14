@@ -25,6 +25,10 @@ namespace CocktailMagician.Services
 
         public async Task<IngredientBasicDTO> AddAsync(string name, string unit)
         {
+            var doesIngredientExist = await context.Ingredients.AnyAsync(c => c.Name.ToLower() == name.ToLower());
+            if (doesIngredientExist)
+                throw new ArgumentException(OutputConstants.IngredientAlreadyExists);
+
             var ingredient = ingredientFactory.Create(name, unit);
             context.Ingredients.Add(ingredient);
             await context.SaveChangesAsync();

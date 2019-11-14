@@ -8,6 +8,6 @@ namespace CocktailMagician.Services.Contracts
     public interface ICityServices
     {
         Task<CityDTO> AddAsync(string name);
-        Task<List<CityDTO>> GetAllDTOsync();
+        Task<List<CityDTO>> GetAllDTOAsync();
     }
 }

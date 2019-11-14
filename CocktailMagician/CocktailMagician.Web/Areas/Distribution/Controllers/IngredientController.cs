@@ -23,14 +23,17 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
         [HttpPost]
         public async Task<IActionResult> Add([FromBody]IngredientBasicViewModel vm)
         {
-            if (ModelState.IsValid)
+            try
             {
                 var ingredient = (await ingredientServices.AddAsync(vm.Name, vm.Unit)).MapToViewModel();
 
                 return Json(ingredient);
             }
-            TempData["Message"] = "Fileds are required!";
-            return View("~/Views/Cocktails/Add.cshtml");
+            catch (ArgumentException ex)
+            {
+                TempData["Status"] = ex.Message;
+                return RedirectToAction("Add", "Cocktails");
+            }
 
         }
         public async Task<IActionResult> Index(int id = 1)
@@ -53,10 +56,10 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
         {
             try
             {
-            await ingredientServices.DeleteAsync(id);
-            return Ok();
+                await ingredientServices.DeleteAsync(id);
+                return Ok();
             }
-            catch(InvalidOperationException)
+            catch (InvalidOperationException)
             {
                 return BadRequest();
             }
