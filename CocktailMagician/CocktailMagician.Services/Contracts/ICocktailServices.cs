@@ -20,7 +20,7 @@ namespace CocktailMagician.Services.Contracts
         Task<List<CocktailInListDTO>> SearchAsync(string name, int? ingredientId, int? minRating);
         Task<int> AllCocktailsCountAsync();
         Task<List<BarBasicDTO>> GetBarsOfCocktailAsync(int cocktailId);
-        Task<List<BarBasicDTO>> GetAllNotIncludedDTOAsync(int cocktailId);
+        Task<List<BarBasicDTO>> GetAllNotIncludedBarsDTOAsync(int cocktailId);
         Task<bool> DoesNameExist(string name);
     }
 }

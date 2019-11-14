@@ -14,7 +14,7 @@ namespace CocktailMagician.Services.SearchFilter
             {
                 return list;
             }
-            var newList = list.Where(b => b.Name.ToLower().Contains(key.ToLower()));
+            var newList = list.Where(b => b.Name.Contains(key, StringComparison.OrdinalIgnoreCase));
             return newList;
         }
 

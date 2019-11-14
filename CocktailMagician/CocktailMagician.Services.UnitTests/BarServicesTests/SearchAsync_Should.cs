@@ -109,10 +109,7 @@ namespace CocktailMagician.Services.UnitTests.BarServicesTests
                 var result = await sut.SearchAsync(substringToSearch, null, null);
 
                 Assert.AreEqual(2, result.Count());
-                foreach (var bar in result)
-                {
-                    Assert.IsTrue(bar.Name.Contains(substringToSearch, StringComparison.OrdinalIgnoreCase));
-                }
+                Assert.IsFalse(result.Any(c => !c.Name.Contains(substringToSearch, StringComparison.OrdinalIgnoreCase)));
             }
         }
         [TestMethod]

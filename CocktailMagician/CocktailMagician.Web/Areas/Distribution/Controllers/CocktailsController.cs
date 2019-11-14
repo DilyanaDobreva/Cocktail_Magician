@@ -7,7 +7,6 @@ using CocktailMagician.Web.Areas.Distribution.Mapper;
 using CocktailMagician.Web.Areas.Distribution.Models.Cocktails;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Authorization;
-using CocktailMagician.Web.Areas.Distribution.Models;
 using System;
 
 namespace CocktailMagician.Web.Areas.Cocktails.Controllers
@@ -100,7 +99,7 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
             {
             var vm = new EditBarsViewModel();
             vm.CocktailName = await cocktailServices.GetNameAsync(id);
-            vm.AllOtherBars = (await cocktailServices.GetAllNotIncludedDTOAsync(id)).Select(b => new SelectListItem(b.Name, b.Id.ToString())).ToList();
+            vm.AllOtherBars = (await cocktailServices.GetAllNotIncludedBarsDTOAsync(id)).Select(b => new SelectListItem(b.Name, b.Id.ToString())).ToList();
             vm.BarsOfCocktail = (await cocktailServices.GetBarsOfCocktailAsync(id)).Select(b => new SelectListItem(b.Name, b.Id.ToString())).ToList();
             return View(vm);
             }
@@ -193,9 +192,17 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
         {
             if (ModelState.IsValid)
             {
-                var ingredientsQuantityDTO = cocktailToEdit.IngredientsQuantity.Select(i => i.MapToDTO()).ToList();
-                await cocktailServices.EditIngredientsAsync(id, ingredientsQuantityDTO, cocktailToEdit.IngredientsToRemove);
-                return RedirectToAction("Details", new { id = cocktailToEdit.Id });
+                try
+                {
+
+                    var ingredientsQuantityDTO = cocktailToEdit.IngredientsQuantity.Select(i => i.MapToDTO()).ToList();
+                    await cocktailServices.EditIngredientsAsync(id, ingredientsQuantityDTO, cocktailToEdit.IngredientsToRemove);
+                    return RedirectToAction("Details", new { id = cocktailToEdit.Id });
+                }
+                catch(InvalidOperationException)
+                {
+                    return BadRequest();
+                }
             }
             ModelState.AddModelError("", "Something went wrong...");
             return View(cocktailToEdit);
