@@ -1,6 +1,4 @@
-﻿using CocktailMagician.Data.Models;
-using CocktailMagician.Services.DTOs;
-using System;
+﻿using CocktailMagician.Services.DTOs;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -14,7 +12,6 @@ namespace CocktailMagician.Services.Contracts
         Task DeleteAsync(int id);
         Task<List<IngredientBasicDTO>> GetAllDTOAsync();
         Task<List<IngredientBasicDTO>> GetAllPagedDTOAsync(int itemsPerPage, int currentPage);
-        Task<List<IngredientBasicDTO>> GetAllNotIncludedDTOAsync(int cocktailId);
         Task<int> AllIngredientsCountAsync();
     }
 }

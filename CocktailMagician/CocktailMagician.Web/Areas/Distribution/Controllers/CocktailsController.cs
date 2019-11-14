@@ -157,7 +157,7 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
                     .Select(i => i.Value + i.Unit + " " + i.Name)
                     .ToList();
 
-                var ingredients = await ingredientServices.GetAllNotIncludedDTOAsync(id);
+                var ingredients = await cocktailServices.GetAllNotIncludedIngredientsDTOAsync(id);
 
                 cocktailToEdit.AllNotIncludedIngredients = ingredients
                     .Select(b => new SelectListItem(b.Name, b.Name)).ToList();

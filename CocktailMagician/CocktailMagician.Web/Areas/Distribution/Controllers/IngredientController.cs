@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using CocktailMagician.Services.Contracts;
 using CocktailMagician.Web.Areas.Distribution.Mapper;
@@ -47,11 +48,18 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
         }
         [HttpPost]
         [Authorize(Roles = "admin")]
-        //[ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
+            try
+            {
             await ingredientServices.DeleteAsync(id);
             return Ok();
+            }
+            catch(InvalidOperationException)
+            {
+                return BadRequest();
+            }
         }
 
     }

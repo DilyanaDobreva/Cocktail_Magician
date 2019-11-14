@@ -297,5 +297,25 @@ namespace CocktailMagician.Services
         {
             return await context.Cocktails.AnyAsync(c => c.Name.ToLower() == name.ToLower() && c.IsDeleted == false);
         }
+        public async Task<List<IngredientBasicDTO>> GetAllNotIncludedIngredientsDTOAsync(int cocktailId)
+        {
+            if (!await context.Cocktails.AnyAsync(b => b.Id == cocktailId && b.IsDeleted == false))
+            {
+                throw new InvalidOperationException(OutputConstants.InvalidId);
+            }
+
+            var ingredients = await context.Ingredients
+                .Include(i => i.CocktailIngredients)
+                .Where(i => i.IsDeleted == false && !(i.CocktailIngredients.Any(ingr => ingr.CocktailId == cocktailId)))
+                .Select(i => new IngredientBasicDTO
+                {
+                    Id = i.Id,
+                    Name = i.Name,
+                    Unit = i.Unit
+                })
+                .ToListAsync();
+
+            return ingredients;
+        }
     }
 }

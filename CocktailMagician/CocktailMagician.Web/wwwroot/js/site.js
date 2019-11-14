@@ -101,3 +101,33 @@ $(document).ready(function () {
 });
 
 
+function ShowModal(id) {
+    $(`.${id}`).modal('show');
+}
+function DeleteValue(id) {
+    $(`.${id}`).modal('hide');
+    let trId = id + '+testId';
+    let button = document.getElementById(trId);
+    //button.remove();
+
+    $.ajax(
+        {
+            type: 'Post',
+            url: 'Ingredients/Delete',
+            data: {
+                'id': id
+            },
+            headers: {
+                RequestVerificationToken:
+                    $('input:hidden[name="__RequestVerificationToken"]').val(),
+                //'Accept': 'application/json',
+                //'Content-Type': 'application/json'
+            },
+            success: function () {
+                button.remove();
+            }
+        })
+}
+
+
+

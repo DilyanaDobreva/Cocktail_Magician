@@ -41,7 +41,6 @@ namespace CocktailMagician.Services
 
             return dbIngredient;
         }
-
         //public async Task EditAsync(int id, string newName)
         //{
         //    var ingredient = await context.Ingredients.FirstOrDefaultAsync(i => i.Id == id && i.IsDeleted == false);
@@ -55,78 +54,61 @@ namespace CocktailMagician.Services
         //}
         public async Task DeleteAsync(int id)
         {
-            var ingredient = await context.Ingredients.Include(i => i.CocktailIngredients).FirstOrDefaultAsync(i => i.Id == id && i.IsDeleted == false);
-            if (ingredient == null)
+            if (!await context.Ingredients.AnyAsync(b => b.Id == id && b.IsDeleted == false))
             {
-                throw new ArgumentException(OutputConstants.IngredientNotFound);
+                throw new InvalidOperationException(OutputConstants.InvalidId);
             }
-            //TODO Why cannot use AnyAsync
+
+            if(await context.CocktailIngredients.AnyAsync(ci => ci.IngredientId == id))
+            {
+                throw new InvalidOperationException(OutputConstants.IngredientPartOfCocktails);
+            }
+
+            var ingredient = await context.Ingredients.FirstOrDefaultAsync(i => i.Id == id && i.IsDeleted == false);
             
             ingredient.IsDeleted = true;
             await context.SaveChangesAsync();
         }
-
         //public async Task<Ingredient> GetAsync(int id)
         //{
         //    var ingredient = await context.Ingredients.FirstOrDefaultAsync(i => i.Id == id && i.IsDeleted == false);
         //    return ingredient;
         //}
-
-        public async Task<List<IngredientBasicDTO>> GetAllNotIncludedDTOAsync(int cocktailId)
-        {
-            var ingredients = await context.Ingredients
-                .Include(i => i.CocktailIngredients)
-                .Where(i => i.IsDeleted == false && !(i.CocktailIngredients.Any(ingr => ingr.CocktailId == cocktailId)))
-                .Select(i => new IngredientBasicDTO
-                {
-                    Id = i.Id,
-                    Name = i.Name,
-                    Unit = i.Unit
-                })
-                .ToListAsync();
-
-            return ingredients;
-        }
         public async Task<List<IngredientBasicDTO>> GetAllDTOAsync()
         {
             var allIngredients = await context.Ingredients
+                .Include(i => i.CocktailIngredients)
                 .Where(i => i.IsDeleted == false)
                 .Select(i => new IngredientBasicDTO
                 {
                     Id = i.Id,
                     Name = i.Name,
                     Unit = i.Unit,
+                    CanDelete = !i.CocktailIngredients.Any()
                 })
                 .OrderBy(i => i.Name)
                 .ToListAsync();
 
-            allIngredients.ForEach(i => i.CanDelete = CanDelete(i.Id));
             return allIngredients;
         }
         public async Task<List<IngredientBasicDTO>> GetAllPagedDTOAsync(int itemsPerPage, int currentPage)
         {
             var allIngredients = await context.Ingredients
+                .Include(i => i.CocktailIngredients)
                 .Where(i => i.IsDeleted == false)
                 .Select(i => new IngredientBasicDTO
                 {
                     Id = i.Id,
                     Name = i.Name,
                     Unit = i.Unit,
+                    CanDelete = !i.CocktailIngredients.Any()
                 })
                 .OrderBy(i => i.Name)
                 .Skip((currentPage - 1) * itemsPerPage)
                 .Take(itemsPerPage)
                 .ToListAsync();
 
-            allIngredients.ForEach(i => i.CanDelete = CanDelete(i.Id));
             return allIngredients;
-        }
-
-
-        private bool CanDelete(int id)
-        {
-            var canDelete = !context.CocktailIngredients.Any(b => b.IngredientId == id);
-            return canDelete;
         }
         public async Task<int> AllIngredientsCountAsync()
         {
