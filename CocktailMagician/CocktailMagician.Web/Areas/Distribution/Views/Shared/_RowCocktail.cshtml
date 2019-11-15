@@ -1,11 +1,56 @@
 ﻿@model CocktailInListViewModel
 
 
-<div class="col-md-3 " align="center">
-    <div class="margin-card shadow">
-        <h5 class="card-title">@Model.Name</h5>
-        <img class="image-cocktail-index img-fluid" src="@Model.ImageURL" alt="Card image cap">
-        <div class="card-body">
+<div class="col-lg-3 mb-5 col-md-6" align="center">
+    <div class="wine_v_1 text-center pb-4">
+        @*<a asp-action="Details" asp-route-id="@Model.Id" class="thumbnail d-block mb-4">*@
+            <img class="image-cocktail-index img-fluid" src="@Model.ImageURL" alt="Card image cap">
+            <div class="m-3">
+                <h2 class="heading text-primary font-weight-bold">@Model.Name</h2>
+                <div class="rating ">
+                    <span class="yellow-color">
+                        @if (Model.AverageRating != null)
+                        {
+                            for (int i = 1; i <= Model.AverageRating; i++)
+                            {
+                                <span class="icon-star"></span>
+                            }
+                            for (int i = 5; i > Model.AverageRating; i--)
+                            {
+                                <span class="icon-star-o"></span>
+                            }
+                        }
+                    </span>
+                    @String.Format("{0:0.0}", Model.AverageRating)
+                </div>
+
+            </div>
+
+        <div class="wine-actions">
+            <div class="heading m-1 text-dark">@Model.Name</div>
+            <div class="rating">
+
+                @if (Model.AverageRating != null)
+                {
+                    for (int i = 1; i <= Model.AverageRating; i++)
+                    {
+                        <span class="icon-star"></span>
+                    }
+                    for (int i = 5; i > Model.AverageRating; i--)
+                    {
+                        <span class="icon-star-o"></span>
+                    }
+                }
+                @String.Format("{0:0.0}", Model.AverageRating)
+            </div>
+
+            <a asp-action="Details" asp-route-id="@Model.Id" class="btn add"><span class="icon-local_drink mr-3"></span> Details</a>
+        </div>
+    </div>
+
+
+
+    @*<div class="card-body">
             <div>
                 @if (Model.AverageRating != null)
                 {
@@ -13,9 +58,9 @@
                     @String.Format("{0:0.0}", Model.AverageRating)
                     <br />
                 }
-                <a asp-action="Details" asp-route-id="@Model.Id">Show Details</a>
+
             </div>
-        </div>
-    </div>
+        </div>*@
 </div>
+
 
