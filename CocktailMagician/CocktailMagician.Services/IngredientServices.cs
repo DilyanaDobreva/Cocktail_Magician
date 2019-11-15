@@ -41,7 +41,7 @@ namespace CocktailMagician.Services
                     Unit = ingredient.Unit
 
                 })
-                .SingleAsync(i => i.Name == name);
+                .FirstAsync(i => i.Name == name);
 
             return dbIngredient;
         }
