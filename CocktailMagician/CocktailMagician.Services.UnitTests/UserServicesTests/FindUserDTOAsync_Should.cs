@@ -46,6 +46,9 @@ namespace CocktailMagician.Services.UnitTests.ServiceTests
                 Assert.AreEqual(userTest.UserName, user.UserName);
                 Assert.AreEqual(userTest.Password, user.Password);
                 Assert.AreEqual(userTest.RoleName, user.Role.Name);
+                Assert.AreEqual(userTest.BannId, user.BannId);
+                Assert.AreEqual(userTest.BannReason, user.Bann.Reason);
+                Assert.AreEqual(userTest.BannEndTime, user.Bann.EndDateTime);
             }
         }
     }

@@ -18,11 +18,8 @@ namespace CocktailMagician.Services.Contracts
         Task<List<UserDTO>> GetListOfUsersDTO();
         Task<IEnumerable<RoleDTO>> GetAllRoles();
         Task<bool> IsBannedAsync(string userName);
-
-
-
-        //To be checked
         Task UpdateUserAsync(string id, string password, string newPassword, int roleId);
+
         Task BanAsync(string reason, UserDTO user);
     }
 }
