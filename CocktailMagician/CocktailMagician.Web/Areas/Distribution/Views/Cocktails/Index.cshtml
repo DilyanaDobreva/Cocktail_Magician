@@ -4,14 +4,24 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-    <div class="row mb-5">
-        <div class="col-12 section-title text-center mb-5">
-            <h2 class="d-block">Our Cocktails</h2>
-            <p>You can't buy happiness, but you can drink a cocktail and that's the kind of the same thing!</p>
-        </div>
+<div class="row mb-2">
+    <div class="col-12 section-title text-center ">
+        <h2 class="d-block">Our Cocktails</h2>
+        <p>You can't buy happiness, but you can drink a cocktail and that's the kind of the same thing!</p>
     </div>
-<a href="/Distribution/Cocktails/Add">Add cocktail</a>
-<a href="/Distribution/Cocktails/Search">Search</a>
+</div>
+<div>
+    <span class="left">
+        @if (User.IsInRole("admin"))
+        {
+            <a href="/Distribution/Cocktails/Add" class="icon-add mr-3 h5">Add cocktail</a>
+        }
+    </span>
+
+    <span class="right">
+        <a href="/Distribution/Cocktails/Search" class="icon-search2 h5">Search</a>
+    </span>
+</div>
 
 <hr />
 <div class="container">

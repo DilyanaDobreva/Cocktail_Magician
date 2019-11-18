@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace CocktailMagician.Web
 {
@@ -60,6 +61,15 @@ namespace CocktailMagician.Web
             services.AddScoped<IBarReviewFactory, BarReviewFactory>();
             services.AddScoped<IBarReviewServices, BarReviewServices>();
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+
+            services.AddSession(options =>
+            {
+                options.Cookie.HttpOnly = true; // XSS Security [no JS]
+
+                // Session Timeout 
+                // For Testing => Set a short Timeout
+                options.IdleTimeout = new TimeSpan(0, 1, 0, 0); // Days, Hours, Minutes, Seconds
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -82,6 +92,7 @@ namespace CocktailMagician.Web
             app.UseCookiePolicy();
 
             app.UseAuthentication();
+
 
             app.UseMvc(routes =>
             {

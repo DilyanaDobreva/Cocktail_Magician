@@ -128,3 +128,33 @@ body {
 .yellow-color {
     color: #ffd800
 }
+.right {
+    text-align: right;
+    width: 50%;
+    display: inline-block;
+}
+
+.left {
+    text-align: left;
+    width: 49%;
+    display: inline-block;
+}
+
+.cocktail-title {
+    color: #000;
+    margin-bottom: 10px;
+}
+
+    .cocktail-title h4 {
+        font-size: 1.35rem;
+        font-weight: 400;
+        position: relative;
+        display: inline-block;
+        font-family: "Cinzel";
+    }
+
+#map {
+    height: 100%;
+}
+
+
