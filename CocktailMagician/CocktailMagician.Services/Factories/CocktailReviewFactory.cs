@@ -8,14 +8,14 @@ namespace CocktailMagician.Services.Factories
 {
     public class CocktailReviewFactory : ICocktailReviewFactory
     {
-        public CocktailReview Create(string comment, int? rating, User user, Cocktail cocktail)
+        public CocktailReview Create(string comment, int? rating, string userId, int cocktailId)
         {
             var review = new CocktailReview
             {
                 Comment = comment,
                 Rating = rating,
-                User = user,
-                Cocktail = cocktail
+                UserId = userId,
+                CocktailId = cocktailId
 
             };
             return review;

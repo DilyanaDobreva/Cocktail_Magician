@@ -6,7 +6,6 @@ using CocktailMagician.Data;
 using CocktailMagician.Services.Contracts;
 using CocktailMagician.Services.Contracts.Factories;
 using CocktailMagician.Services.DTOs;
-using CocktailMagician.Services.Mapper;
 using Microsoft.EntityFrameworkCore;
 
 namespace CocktailMagician.Services
@@ -49,15 +48,6 @@ namespace CocktailMagician.Services
             await context.SaveChangesAsync();
         }
 
-        public Task<double?> GetMidRatingAsync(int cocktailId)
-        {
-            var allRatings = context.CocktailReviews
-                .Where(c => c.Id == cocktailId)
-                .Where(c => c.Rating != null).Select(r => r.Rating);
-            var avgRating = allRatings.AverageAsync();
-
-            return avgRating;
-        }
         public async Task<List<BarReviewDTO>> AllReviewsAsync(int barId)
         {
 
