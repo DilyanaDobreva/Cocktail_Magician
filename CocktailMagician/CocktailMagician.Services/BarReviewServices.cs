@@ -14,23 +14,20 @@ namespace CocktailMagician.Services
     public class BarReviewServices : IBarReviewServices
     {
         private readonly IBarReviewFactory barReviewFactory;
-        private readonly IUserServices userServices;
         private readonly CocktailMagicianDb context;
 
-        public BarReviewServices(IBarReviewFactory barReviewFactory, IUserServices userServices, CocktailMagicianDb context)
+        public BarReviewServices(IBarReviewFactory barReviewFactory, CocktailMagicianDb context)
         {
             this.barReviewFactory = barReviewFactory;
-            this.userServices = userServices;
             this.context = context;
         }
 
         public async Task AddReviewAsync(string comment, int? rating, string userName, int barId)
         {
-            string[] rudeWords ={ "ass", "arse", "asshole", "bastard", "bitch", "bollocks", "child-fucker", "Christ on a bike", "Christ on a cracker", "crap", "cunt", "damn", "frigger", "fuck", "goddamn", "godsdamn", "hell", "holy shit", "horseshit", "Jesus Christ", "Jesus fuck", "Jesus H. Christ", "Jesus Harold Christ", "Jesus wept", "Jesus, Mary and Joseph", "Judas Priest", "motherfucker", "nigga", "nigger", "prick", "shit", "shit ass", "shitass", "slut", "son of a bitch", "son of a motherless goat", "son of a whore", "sweet Jesus" };
+            string[] rudeWords ={ "ass" };
 
-            var user = await userServices.FindUserAsync(userName);
-            var bar = await context.Bars
-                .FirstOrDefaultAsync(c => c.Id == barId && c.IsDeleted == false);
+            var userId = await context.Users.Where(u => u.UserName == userName).Select(u => u.Id).FirstAsync();
+            var bar = await context.Bars.Where(b => b.Id == barId).Select(b => b.Id).FirstAsync();
 
             //TODO K better way for replace.
             var newComment = comment.Split(' ');
@@ -46,7 +43,7 @@ namespace CocktailMagician.Services
                 }
             }
             comment = string.Join(' ', newComment);
-            var review = barReviewFactory.Create(comment, rating, user, bar);
+            var review = barReviewFactory.Create(comment, rating, userId, bar);
 
             context.BarReviews.Add(review);
             await context.SaveChangesAsync();

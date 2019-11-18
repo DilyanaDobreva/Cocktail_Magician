@@ -28,7 +28,7 @@ namespace CocktailMagician.Services
         }
         public async Task BanAsync(string reason, UserDTO userDTO)
         {
-            var date = DateTime.Now;
+            var date = DateTime.Today;
 
             if (userDTO.BannId != null)
             {
@@ -187,13 +187,12 @@ namespace CocktailMagician.Services
             if (newPassword != null)
             {
                 user.Password = hasher.Hasher(newPassword);
-                await this.context.SaveChangesAsync();
             }
             if (roleId != user.RoleId)
             {
                 user.RoleId = roleId;
-                await this.context.SaveChangesAsync();
             }
+            await this.context.SaveChangesAsync();
         }
         public Task<bool> IsBannedAsync(string userName)
         {

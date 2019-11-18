@@ -9,14 +9,14 @@ namespace CocktailMagician.Services.Factories
     public class BarReviewFactory : IBarReviewFactory
     {
 
-        public BarReview Create(string comment, int? rating, User user, Bar bar)
+        public BarReview Create(string comment, int? rating, string userId, int barId)
         {
             var review = new BarReview
             {
                 Comment = comment,
                 Rating = rating,
-                User = user,
-                Bar = bar
+                UserId = userId,
+                BarId = barId
 
             };
             return review;
