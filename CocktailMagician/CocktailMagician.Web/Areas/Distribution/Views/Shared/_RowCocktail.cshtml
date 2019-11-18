@@ -1,12 +1,14 @@
 ﻿@model CocktailInListViewModel
 
 
-<div class="col-lg-3 mb-5 col-md-6" align="center">
+<div class="col-lg-3 col-md-2" align="center">
     <div class="wine_v_1 text-center pb-4">
         @*<a asp-action="Details" asp-route-id="@Model.Id" class="thumbnail d-block mb-4">*@
             <img class="image-cocktail-index img-fluid" src="@Model.ImageURL" alt="Card image cap">
             <div class="m-3">
-                <h2 class="heading text-primary font-weight-bold">@Model.Name</h2>
+                <div class="cocktail-title text-center">
+                    <h4 class="d-block">@Model.Name</h4>
+                </div>
                 <div class="rating ">
                     <span class="yellow-color">
                         @if (Model.AverageRating != null)

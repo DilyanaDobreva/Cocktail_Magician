@@ -5,99 +5,123 @@
 
 }
 
-    <div class="row">
-        <div class="col-md-8">
-            <div align="right">
-                <img class="details-bar-image" src="@Model.ImageURL" alt="Card image cap" />
-            </div>
+<div class="row">
+    <div class="col-md-8">
+        <div align="right">
+            <img class="details-bar-image" src="@Model.ImageURL" alt="Card image cap" />
         </div>
-        <div class="col-md-4" align="center">
+    </div>
+    <div class="col-md-4" align="center">
 
-            <h3 class="m-4">@Model.Name</h3>
-            @if (User.IsInRole("admin"))
-            {
-                <div class="btn-group btn-group">
-                    <a asp-action="Edit" asp-controller="Bars" asp-route-id="@Model.Id" class="btn btn-outline-info">Edit</a>
-                    <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#deteleBarModal">Delete</button>
-                </div>
-            }
-            <div class="modal" id="deteleBarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div>Are you sure you want to delete @Model.Name bar?</div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <form asp-controller="Bars" asp-action="Delete" asp-route-id="@Model.Id">
-                                <button type="submit" class="btn btn-primary">Delete</button>
-                            </form>
-                        </div>
+        <h3 class="m-4">@Model.Name</h3>
+        @if (User.IsInRole("admin"))
+        {
+            <div class="btn-group btn-group">
+                <a asp-action="Edit" asp-controller="Bars" asp-route-id="@Model.Id" class="btn btn-outline-info">Edit</a>
+                <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#deteleBarModal">Delete</button>
+            </div>
+        }
+        <div class="modal" id="deteleBarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div>Are you sure you want to delete @Model.Name bar?</div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <form asp-controller="Bars" asp-action="Delete" asp-route-id="@Model.Id">
+                            <button type="submit" class="btn btn-primary">Delete</button>
+                        </form>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="m-4">
-                <div>
-                    <strong>Address:</strong>
-                </div>
-                <div>
-                    @Model.Address.Address, @Model.Address.CityName
-                </div>
-                <div>
-                    Map
+        <div class="m-4">
+            <div>
+                <strong>Address:</strong>
+            </div>
+            <div>
+                @Model.Address.Address, @Model.Address.CityName
+            </div>
+
+            <button class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">
+                Show on map
+            </button>
+
+            <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
+                 aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+                        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+                        <div id="googleMap" style="height:400px;width:100%;"></div>
+                        <script>
+                    function myMap() {
+                        var myCenter = new google.maps.LatLng(@Model.Address.Latitude, @Model.Address.Longitude);
+                        var mapProp = { center: myCenter, zoom: 15, scrollwheel: false, draggable: true, mapTypeId: google.maps.MapTypeId.ROADMAP };
+                        var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+                        var marker = new google.maps.Marker({ position: myCenter });
+                        marker.setMap(map);
+                    }
+                        </script>
+                        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAJnXpMOme8MhBjx57-7R5o1JsqDCnHJ-g&callback=myMap"></script>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
                 </div>
             </div>
             <hr />
-            <div class="m-4">
-                <div class="cocktails-scroll-frame">
-                    @if (Model.Cocktails != null && Model.Cocktails?.Count() != 0)
+            <div class="cocktails-scroll-frame">
+                @if (Model.Cocktails != null && Model.Cocktails?.Count() != 0)
+                {
+                    <h5>Cocktails:</h5>
+                    @foreach (var cocktail in Model.Cocktails)
                     {
-                        <h5>Cocktails:</h5>
-                        @foreach (var cocktail in Model.Cocktails)
-                        {
-                            <div class="m-3">
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <img src=@cocktail.ImageURL height="50" />
-                                    </div>
-                                    <div class="col-sm-8">
-                                        <div class="p-2" align="left">
-                                            <a asp-controller="Cocktails" asp-action="Details" asp-route-id="@cocktail.Id">@cocktail.Name</a>
-                                        </div>
+                        <div class="m-3">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <img src=@cocktail.ImageURL height="50" />
+                                </div>
+                                <div class="col-sm-8">
+                                    <div class="p-2" align="left">
+                                        <a asp-controller="Cocktails" asp-action="Details" asp-route-id="@cocktail.Id">@cocktail.Name</a>
                                     </div>
                                 </div>
                             </div>
-                        }
+                        </div>
                     }
-                </div>
-            </div>
-            <div>
-                @if (User.IsInRole("admin"))
-                {
-                    <a asp-action="EditCocktails" asp-controller="Bars" asp-route-id="@Model.Id" class="btn btn-outline-info">Edit cocktails</a>
                 }
             </div>
-            <a asp-action="BarReview" asp-route-id="@Model.Id">Add Review</a>
         </div>
-        <div class="col-md-6">
-            <button class="btn btn-light" id="load-show-comments-form-bar">Show comments</button>
-            <div style="display:none" id="barReview-div">
-                @foreach (var bar in Model.BarReviews)
-                {
-                    <div class="margin-container">
-                        <partial name="_BarReviewPartial" model="@bar" />
-                    </div>
-                }
-            </div>
+        <div>
+            @if (User.IsInRole("admin"))
+            {
+                <a asp-action="EditCocktails" asp-controller="Bars" asp-route-id="@Model.Id" class="btn btn-outline-info">Edit cocktails</a>
+            }
+        </div>
+        <a asp-action="BarReview" asp-route-id="@Model.Id">Add Review</a>
+    </div>
+    <div class="col-md-6">
+        <button class="btn btn-light" id="load-show-comments-form-bar">Show comments</button>
+        <div style="display:none" id="barReview-div">
+            @foreach (var bar in Model.BarReviews)
+            {
+                <div class="margin-container">
+                    <partial name="_BarReviewPartial" model="@bar" />
+                </div>
+            }
         </div>
     </div>
+</div>
 
 
 
