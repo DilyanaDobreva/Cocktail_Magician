@@ -214,7 +214,7 @@ h1, h2, h3, h4, h5,
   .select-wrap select, .wrap-icon select {
     -webkit-appearance: none;
     -moz-appearance: none;
-    appearance: none;
+    /*appearance: none;*/
     width: 100%; }
 
 /* Navbar */
@@ -802,7 +802,7 @@ h1, h2, h3, h4, h5,
 
 .section-title {
   color: #000;
-  margin-bottom: 50px; }
+  margin-bottom: 40px; }
   .section-title h2 {
     font-size: 2rem;
     font-weight: 400;
@@ -1399,7 +1399,7 @@ h1, h2, h3, h4, h5,
   text-align: center;
   text-transform: none !important; }
   .testimony img {
-    max-width: auto !important;
+    /*max-width: auto !important;*/
     width: 80px !important;
     border: 4px solid #930077;
     margin-bottom: 30px;
@@ -1456,7 +1456,7 @@ h1, h2, h3, h4, h5,
 
 .page-title-wrap h1 {
   color: #fff;
-  font-style: 4rem;
+  /*font-style: 4rem;*/
   font-family: "Cinzel"; }
 
 .site-blocks-table {

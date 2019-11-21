@@ -3,9 +3,9 @@
     ViewData["Title"] = "Add Cocktail";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h1>Add Cocktail</h1>
-
+<div align="center">
+    <h2 class="font-cinzel"><span class="icon-add"></span>Add Cocktail</h2>
+</div>
 @{ var statusMessage = TempData["Status"]?.ToString(); }
 @if (!string.IsNullOrWhiteSpace(statusMessage))
 {
@@ -18,37 +18,38 @@
 <div>
     <span asp-validation-summary="All" class="text-danger" />
 </div>
-<hr />
+<hr class="hr-primary" />
 @if ((Model?.IngredientsQuantity?.Count() ?? 0) == 0)
 {
     <div class="row">
         <div class="col-md-6">
             <form asp-action="/Distribution/Cocktails/Add" method="get">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
+                <div class="form-group m-2">
                     <label asp-for="@Model.Name" class="control-label"></label>
                     <input asp-for="@Model.Name" class="form-control" />
                     <span asp-validation-for="@Model.Name" class="text-danger" />
                 </div>
-                <div>
+                <div class="form-group m-2">
                     <label asp-for="@Model.ImageURL" class="control-label"></label>
                     <input asp-for="@Model.ImageURL" class="form-control" />
                     <span asp-validation-for="@Model.ImageURL" class="text-danger" />
                 </div>
-                <div>Please select ingredients:</div>
-                <div class="form-group">
+                <div class="form-group m-2">
                     <label>Ingredients</label>
                     <select multiple="multiple" class="multiple-select2 input-group input-group-lg" asp-for="@Model.CocktilIngredients" asp-items="@Model.AllIngredients " id="list-of-ingredients" width="100">
                     </select>
                     <span asp-validation-for="@Model.CocktilIngredients" class="text-danger" />
                 </div>
-                <input type="submit" value="Continue" class="btn btn-outline-info" />
+                <div class="m-4" align="right">
+                    <input type="submit" value="Continue" class="btn btn-outline-primary" />
+                </div>
             </form>
         </div>
         <div class="col-md-6">
             @{string message = TempData["Message"]?.ToString();}
             <div class="text-danger">@message</div>
-            <button class="btn btn-light" id="load-add-ingredient-form">Add ingredient</button>
+            <div class="text-link" id="load-add-ingredient-form">Add ingredient to menu</div>
             <div style="display:none" id="ingrediens-div">
                 <div class="m-4">
                     <div>
@@ -64,7 +65,7 @@
                     }
 
                 </div>
-                <button class="btn btn-light" id="ingrediens-to-db">Add new ingredient</button>
+                <button class="btn btn-outline-primary" id="ingrediens-to-db">Add new ingredient</button>
             </div>
         </div>
     </div>
@@ -72,42 +73,41 @@
 }
 else
 {
-    <div class="margin-bottom" align="center">
-        <h3>
-            Cocktail name: @Model.Name
-        </h3>
-        <h5>
-            Please enter ingrediens quantites:
-        </h5>
-    </div>
     <div class="row">
-        <div class="col-md-4 ">
-            <img src="@Model.ImageURL" alt="missing image" height="250" align="right">
+        <div class="col-md-5" align="center">
+            <div>
+                <img class="details-image img-fluid" src="@Model.ImageURL" alt="Card image cap">
+            </div>
         </div>
-        <div class="col-md-6">
-            <form asp-action="/Distribution/Cocktails/Add">
+        <div class="col-md-7" align="center">
+            <h2 class="font-cinzel m-4">@Model.Name</h2>
+            <h5>
+                Please enter ingrediens quantites:
+            </h5>
+            <div class="p-5">
 
-                @*@foreach (var ingr in Model.IngredientsQuantity)
+                <form asp-action="/Distribution/Cocktails/Add">
+
+                    @for (int i = 0; i < Model.IngredientsQuantity.Count(); ++i)
                     {
-                        <label asp-for="@ingr.Name" class="control-label">@ingr.Name</label>
-                        <input type="text" asp-for="@ingr.Value" class="form-control" />
-                        <span asp-validation-for="@ingr.Value" class="text-danger"></span>
-                    }*@
+                        <div class="form-row m-2">
 
-                @for (int i = 0; i < Model.IngredientsQuantity.Count(); ++i)
-                {
-                    @Html.HiddenFor(m => m.IngredientsQuantity[i].Name)
+                            @Html.HiddenFor(m => m.IngredientsQuantity[i].Name)
 
-                    <label asp-for="@Model.IngredientsQuantity[i].Name" class="control-label">@Model.IngredientsQuantity[i].Name</label>
-                    <input type="text" asp-for="@Model.IngredientsQuantity[i].Value" class="form-control" maxlength="20" />
+                            <label asp-for="@Model.IngredientsQuantity[i].Name" class="control-label col-md-6" align="right">@Model.IngredientsQuantity[i].Name:</label>
+                            <input type="text" asp-for="@Model.IngredientsQuantity[i].Value" class="form-control col-md-4" maxlength="20" />
+                        </div>
+                        <span asp-validation-for="@Model.IngredientsQuantity[i].Value" class="text-danger"></span>
 
-                    <span asp-validation-for="@Model.IngredientsQuantity[i].Value" class="text-danger"></span>
-
-                }
-                <input type="submit" value="Add Cocktail" class="btn btn-outline-info" />
-            </form>
+                    }
+                    <div class="m-4">
+                    <input type="submit" value="Add Cocktail" class="btn btn-outline-primary" />
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
+
 }
 
 

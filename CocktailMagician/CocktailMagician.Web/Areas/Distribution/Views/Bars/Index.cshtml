@@ -4,9 +4,24 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Bars</h1>
-<a href="/Distribution/Bars/Add">Add bar</a>
-<a href="/Distribution/Bars/Search">Search</a>
+<div class="row mb-1">
+    <div class="col-12 section-title text-center ">
+        <h2 class="d-block">Our Bars</h2>
+        <p>Start the day with a smile and end it with a cocktail!</p>
+    </div>
+</div>
+<div>
+    <span class="left">
+        @if (User.IsInRole("admin"))
+        {
+            <a href="/Distribution/Bars/Add" class="icon-add mr-3 h5">Add bar</a>
+        }
+    </span>
+
+    <span class="right">
+        <a href="/Distribution/Bars/Search" class="icon-search2 h5">Search</a>
+    </span>
+</div>
 
 <hr />
 <div class="container">

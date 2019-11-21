@@ -111,8 +111,9 @@ body {
 
 .image-bar-index {
     height: 280px;
-    width: 330px;
+    max-width: 310px;
     object-fit: cover;
+    
 }
 
 .bar-card-size {
@@ -256,3 +257,94 @@ body {
 .hr-primary {
     background-color: #930077;
 }
+
+
+.bar_v_1, .bar_h_1 {
+    height: 420px;
+    position: relative;
+    margin-bottom: 30px;
+}
+
+    .bar_v_1:before, .bar_h_1:before {
+        content: "";
+        background: #f3f4f5;
+        top: 20%;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        position: absolute;
+        z-index: -1;
+    }
+
+    .bar_v_1 .thumbnail, .bar_h_1 .thumbnail {
+        position: relative;
+        display: block;
+    }
+
+    .bar_v_1 .heading, .bar_h_1 .heading {
+        font-size: 18px;
+    }
+
+        .bar_v_1 .heading a, .bar_h_1 .heading a {
+            color: #000;
+        }
+
+    .bar_v_1 .bar-actions, .bar_h_1 .bar-actions {
+        padding-top: 20px;
+        padding-bottom: 20px;
+        position: absolute;
+        left: 20px;
+        right: 20px;
+        bottom: 20px;
+        background: #fff;
+        opacity: 0;
+        visibility: hidden;
+        -webkit-transition: .3s all ease;
+        -o-transition: .3s all ease;
+        transition: .3s all ease;
+    }
+
+        .bar_v_1 .bar-actions .heading-2, .bar_h_1 .baractions .heading-2 {
+            font-size: 20px;
+        }
+
+            .bar_v_1 .bar-actions .heading-2 a, .bar_h_1 .bar-actions .heading-2 a {
+                color: #000;
+            }
+
+        .bar_v_1 .bar-actions .price, .bar_h_1 .bar-actions .price {
+            font-size: 20px;
+            color: #930077;
+            font-family: "Cinzel";
+        }
+
+            .bar_v_1 .bar-actions .price del, .bar_h_1 .bar-actions .price del {
+                color: #ccc;
+            }
+
+        .bar_v_1 .bar-actions .rating, .bar_h_1 .bar-actions .rating {
+            margin-bottom: 20px;
+        }
+
+            .bar_v_1 .bar-actions .rating span, .bar_h_1 .bar-actions .rating span {
+                font-size: 16px;
+                color: #ffbd39;
+            }
+
+        .bar_v_1 .bar-actions .btn, .bar_h_1 .bar-actions .btn {
+            background: #930077;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 0;
+        }
+
+            .bar_v_1 .bar-actions .btn:hover, .bar_h_1 .bar-actions .btn:hover {
+                background: #60004e;
+                color: #fff;
+            }
+
+    .bar_v_1:hover .bar-actions, .bar_h_1:hover .bar-actions, .bar_v_1:focus .bar-actions, .bar_h_1:focus .bar-actions {
+        opacity: 1;
+        visibility: visible;
+    }
+

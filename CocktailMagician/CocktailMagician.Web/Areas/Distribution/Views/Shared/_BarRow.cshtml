@@ -1,23 +1,56 @@
 ﻿@model BarInListViewModel
 
 
-<div class="col-md-4 " align="center">
-    <div class="margin-bar-card shadow">
-        <h5 class="card-title">@Model.Name</h5>
-        <img class="card-img-top image-bar-index" src="@Model.ImageURL" alt="Card image cap">
-        <div class="card-body">
+<div class="col-xl-4 col-md-6 col-sm-12" align="center">
+    <div class="bar_v_1 text-center pb-4">
+        <div>
+            <img class="image-bar-index p-2" src="@Model.ImageURL" alt="Card image cap">
+        </div>
+        <div class="m-3">
+            <div class="cocktail-title text-center">
+                <h4 class="d-block">@Model.Name</h4>
+            </div>
             <p>
                 Address: @Model.Address, @Model.City
             </p>
             @if (Model.AverageRating != null)
             {
-                <span>Rating: &#11088;</span>
+                <span class="yellow-color">
+                    @if (Model.AverageRating != null)
+                    {
+                        for (int i = 1; i <= Model.AverageRating; i++)
+                        {
+                            <span class="icon-star"></span>
+                        }
+                        for (int i = 5; i > Model.AverageRating; i--)
+                        {
+                            <span class="icon-star-o"></span>
+                        }
+                    }
+                </span>
                 @String.Format("{0:0.0}", Model.AverageRating)
                 <br />
             }
-            <p>
-                <a asp-controller="Bars" asp-action="Details" asp-route-id="@Model.Id"> More info</a>
-            </p>
+        </div>
+        <div class="bar-actions">
+            <div class="heading m-1 text-dark">@Model.Name</div>
+            <div class="rating">
+
+                @if (Model.AverageRating != null)
+                {
+                    for (int i = 1; i <= Model.AverageRating; i++)
+                    {
+                        <span class="icon-star"></span>
+                    }
+                    for (int i = 5; i > Model.AverageRating; i--)
+                    {
+                        <span class="icon-star-o"></span>
+                    }
+                }
+                @String.Format("{0:0.0}", Model.AverageRating)
+            </div>
+
+            <a asp-action="Details" asp-route-id="@Model.Id" class="btn add"><span class="icon-building mr-3"></span> Details</a>
         </div>
     </div>
 </div>

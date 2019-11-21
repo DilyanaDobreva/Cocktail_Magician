@@ -35,8 +35,7 @@
                 }
             </div>
             <div class="pl-4" align="left">
-                If an ingredient is not in the list add it from
-                <span class="text-link" @*id="load-add-ingredient-form"*@ data-toggle="modal" data-target="#exampleModalCentered">here</span>
+                <span class="text-link" @*id="load-add-ingredient-form"*@ data-toggle="modal" data-target="#exampleModalCentered">Add missing ingredient to menu</span>
             </div>
 
             <div>
@@ -60,7 +59,7 @@
                         <select multiple="multiple" class="multiple-select2 input-group" asp-for="@Model.IngredientsToRemove" asp-items="@Model.CurrentCocktailIngredients " width="100">
                         </select>
                     </div>
-                    <input type="submit" value="Continue" class="btn btn-outline-info" />
+                    <input type="submit" value="Continue" class="btn btn-outline-primary" />
                 </form>
             </div>
 

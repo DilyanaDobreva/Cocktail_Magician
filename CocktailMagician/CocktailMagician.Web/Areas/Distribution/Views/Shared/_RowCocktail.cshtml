@@ -25,7 +25,6 @@
                     </span>
                     @String.Format("{0:0.0}", Model.AverageRating)
                 </div>
-
             </div>
 
         <div class="wine-actions">
@@ -49,20 +48,6 @@
             <a asp-action="Details" asp-route-id="@Model.Id" class="btn add"><span class="icon-local_drink mr-3"></span> Details</a>
         </div>
     </div>
-
-
-
-    @*<div class="card-body">
-            <div>
-                @if (Model.AverageRating != null)
-                {
-                    <span>Rating: &#11088;</span>
-                    @String.Format("{0:0.0}", Model.AverageRating)
-                    <br />
-                }
-
-            </div>
-        </div>*@
 </div>
 
 
