@@ -16,7 +16,8 @@ namespace CocktailMagician.Web.Areas.Distribution.Mapper
             {
                 Id = cocktail.Id,
                 Name = cocktail.Name,
-                ImageURL = cocktail.ImageURL
+                ImageURL = cocktail.ImageURL,
+                AverageRating = cocktail.AverageRating
             };
             vm.AverageRating = cocktail.AverageRating;
             return vm;

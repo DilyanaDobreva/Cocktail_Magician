@@ -236,24 +236,54 @@ namespace CocktailMagician.Services
             }
             await context.SaveChangesAsync();
         }
-        public async Task<List<CocktailInListDTO>> SearchAsync(string name, int? ingredientId, int? minRating)
+        public async Task<List<CocktailInListDTO>> SearchAsync(CocktailSearchDTO dto, int itemsPerPage, int currentPage)
         {
             var resultDTO = await context.Cocktails
                 .Include(c => c.CocktailIngredients)
                 .Include(c => c.CocktailReviews)
                 .Where(c => c.IsDeleted == false)
-                .FilterByName(name)
-                .FilterByIngredient(ingredientId)
-                .FilterByRating(minRating)
+                .FilterByName(dto.NameKey)
+                .FilterByIngredient(dto.IngredientId)
+                .FilterByRating(dto.MinRating)
                 .Select(c => new CocktailInListDTO
                 {
                     Id = c.Id,
                     Name = c.Name,
-                    ImageURL = c.ImageUrl
+                    ImageURL = c.ImageUrl,
+                    AverageRating = c.CocktailReviews
+                        .Where(r => r.Rating != null)
+                        .Select(r => r.Rating)
+                        .Average()
                 })
+                .Skip((currentPage - 1) * itemsPerPage)
+                .Take(itemsPerPage)
+
                 .ToListAsync();
 
             return resultDTO;
+        }
+        public async Task<int> SerchResultCountAsync(CocktailSearchDTO dto)
+        {
+            var resultCount = await context.Cocktails
+                .Include(c => c.CocktailIngredients)
+                .Include(c => c.CocktailReviews)
+                .Where(c => c.IsDeleted == false)
+                .FilterByName(dto.NameKey)
+                .FilterByIngredient(dto.IngredientId)
+                .FilterByRating(dto.MinRating)
+                .Select(c => new CocktailInListDTO
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    ImageURL = c.ImageUrl,
+                    AverageRating = c.CocktailReviews
+                        .Where(r => r.Rating != null)
+                        .Select(r => r.Rating)
+                        .Average()
+                })
+                .CountAsync();
+
+            return resultCount;
         }
         public async Task<int> AllCocktailsCountAsync()
         {

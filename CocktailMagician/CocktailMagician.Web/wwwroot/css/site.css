@@ -121,7 +121,7 @@ body {
 }
 
 .search-container {
-    width: 600px;
+    max-width: 800px;
     height: auto;
 }
 
@@ -252,4 +252,7 @@ body {
     color: #930077;
     text-decoration:underline;
     cursor:pointer
+}
+.hr-primary {
+    background-color: #930077;
 }

@@ -1,6 +1,7 @@
 ﻿using CocktailMagician.Data;
 using CocktailMagician.Data.Models;
 using CocktailMagician.Services.Contracts.Factories;
+using CocktailMagician.Services.DTOs;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -153,7 +154,11 @@ namespace CocktailMagician.Services.UnitTests.CocktailServicesTests
             using (var assertContext = new CocktailMagicianDb(options))
             {
                 var sut = new CocktailServices(assertContext, cocktailFactoryMock.Object, cocktailIngredinetFactoryMock.Object, barCocktailFactoryMock.Object);
-                var result = await sut.SearchAsync(substringToSearch, null, null);
+                var dtoTest = new CocktailSearchDTO
+                {
+                    NameKey = substringToSearch,
+                };
+                var result = await sut.SearchAsync(dtoTest, 5, 1);
 
                 Assert.AreEqual(2, result.Count());
                 Assert.IsFalse(result.Any(c => !c.Name.Contains(substringToSearch, StringComparison.OrdinalIgnoreCase)));
@@ -298,7 +303,12 @@ namespace CocktailMagician.Services.UnitTests.CocktailServicesTests
             {
                 var ingredientId = await assertContext.Ingredients.Where(i => i.Name == ingr2Name).Select(i => i.Id).FirstAsync();
                 var sut = new CocktailServices(assertContext, cocktailFactoryMock.Object, cocktailIngredinetFactoryMock.Object, barCocktailFactoryMock.Object);
-                var result = await sut.SearchAsync(null, ingredientId, null);
+
+                var DTOTest = new CocktailSearchDTO
+                {
+                    IngredientId = ingredientId
+                };
+                var result = await sut.SearchAsync(DTOTest, 5, 1);
 
                 Assert.AreEqual(2, result.Count());
                 Assert.IsTrue(result.Any(c => c.Name == cocktail2NameTest));
@@ -444,7 +454,11 @@ namespace CocktailMagician.Services.UnitTests.CocktailServicesTests
             using (var assertContext = new CocktailMagicianDb(options))
             {
                 var sut = new CocktailServices(assertContext, cocktailFactoryMock.Object, cocktailIngredinetFactoryMock.Object, barCocktailFactoryMock.Object);
-                var result = await sut.SearchAsync(null, null, minRatingToFilter);
+                var DTOTest = new CocktailSearchDTO
+                {
+                    MinRating = minRatingToFilter
+                };
+                var result = await sut.SearchAsync(DTOTest, 5, 1);
 
                 Assert.AreEqual(3, result.Count());
                 Assert.IsFalse(result.Any(c => c.AverageRating < minRatingToFilter));
@@ -590,7 +604,14 @@ namespace CocktailMagician.Services.UnitTests.CocktailServicesTests
             {
                 var ingredientId = await assertContext.Ingredients.Where(i => i.Name == ingr2Name).Select(i => i.Id).FirstAsync();
                 var sut = new CocktailServices(assertContext, cocktailFactoryMock.Object, cocktailIngredinetFactoryMock.Object, barCocktailFactoryMock.Object);
-                var result = await sut.SearchAsync(substringToSearh, ingredientId, minRatingToSearch);
+
+                var DTOTest = new CocktailSearchDTO
+                {
+                    NameKey = substringToSearh,
+                    IngredientId = ingredientId,
+                    MinRating = minRatingToSearch
+                };
+                var result = await sut.SearchAsync(DTOTest, 5, 1);
 
                 Assert.AreEqual(1, result.Count());
                 Assert.IsTrue(result.Any(c => c.Name == cocktail3NameTest));

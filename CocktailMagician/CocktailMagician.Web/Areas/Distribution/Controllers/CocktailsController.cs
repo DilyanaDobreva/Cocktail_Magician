@@ -8,6 +8,7 @@ using CocktailMagician.Web.Areas.Distribution.Models.Cocktails;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Authorization;
 using System;
+using CocktailMagician.Services.DTOs;
 
 namespace CocktailMagician.Web.Areas.Cocktails.Controllers
 {
@@ -219,7 +220,7 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
             await cocktailServices.DeleteAsync(id);
             return RedirectToAction("Index");
         }
-        public async Task<IActionResult> Search([FromQuery] CocktailSearchViewModel vm)
+        public async Task<IActionResult> Search(int id, [FromQuery] CocktailSearchViewModel vm)
         {
             var allIngredients = (await ingredientServices.GetAllDTOAsync());
             vm.AllIngredients = new List<SelectListItem>();
@@ -232,7 +233,18 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
                 return View(vm);
             }
 
-            vm.Result = (await cocktailServices.SearchAsync(vm.NameKey, vm.IngredientId, vm.MinRating))
+            var searchParameters = new CocktailSearchDTO
+            {
+                NameKey = vm.NameKey,
+                MinRating = vm.MinRating,
+                IngredientId = vm.IngredientId
+            };
+
+            vm.Paging.Count = await cocktailServices.SerchResultCountAsync(searchParameters);
+            vm.Paging.ItemsPerPage = itemsPerPage;
+            vm.Paging.CurrentPage = id == 0 ? 1 : id;
+
+            vm.Result = (await cocktailServices.SearchAsync(searchParameters, itemsPerPage, vm.Paging.CurrentPage))
                 .Select(b => b.MapToViewModel());
 
             return View(vm);
