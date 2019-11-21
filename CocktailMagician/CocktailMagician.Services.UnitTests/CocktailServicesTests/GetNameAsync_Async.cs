@@ -58,7 +58,7 @@ namespace CocktailMagician.Services.UnitTests.CocktailServicesTests
             using (var assertContext = new CocktailMagicianDb(options))
             {
                 var sut = new CocktailServices(assertContext, cocktailFactoryMock.Object, cocktailIngredinetFactoryMock.Object, barCocktailFactoryMock.Object);
-                await Assert.ThrowsExceptionAsync<InvalidOperationException>(() => sut.GetNameAsync(invalidId));
+                await Assert.ThrowsExceptionAsync<InvalidOperationException>(() => sut.GetDTOAsync(invalidId));
             };
         }
 
@@ -90,7 +90,7 @@ namespace CocktailMagician.Services.UnitTests.CocktailServicesTests
             {
                 var cocktailId = await assertContext.Cocktails.Where(c => c.Name == cocktailNameTest).Select(c => c.Id).FirstAsync();
                 var sut = new CocktailServices(assertContext, cocktailFactoryMock.Object, cocktailIngredinetFactoryMock.Object, barCocktailFactoryMock.Object);
-                await Assert.ThrowsExceptionAsync<InvalidOperationException>(() => sut.GetNameAsync(cocktailId));
+                await Assert.ThrowsExceptionAsync<InvalidOperationException>(() => sut.GetDTOAsync(cocktailId));
             };
         }
 
@@ -141,7 +141,7 @@ namespace CocktailMagician.Services.UnitTests.CocktailServicesTests
                     var cocktailId = await assertContext.Cocktails.Where(c => c.Name == cocktailNameTest).Select(c => c.Id).FirstAsync();
 
                     var sut = new CocktailServices(assertContext, cocktailFactoryMock.Object, cocktailIngredinetFactoryMock.Object, barCocktailFactoryMock.Object);
-                    var foundCocktailsName = await sut.GetNameAsync(cocktailId);
+                    var foundCocktailsName = await sut.GetDTOAsync(cocktailId);
 
                     Assert.AreEqual(cocktailNameTest, foundCocktailsName);
 

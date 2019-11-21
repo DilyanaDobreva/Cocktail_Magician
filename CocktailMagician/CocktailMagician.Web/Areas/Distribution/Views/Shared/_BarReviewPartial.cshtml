@@ -1,15 +1,19 @@
 ﻿@model BarReviewViewModel
 
 <div class="comment-box">
-    <div align="left">
+    <div class="ml-2 mr-2" align="left">
         By: @Model.UserName<span class="float-right">
-            Raiting:
-            @for (var i = 1; i <= Model.Rating; i++)
-            {
-                <span>&#11088;</span>
-            }
-            @Model.Rating
-        </span>
+    Raiting:
+    for (int i = 1; i <= Model.AverageRating; i++)
+    {
+    <span class="icon-star"></span>
+    }
+    for (int i = 5; i > Model.AverageRating; i--)
+    {
+    <span class="icon-star-o"></span>
+    }
+    @Model.Rating
+</span>
     </div>
     <hr />
     @if (Model.Comment != null)

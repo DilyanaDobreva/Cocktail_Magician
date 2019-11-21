@@ -3,13 +3,20 @@
 <div class="comment-box">
     <div align="left">
         By: @Model.UserName<span class="float-right">
-            Raiting:
-            @for (var i = 1; i <= Model.Rating; i++)
-            {
-                <span>&#11088;</span>
-            }
-            @Model.Rating
-        </span>
+    Raiting:
+    <span class="yellow-color">
+        @for (int i = 1; i <= Model.Rating; i++)
+        {
+            <span class="icon-star"></span>
+        }
+        @for (int i = 5; i > Model.Rating; i--)
+        {
+            <span class="icon-star-o"></span>
+        }
+    </span>
+    @Model.Rating
+
+</span>
     </div>
     <hr />
     @if (Model.Comment != null)

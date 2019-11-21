@@ -30,7 +30,7 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
         public async Task<IActionResult> Index(int id = 1)
         {
             var listOfCocktail = new CocktailsListViewModel();
-            
+
             listOfCocktail.Paging.Count = await cocktailServices.AllCocktailsCountAsync();
             listOfCocktail.Paging.ItemsPerPage = itemsPerPage;
             listOfCocktail.Paging.CurrentPage = id;
@@ -53,7 +53,7 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
 
                 return View(cocktailVM);
             }
-            if(await cocktailServices.DoesNameExist(cocktailVM.Name))
+            if (await cocktailServices.DoesNameExist(cocktailVM.Name))
             {
                 cocktailVM.Name = null;
                 cocktailVM.CocktilIngredients = null;
@@ -84,7 +84,7 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
         public async Task<IActionResult> Details(int id)
         {
             var listWithReviews = await cocktailReview.AllReviewsAsync(id);
-            var cocktail = (await cocktailServices.GetDTOAsync(id));
+            var cocktail = (await cocktailServices.GetDetailedDTOAsync(id));
             var cocktailVM = cocktail.MapToViewModel();
 
             cocktailVM.CocktailReviews = listWithReviews.Select(r => r.MapToViewModel());
@@ -97,13 +97,16 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
         {
             try
             {
-            var vm = new EditBarsViewModel();
-            vm.CocktailName = await cocktailServices.GetNameAsync(id);
-            vm.AllOtherBars = (await cocktailServices.GetAllNotIncludedBarsDTOAsync(id)).Select(b => new SelectListItem(b.Name, b.Id.ToString())).ToList();
-            vm.BarsOfCocktail = (await cocktailServices.GetBarsOfCocktailAsync(id)).Select(b => new SelectListItem(b.Name, b.Id.ToString())).ToList();
-            return View(vm);
+                var vm = new EditBarsViewModel();
+                var cocktail = await cocktailServices.GetDTOAsync(id);
+                vm.Id = cocktail.Id;
+                vm.CocktailName = cocktail.Name;
+                vm.ImageUrl = cocktail.ImageURL;
+                vm.AllOtherBars = (await cocktailServices.GetAllNotIncludedBarsDTOAsync(id)).Select(b => new SelectListItem(b.Name, b.Id.ToString())).ToList();
+                vm.BarsOfCocktail = (await cocktailServices.GetBarsOfCocktailAsync(id)).Select(b => new SelectListItem(b.Name, b.Id.ToString())).ToList();
+                return View(vm);
             }
-            catch(InvalidOperationException)
+            catch (InvalidOperationException)
             {
                 return BadRequest();
             }
@@ -121,7 +124,7 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
 
                 return RedirectToAction("Details", new { id = id });
             }
-            catch(InvalidCastException)
+            catch (InvalidCastException)
             {
                 return BadRequest();
             }
@@ -151,7 +154,7 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
 
             if (cocktailToEdit.CocktilNewIngredients.Count() == 0 && cocktailToEdit.IngredientsToRemove.Count() == 0)
             {
-                cocktailToEdit = (await cocktailServices.GetDTOAsync(id)).MapToEditViewModel();
+                cocktailToEdit = (await cocktailServices.GetDetailedDTOAsync(id)).MapToEditViewModel();
 
                 cocktailToEdit.ListCurrentIngredients = cocktailToEdit.IngredientsQuantity
                     .Select(i => i.Value + i.Unit + " " + i.Name)
@@ -199,7 +202,7 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
                     await cocktailServices.EditIngredientsAsync(id, ingredientsQuantityDTO, cocktailToEdit.IngredientsToRemove);
                     return RedirectToAction("Details", new { id = cocktailToEdit.Id });
                 }
-                catch(InvalidOperationException)
+                catch (InvalidOperationException)
                 {
                     return BadRequest();
                 }
@@ -237,7 +240,7 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
         }
         public async Task<IActionResult> CocktailReview(int id)
         {
-            var cocktail = await cocktailServices.GetDTOAsync(id);
+            var cocktail = await cocktailServices.GetDetailedDTOAsync(id);
             var cocktailVM = cocktail.MapToViewModel();
 
             var vm = new CocktailReviewViewModel
@@ -256,7 +259,7 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
                 await cocktailReview.AddReviewAsync(vm.Comment, vm.Rating, memberName, id);
             }
 
-            return RedirectToAction("Details", "Cocktails", new {id = id });
+            return RedirectToAction("Details", "Cocktails", new { id = id });
         }
 
         //public async Task<IActionResult> ShowReviews(int id)

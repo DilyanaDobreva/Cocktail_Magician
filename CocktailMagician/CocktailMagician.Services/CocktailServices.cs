@@ -72,7 +72,7 @@ namespace CocktailMagician.Services
 
             await context.SaveChangesAsync();
         }
-        public async Task<CocktailDetailsDTO> GetDTOAsync(int id)
+        public async Task<CocktailDetailsDTO> GetDetailedDTOAsync(int id)
         {
             if (!await context.Cocktails.AnyAsync(b => b.Id == id && b.IsDeleted == false))
             {
@@ -136,14 +136,19 @@ namespace CocktailMagician.Services
 
             return list;
         }
-        public async Task<string> GetNameAsync(int id)
+        public async Task<CocktailInListDTO> GetDTOAsync(int id)
         {
             if (!await context.Cocktails.AnyAsync(b => b.Id == id && b.IsDeleted == false))
             {
                 throw new InvalidOperationException(OutputConstants.InvalidId);
             }
 
-            var cokctailName = await context.Cocktails.Where(c => c.Id == id).Select(c => c.Name).FirstAsync();
+            var cokctailName = await context.Cocktails.Where(c => c.Id == id).Select(c => new CocktailInListDTO
+            {
+                Id = c.Id,
+                Name = c.Name,
+                ImageURL = c.ImageUrl
+            }).FirstAsync();
 
             return cokctailName;
         }

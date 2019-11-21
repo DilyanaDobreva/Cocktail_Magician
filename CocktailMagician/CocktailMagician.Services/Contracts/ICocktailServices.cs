@@ -9,11 +9,11 @@ namespace CocktailMagician.Services.Contracts
     {
         Task AddAsync(string name, string inmageURL, List<CocktailIngredientDTO> ingredientsAndQuantities);
         Task DeleteAsync(int id);
-        Task<CocktailDetailsDTO> GetDTOAsync(int id);
+        Task<CocktailDetailsDTO> GetDetailedDTOAsync(int id);
         Task<List<CocktailInListDTO>> GetAllDTOAsync(int itemsPerPage, int currentPage);
         //Task AddIngredientAsync(int cocktailId, int ingredientId, int quantity);
         //Task RemoveIngredientAsync(int cocktailId, int ingredientId);
-        Task<string> GetNameAsync(int id);
+        Task<CocktailInListDTO> GetDTOAsync(int id);
         Task AddBarsAsync(int cocktailID, List<int> barsId);
         Task RemoveBarsAsync(int cocktailID, List<int> barsId);
         Task EditIngredientsAsync(int cocktailId, List<CocktailIngredientDTO> ci, List<string> ingrToRemove);

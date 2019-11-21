@@ -4,21 +4,30 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div align="center">
-    <div class="col-md-6">
-        <h3>Add Bar for cocktail @Model.CocktailName</h3>
-        <form asp-action="EditBars" asp-controller="Cocktails">
+<div class="row">
+    <div class="col-md-5" align="center">
+        <div>
+            <img class="details-image img-fluid" src="@Model.ImageUrl" alt="Card image cap">
+        </div>
+    </div>
+    <div class="col-md-7" align="center">
+        <h2 class="font-cinzel m-4">@Model.CocktailName</h2>
+        <h5 class="m-2">Edit disrubution information:</h5>
+        <form class="p-5" asp-action="EditBars" asp-controller="Cocktails">
             <div class="m-4">
-                <label>Select bars to add:</label>
-                <select multiple="multiple" class="multiple-select2 input-group input-group-lg" asp-for="@Model.BarsToAdd" asp-items="@Model.AllOtherBars">
+                <label class="float-left">Select bars to add:</label>
+                <select multiple="multiple" class="multiple-select2 input-group" asp-for="@Model.BarsToAdd" asp-items="@Model.AllOtherBars">
                 </select>
             </div>
             <div class="m-4">
-                <label>Select bars to remove:</label>
-                <select multiple="multiple" class="multiple-select2 input-group input-group-lg" asp-for="@Model.BarsToRemove" asp-items="@Model.BarsOfCocktail">
+                <label class="float-left">Select bars to remove:</label>
+                <select multiple="multiple" class="multiple-select2 input-group" asp-for="@Model.BarsToRemove" asp-items="@Model.BarsOfCocktail">
                 </select>
             </div>
-            <input type="submit" class="btn btn-light" />
+            <div class="float-right m-4">
+                <a asp-action="Details" asp-route-id="@Model.Id">Go back</a>
+                <input type="submit" value="Save" class="btn btn-outline-primary" />
+            </div>
         </form>
     </div>
 </div>
