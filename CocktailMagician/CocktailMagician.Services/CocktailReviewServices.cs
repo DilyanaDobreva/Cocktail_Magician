@@ -14,13 +14,11 @@ namespace CocktailMagician.Services
     public class CocktailReviewServices : ICocktailReviewServices
     {
         private readonly ICocktailReviewFactory reviewCocktailFactory;
-        private readonly IUserServices userServices;
         private readonly CocktailMagicianDb context;
 
-        public CocktailReviewServices(ICocktailReviewFactory reviewCocktailFactory, IUserServices userServices, CocktailMagicianDb context)
+        public CocktailReviewServices(ICocktailReviewFactory reviewCocktailFactory, CocktailMagicianDb context)
         {
             this.reviewCocktailFactory = reviewCocktailFactory;
-            this.userServices = userServices;
             this.context = context;
         }
 
@@ -28,43 +26,23 @@ namespace CocktailMagician.Services
         {
             string[] rudeWords ={ "ass", "arse", "asshole", "bastard", "bitch", "bollocks", "child-fucker", "Christ on a bike", "Christ on a cracker", "crap", "cunt", "damn", "frigger", "fuck", "goddamn", "godsdamn", "hell", "holy shit", "horseshit", "Jesus Christ", "Jesus fuck", "Jesus H. Christ", "Jesus Harold Christ", "Jesus wept", "Jesus, Mary and Joseph", "Judas Priest", "motherfucker", "nigga", "nigger", "prick", "shit", "shit ass", "shitass", "slut", "son of a bitch", "son of a motherless goat", "son of a whore", "sweet Jesus" };
 
-            var user = await userServices.FindUserAsync(userName);
-            var cocktail = await context.Cocktails
-                .Include(c => c.CocktailIngredients)
-                    .ThenInclude(i => i.Ingredient)
-                .Include(c => c.BarCocktails)
-                    .ThenInclude(b => b.Bar)
-                        .ThenInclude(b => b.Address)
-                            .ThenInclude(a => a.City)
-                .FirstOrDefaultAsync(c => c.Id == cocktailId && c.IsDeleted == false);
+            var userId = await context.Users.Where(u => u.UserName == userName).Select(u => u.Id).FirstAsync();
+            var cocktailIdFound = await context.Cocktails.Where(c => c.Id == cocktailId).Select(c => c.Id).FirstAsync();
+            
 
-            //TODO K better way for replace.
             var newComment = comment.Split(' ');
 
-            for (int i = 0; i < newComment.Length; i++)
-            {
-                for (int j = 0; j < rudeWords.Length; j++)
-                {
-                    if (newComment[i].Contains(rudeWords[j],StringComparison.OrdinalIgnoreCase))
-                    {
-                        newComment[i] = "I'm happy";
-                    }
-                }
-            }
+            newComment = newComment
+                            .Select(r => rudeWords
+                                .Contains(r.ToLower()) ? r = "I'm happy" : r)
+                            .ToArray();
+
             comment = string.Join(' ', newComment);
-            var review = reviewCocktailFactory.Create(comment, rating, user, cocktail);
+
+            var review = reviewCocktailFactory.Create(comment, rating, userId, cocktailIdFound);
 
             context.CocktailReviews.Add(review);
             await context.SaveChangesAsync();
-        }
-
-        public Task<double?> GetMidRatingAsync(int cocktailId)
-        {
-            var allRatings = context.CocktailReviews
-                .Where(c => c.Id == cocktailId)
-                .Where(c => c.Rating != null).AverageAsync(r => r.Rating);
-
-            return allRatings;
         }
         public async Task<List<CocktailReviewDTO>> AllReviewsAsync(int cocktailId)
         {

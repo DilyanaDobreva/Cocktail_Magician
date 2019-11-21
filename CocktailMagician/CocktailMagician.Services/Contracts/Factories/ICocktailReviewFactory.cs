@@ -7,6 +7,6 @@ namespace CocktailMagician.Services.Contracts.Factories
 {
     public interface ICocktailReviewFactory
     {
-        CocktailReview Create(string comment,int? rating, User user, Cocktail cocktail);
+        CocktailReview Create(string comment,int? rating, string userId, int cocktailId);
     }
 }

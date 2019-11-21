@@ -12,14 +12,13 @@ using System.Threading.Tasks;
 namespace CocktailMagician.Services.UnitTests.ServiceTests
 {
     [TestClass]
-    public class AddReviewAsync_Should
+    public class AllBarReviewsAsync_Should
     {
         [TestMethod]
-        public async Task AddReviewAsync()
+        public async Task AllReviewsAsync()
         {
-            var comment = "comment";
-            var rating = 5;
             var userName = "user";
+            var userName2 = "user";
             var userpassword = "user";
             var roleId = 1;
             var barTestName = "New Bar";
@@ -28,8 +27,6 @@ namespace CocktailMagician.Services.UnitTests.ServiceTests
 
             var userServicesMock = new Mock<IUserServices>();
             var barReviewFactoryMock = new Mock<IBarReviewFactory>();
-
-            
 
             var addressTest = new Address
             {
@@ -46,54 +43,49 @@ namespace CocktailMagician.Services.UnitTests.ServiceTests
                 Address = addressTest,
             };
 
+
             var user = new User(userName, userpassword, roleId);
+            var user2 = new User(userName2, userpassword, roleId);
+            var barReview1 = new BarReview
+            {
+                Bar = barTest,
+                User = user
+            };
 
-          
-
-
+            var barReview2 = new BarReview
+            {
+                Bar = barTest,
+                User = user2
+            };
 
             userServicesMock
                 .Setup(r => r.FindUserAsync(userName))
                 .ReturnsAsync(user);
 
-            var options = TestUtilities.GetOptions(nameof(AddReviewAsync));
+            var options = TestUtilities.GetOptions(nameof(AllReviewsAsync));
 
             using (var arrangeContext = new CocktailMagicianDb(options))
             {
                 arrangeContext.Bars.Add(barTest);
                 arrangeContext.Users.Add(user);
+                arrangeContext.Users.Add(user2);
+                arrangeContext.BarReviews.Add(barReview1);
+                arrangeContext.BarReviews.Add(barReview2);
                 await arrangeContext.SaveChangesAsync();
             }
 
             using (var actContext = new CocktailMagicianDb(options))
             {
+
+
                 var barFound = await actContext.Bars.Where(b => b.Name == barTest.Name).Select(b => b.Id).FirstAsync();
-                var userNameFound = await actContext.Users.Where(u => u.UserName == userName).Select(u => u.UserName).FirstAsync();
-
-                var userIdFound = await actContext.Users.Where(u => u.UserName == userName).Select(u => u.Id).FirstAsync();
-
-                var barReview = new BarReview
-                {
-                    Comment = comment,
-                    Rating = rating,
-                    UserId = userIdFound,
-                    BarId = barFound
-                };
-
-                barReviewFactoryMock
-                    .Setup(r => r.Create(comment, rating, userIdFound, barFound))
-                    .Returns(barReview);
-
                 var sut = new BarReviewServices(barReviewFactoryMock.Object, actContext );
-                await sut.AddReviewAsync(comment, rating, userNameFound, barFound);
+                await sut.AllReviewsAsync(barFound);
             }
 
             using (var assertContext = new CocktailMagicianDb(options))
             {
-                var barReviewTest = await assertContext.BarReviews.Include(b => b.User).FirstAsync(u => u.User == user);
-                var userIdFound = await assertContext.Users.Where(u => u.UserName == userName).Select(u => u.Id).FirstAsync();
-
-                Assert.AreEqual(barReviewTest.User.Id, user.Id);
+                Assert.AreEqual(2, assertContext.BarReviews.Count());
             }
         }
     }
