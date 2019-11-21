@@ -2,69 +2,75 @@
 for details on configuring this project to bundle and minify static web assets. */
 
 a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
 }
 
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
+
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 .border-top {
-  border-top: 1px solid #e5e5e5;
+    border-top: 1px solid #e5e5e5;
 }
+
 .border-bottom {
-  border-bottom: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
 }
 
 .box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
 
 button.accept-policy {
-  font-size: 1rem;
-  line-height: inherit;
+    font-size: 1rem;
+    line-height: inherit;
 }
 
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
 }
+
 .footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  /* Set the fixed height of the footer here */
-  height: 60px;
-  line-height: 60px; /* Vertically center the text there */
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    /* Set the fixed height of the footer here */
+    height: 60px;
+    line-height: 60px; /* Vertically center the text there */
 }
+
 .margin-bottom {
-    margin-bottom:50px;
+    margin-bottom: 50px;
 }
+
 .margin-card {
     margin: 10px;
-    border:thin;
+    border: thin;
     border-radius: 5px;
     padding: 5px;
-    height:450px;
-    width:220px;
+    height: 450px;
+    width: 220px;
 }
+
 .margin-bar-card {
     margin: 10px;
     border: thin;
@@ -73,14 +79,18 @@ body {
     height: 450px;
     width: 350px;
 }
+
 .details-image {
-    max-height: 500px;
+    max-height: 700px;
     max-width: 500px;
+    box-shadow: 7px 7px 15px grey;
 }
-.details-bar-image{
-    max-height:750px;
-    max-width:750px;
+
+.details-bar-image {
+    max-height: 750px;
+    max-width: 750px;
 }
+
 .cocktails-scroll-frame {
     overflow: auto;
     width: 250px;
@@ -91,19 +101,11 @@ body {
     border-radius: 5px;
     box-shadow: 7px 7px 15px grey;
 }
-.bars-scroll-frame {
-    overflow: auto;
-    width: 400px;
-    height: 250px;
-    border-style: hidden;
-    border-color: cadetblue;
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 7px 7px 15px grey;
-}
-.image-cocktail-index{
+
+
+.image-cocktail-index {
     height: 420px;
-    width:220px;
+    width: 220px;
     object-fit: cover;
 }
 
@@ -118,16 +120,19 @@ body {
     width: 350px;
 }
 
-.search-container{
+.search-container {
     width: 600px;
-    height:auto;
+    height: auto;
 }
+
 .text-shadow {
     text-shadow: 2px 2px 4px #b89fb7;
 }
+
 .yellow-color {
     color: #ffd800
 }
+
 .right {
     text-align: right;
     width: 50%;
@@ -145,7 +150,7 @@ body {
     margin-bottom: 10px;
 }
 
-    .cocktail-title h4 {
+    .cocktail-title h4, h2 {
         font-size: 1.35rem;
         font-weight: 400;
         position: relative;
@@ -157,4 +162,88 @@ body {
     height: 100%;
 }
 
+.cocktail-backframe {
+    height: 700px;
+    position: relative;
+    margin-bottom: 20px;
+}
 
+    .cocktail-backframe:before {
+        content: "";
+        background: #f3f4f5;
+        top: 30%;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        position: absolute;
+        z-index: -1;
+    }
+
+
+.cocktail-backframe {
+        color: #000;
+    }
+
+/*.cocktail-backframe {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    bottom: 20px;
+    background: #fff;
+    opacity: 0;
+    visibility: hidden;
+    -webkit-transition: .3s all ease;
+    -o-transition: .3s all ease;
+    transition: .3s all ease;
+}*/
+
+    /*.cocktail-backframe:hover {
+        opacity: 1;
+        visibility: visible;
+    }*/
+
+.font-cinzel {
+    font-family: "Cinzel";
+}
+
+.modal-body {
+    max-height: calc(100vh - 210px);
+    overflow-y: auto;
+}
+
+.recepie-container{
+    height: 190px;
+}
+.display-none{
+    display:none
+}
+
+#show-reviews {
+    background-color: #930077;
+    color:white;
+    cursor:pointer;
+
+}
+
+.bars-scroll-frame {
+    /*overflow: auto;*/
+    max-width: calc(100vh - 80px);
+    height: calc(100vh - 420px);
+    border-style: hidden;
+    /*border-color: cadetblue;*/
+    padding: 15px;
+    /*border-radius: 5px;*/
+    box-shadow: 7px 7px 15px grey;
+    vertical-align:middle
+}
+
+.scroll {
+    overflow: auto;
+    height: calc(100vh - 490px);
+    overflow-x:hidden
+}
+.font-size-15{
+    font-size:20px
+}

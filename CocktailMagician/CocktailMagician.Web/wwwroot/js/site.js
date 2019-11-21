@@ -130,4 +130,20 @@ function DeleteValue(id) {
 }
 
 
+$(document).ready(function () {
+    $('#show-reviews').click(function() {
+        $('#bars-content').hide();
+        $('#review-content').show();
+        $('#show-bars').css("background-color", "#930077").css("color", "white").css("cursor", "pointer");
+        $('#show-reviews').css("background-color", "white").css("color", "gray").css("cursor", "default");
+    });
+});
 
+$(document).ready(function () {
+    $('#show-bars').click(function () {
+        $('#review-content').hide();
+        $('#bars-content').show();
+        $('#show-reviews').css("background-color", "#930077").css("color", "white").css("cursor", "pointer");
+        $('#show-bars').css("background-color", "white").css("color", "gray").css("cursor", "default");
+    });
+});

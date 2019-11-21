@@ -6,101 +6,131 @@
 }
 
 <div class="row">
-    <div class="col-md-6">
-        <div align="right">
-            <img class="details-image" src="@Model.ImageURL" alt="Card image cap">
+    <div class="col-md-5" align="center">
+        <div>
+            <img class="details-image img-fluid" src="@Model.ImageURL" alt="Card image cap">
         </div>
     </div>
-    <div class="col-md-6" align="center">
-        <h3>@Model.Name</h3>
-        <div class="m-4">
-            @if (User.IsInRole("admin"))
-            {
-                <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#exampleModal">
-                    Delete cokctail
-                </button>
+    <div class="col-md-7">
+        <div align="center">
 
-                <!-- Modal -->
-                <div class="modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <div>Are you sure you want to delete @Model.Name cocktail?</div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <form asp-controller="Cocktails" asp-action="Delete" asp-route-id="@Model.Id">
-                                    <button type="submit" class="btn btn-primary">Delete</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <h5>Recipe: </h5>
-                @foreach (var ingr in Model.Ingredients)
-                {
-                    <div> @ingr.Value @ingr.Unit    @ingr.Name</div>
-                }
-                <a asp-action="EditIngredients" asp-controller="Cocktails" asp-route-id="@Model.Id">Edit Ingredients</a>
+            <h2 class="font-cinzel">@Model.Name</h2>
+            <div class="container m-4">
+                <div class="recepie-container">
 
-            }
-            else
-            {
-                <h5>Ingredients:</h5>
-                <div> @Model.ListedIngredients </div>
-            }
-        </div>
-        @if (Model.Bars != null && Model.Bars?.Count() != 0)
-        {
-            <div class="m-4">
-                <div class="bars-scroll-frame">
+                    @if (User.IsInRole("admin"))
+                    {<div class="btn-group mb-3">
+                            <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal">
+                                Delete cokctail
+                            </button>
 
-                    <h5>Bars:</h5>
-                    @foreach (var bar in Model.Bars)
-                    {
-                        <div @*class="m-4"*@>
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <img src=@bar.ImageURL height="50" />
-                                </div>
-                                <div class="col-sm-8">
-                                    <div class="p-2" align="center">
-                                        <a asp-controller="Bars" asp-action="Details" asp-route-id="@bar.Id">@bar.Name</a>
-                                        <div>@bar.Address, @bar.City</div>
+                            <!-- Modal -->
+                            <div class="modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div>Are you sure you want to delete @Model.Name cocktail?</div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <form asp-controller="Cocktails" asp-action="Delete" asp-route-id="@Model.Id">
+                                                <button type="submit" class="btn btn-primary">Delete</button>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+
+                            <a class="btn btn-outline-primary" asp-action="EditIngredients" asp-controller="Cocktails" asp-route-id="@Model.Id">Edit Ingredients</a>
+                            <a class="btn btn-outline-primary" asp-action="EditBars" asp-controller="Cocktails" asp-route-id="@Model.Id">Edit bars</a>
                         </div>
-                        <hr />
+                        <h5>Recipe: </h5>
+                        @foreach (var ingr in Model.Ingredients)
+                        {
+                            <div> @ingr.Value @ingr.Unit    @ingr.Name</div>
+                        }
+                        @*<a asp-action="EditIngredients" asp-controller="Cocktails" asp-route-id="@Model.Id">Edit Ingredients</a>*@
+
                     }
+                    else
+                    {
+                        <h5>Ingredients:</h5>
+                        <div> @Model.ListedIngredients </div>
+                    }
+
                 </div>
             </div>
+            <a asp-action="CockTailReview" asp-route-id="@Model.Id">Add Review</a>
 
-        }
-        <div>
-            @if (User.IsInRole("admin"))
-            {
-                <a asp-action="EditBars" asp-controller="Cocktails" asp-route-id="@Model.Id">Edit bars</a>
-            }
-        </div>
-        <a asp-action="CockTailReview" asp-route-id="@Model.Id">Add Review</a>
-    </div>
-    <div class="col-md-6">
-        <button class="btn btn-light" id="load-show-comments-form-cocktail">Show comments</button>
-        <div style="display:none" id="cocktailReview-div">
-                @foreach (var cocktail in Model.CocktailReviews)
-                {
-                    <div class="margin-container">
-                        <partial name="_CocktailReviewPartial" model="@cocktail" />
+            <div class="center">
+                <div class="m-4">
+                    <div class="bars-scroll-frame pt-0">
+                        <div class="row mb-4">
+                            <div class="col-sm-6" id="show-bars">
+                                Show bars
+                            </div>
+                            <div class="col-sm-6" id="show-reviews">
+                                Show reviews
+                            </div>
+
+                        </div>
+                        <div class="scroll">
+                            <div id="bars-content">
+                                @if (Model.Bars != null && Model.Bars?.Count() != 0)
+                                {
+                                    @foreach (var bar in Model.Bars)
+                                    {
+                                        <div @*class="m-4"*@>
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <img src=@bar.ImageURL height="70" />
+                                                </div>
+                                                <div class="col-sm-8">
+                                                    <div class="p-2" align="center">
+                                                        <a class="font-cinzel font-size-15" asp-controller="Bars" asp-action="Details" asp-route-id="@bar.Id"><b>@bar.Name</b></a>
+                                                        <div>@bar.Address, @bar.City</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr />
+                                    }
+                                }
+                                else
+                                {
+                                    <div>Coming soon...</div>
+                                }
+                            </div>
+                            <div class="display-none" id="review-content">
+                                @if (Model.CocktailReviews != null && Model.CocktailReviews?.Count() != 0)
+                                {
+                                    @foreach (var cocktail in Model.CocktailReviews)
+                                    {
+                                        <div class="margin-container">
+                                            <partial name="_CocktailReviewPartial" model="@cocktail" />
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    <div>Be firts to leave a review!</div>
+                                }
+                            </div>
+                        </div>
                     </div>
-                }
+                </div>
+            </div>
         </div>
     </div>
+
 </div>
+
+
+
 

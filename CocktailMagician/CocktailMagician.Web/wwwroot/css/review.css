@@ -131,10 +131,10 @@
 .comment-box {
     position: center;
     vertical-align: middle;
-    width: 600px;
-    padding: 25px;
+    max-width: 600px;
+    padding: 5px;
     border: 1px solid #e7e7e7;
-    border-radius: 25px;
+    border-radius: 5px;
     color: #000;
 }
 
