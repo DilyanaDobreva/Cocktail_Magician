@@ -247,3 +247,9 @@ body {
 .font-size-15{
     font-size:20px
 }
+
+.text-link {
+    color: #930077;
+    text-decoration:underline;
+    cursor:pointer
+}

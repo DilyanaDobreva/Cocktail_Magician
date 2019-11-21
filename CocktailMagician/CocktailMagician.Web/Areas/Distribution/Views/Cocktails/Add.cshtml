@@ -59,6 +59,10 @@
                         Unit:
                         <input type="text" class=" form-control" id="ingredient-unit" />
                     </div>
+                    @{
+                        TempData["Action"] = "Add";
+                    }
+
                 </div>
                 <button class="btn btn-light" id="ingrediens-to-db">Add new ingredient</button>
             </div>

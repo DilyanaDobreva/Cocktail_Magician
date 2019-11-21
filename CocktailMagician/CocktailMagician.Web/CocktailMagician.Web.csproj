@@ -26,7 +26,6 @@
 
 
   <ItemGroup>
-    <PackageReference Include="GoogleMapsApi" Version="0.78.0" />
     <PackageReference Include="Microsoft.AspNetCore.App">
       <PrivateAssets Condition="'%(PackageReference.Version)' == ''">all</PrivateAssets>
       <Publish Condition="'%(PackageReference.Version)' == ''">true</Publish>

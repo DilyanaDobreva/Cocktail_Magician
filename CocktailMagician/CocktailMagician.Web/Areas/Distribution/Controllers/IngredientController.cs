@@ -23,18 +23,23 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
         [HttpPost]
         public async Task<IActionResult> Add([FromBody]IngredientBasicViewModel vm)
         {
-            try
+            var action = TempData["Action"].ToString();
+            if (ModelState.IsValid)
             {
-                var ingredient = (await ingredientServices.AddAsync(vm.Name, vm.Unit)).MapToViewModel();
+                try
+                {
+                    var ingredient = (await ingredientServices.AddAsync(vm.Name, vm.Unit)).MapToViewModel();
 
-                return Json(ingredient);
+                    return Json(ingredient);
+                }
+                catch (ArgumentException ex)
+                {
+                    TempData["Status"] = ex.Message;
+                    return RedirectToAction(action, "Cocktails");
+                }
             }
-            catch (ArgumentException ex)
-            {
-                TempData["Status"] = ex.Message;
-                return RedirectToAction("Add", "Cocktails");
-            }
-
+            TempData["Status"] = "Invalid ingredient parameters";
+            return RedirectToAction(action, "Cocktails");
         }
         public async Task<IActionResult> Index(int id = 1)
         {
