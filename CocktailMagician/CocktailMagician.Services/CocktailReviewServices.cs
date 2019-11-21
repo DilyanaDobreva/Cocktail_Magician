@@ -28,29 +28,17 @@ namespace CocktailMagician.Services
 
             var userId = await context.Users.Where(u => u.UserName == userName).Select(u => u.Id).FirstAsync();
             var cocktailIdFound = await context.Cocktails.Where(c => c.Id == cocktailId).Select(c => c.Id).FirstAsync();
-            //var cocktail = await context.Cocktails
-            //    .Include(c => c.CocktailIngredients)
-            //        .ThenInclude(i => i.Ingredient)
-            //    .Include(c => c.BarCocktails)
-            //        .ThenInclude(b => b.Bar)
-            //            .ThenInclude(b => b.Address)
-            //                .ThenInclude(a => a.City)
-            //    .FirstOrDefaultAsync(c => c.Id == cocktailId && c.IsDeleted == false);
+            
 
-            //TODO K better way for replace.
             var newComment = comment.Split(' ');
 
-            for (int i = 0; i < newComment.Length; i++)
-            {
-                for (int j = 0; j < rudeWords.Length; j++)
-                {
-                    if (newComment[i].Contains(rudeWords[j],StringComparison.OrdinalIgnoreCase))
-                    {
-                        newComment[i] = "I'm happy";
-                    }
-                }
-            }
+            newComment = newComment
+                            .Select(r => rudeWords
+                                .Contains(r.ToLower()) ? r = "I'm happy" : r)
+                            .ToArray();
+
             comment = string.Join(' ', newComment);
+
             var review = reviewCocktailFactory.Create(comment, rating, userId, cocktailIdFound);
 
             context.CocktailReviews.Add(review);

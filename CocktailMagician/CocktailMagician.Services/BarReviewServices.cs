@@ -23,24 +23,18 @@ namespace CocktailMagician.Services
 
         public async Task AddReviewAsync(string comment, int? rating, string userName, int barId)
         {
-            string[] rudeWords ={ "ass" };
+            List<string> rudeWords = new List<string>{ "ass", "arse", "asshole", "bastard", "bitch", "bollocks", "child-fucker", "Christ on a bike", "Christ on a cracker", "crap", "cunt", "damn", "frigger", "fuck", "goddamn", "godsdamn", "hell", "holy shit", "horseshit", "Jesus Christ", "Jesus fuck", "jesus h. christ", "jesus harold christ", "jesus wept", "Jesus, Mary and Joseph", "Judas Priest", "motherfucker", "nigga", "nigger", "prick", "shit", "shit ass", "shitass", "slut", "son of a bitch", "son of a motherless goat", "son of a whore", "sweet Jesus" };
 
             var userId = await context.Users.Where(u => u.UserName == userName).Select(u => u.Id).FirstAsync();
             var bar = await context.Bars.Where(b => b.Id == barId).Select(b => b.Id).FirstAsync();
 
-            //TODO K better way for replace.
             var newComment = comment.Split(' ');
 
-            for (int i = 0; i < newComment.Length; i++)
-            {
-                for (int j = 0; j < rudeWords.Length; j++)
-                {
-                    if (newComment[i].Contains(rudeWords[j],StringComparison.OrdinalIgnoreCase))
-                    {
-                        newComment[i] = "I'm happy";
-                    }
-                }
-            }
+            newComment = newComment
+                .Select(r => rudeWords
+                    .Contains(r.ToLower()) ? r = "I'm happy" : r)
+                .ToArray();
+
             comment = string.Join(' ', newComment);
             var review = barReviewFactory.Create(comment, rating, userId, bar);
 
