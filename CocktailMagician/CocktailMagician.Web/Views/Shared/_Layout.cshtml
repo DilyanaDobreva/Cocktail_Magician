@@ -60,7 +60,7 @@
                             <a class="navbar-brand" asp-area="Distribution" asp-controller="Ingredients" asp-action="Index">Ingredients</a>
                         </span>
                     }
-                    </span>
+                </span>
                 <span id="authForm">
                     @if (!User.Identity.IsAuthenticated)
                     {
@@ -68,7 +68,7 @@
                             Login
                         </a>
                         <a class="navbar-brand" asp-area="Users" asp-controller="Auth" asp-action="Register">
-                            Register
+                            Sign up
                         </a>
                     }
                 </span>
@@ -77,17 +77,15 @@
                 {
                     if (User.IsInRole("admin"))
                     {
-                        <a class="nav-link text-dark" asp-area="Users" asp-controller="User" asp-action="Index">Users</a>
+                        <a class="navbar-brand" asp-area="Users" asp-controller="User" asp-action="Index">Users</a>
                     }
                     else
                     {
-                        <a class="nav-link text-dark" asp-area="Users" asp-controller="User" asp-action="Edit">Edit</a>
+                        <a class="navbar-brand" asp-area="Users" asp-controller="User" asp-action="Edit">Edit</a>
                     }
-                    <div class="nav-item logout-btn">
-                        <form asp-area="Users" asp-controller="Auth" asp-action="Logout">
-                            <button class="btn btn-outline-dark">Logout</button>
-                        </form>
-                    </div>
+                    <form asp-area="Users" asp-controller="Auth" asp-action="Logout">
+                        <button class="btn btn-outline-dark">Logout</button>
+                    </form>
                 }
             </div>
         </nav>
@@ -100,10 +98,10 @@
     </div>
 
     @*<footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2019 - CocktailMagician.Web - <a asp-area="" asp-page="/Privacy">Privacy</a>
-        </div>
-    </footer>*@
+            <div class="container">
+                &copy; 2019 - CocktailMagician.Web - <a asp-area="" asp-page="/Privacy">Privacy</a>
+            </div>
+        </footer>*@
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>

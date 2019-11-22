@@ -272,7 +272,9 @@ body {
     color: white;
     cursor: pointer;
 }
-
+.float-right{
+    float:right;
+}
 .bars-scroll-frame {
     /*overflow: auto;*/
     max-width: calc(100vh - 80px);
