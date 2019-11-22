@@ -12,6 +12,9 @@ namespace CocktailMagician.Web.Areas.Distribution.Models.Bars
         [Url]
         [Required]
         public string ImageURL { get; set; }
+        [Phone]
+        [Display(Name = "Phone Number")]
+        public string PhoneNumber { get; set; }
         public AddressViewModel Address { get; set; }
         public List<SelectListItem> AllCities { get; set; }
     }

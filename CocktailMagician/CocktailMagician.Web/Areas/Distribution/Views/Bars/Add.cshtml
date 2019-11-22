@@ -4,8 +4,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Add Bar</h1>
-
+<div align="center">
+    <h2 class="font-cinzel"><span class="icon-add"></span>Add Bar</h2>
+</div>
 @{ var statusMessage = TempData["Status"]?.ToString(); }
 @if (!string.IsNullOrWhiteSpace(statusMessage))
 {
@@ -15,25 +16,40 @@
     </div>
 }
 
+<div>
+    <span asp-validation-summary="All" class="text-danger" />
+</div>
+<hr class="hr-primary" />
+
 <div class="row">
     <div class="col-md-6">
         <form asp-action="/Distribution/Bars/Add">
 
             <partial name="_BarProperties" model="@Model" />
 
-            <button class="btn btn-outline-info load-add-city-form">Add City</button>
-            <input type="submit" class="btn btn-light" />
+            <div class="m-4" align="right">
+                <input type="submit" value="Add Bar" class="btn btn-outline-primary" />
+            </div>
         </form>
     </div>
     <div class="col-md-6">
+
+        <div class="text-link load-add-city-form">Add city to the menu here</div>
+
+
         <div style="display:none" id="city-div">
             <div class="m-4">
-                <div>
-                    City Name:
-                    <input type="text" name="cityName" class=" form-control" id="city-name" />
+                <div class="row">
+                    <div class="=col-md-3 mr-2 float-md-right">
+                        City Name
+                    </div>
+                    <div class="col-md-8">
+                        <input type="text" name="cityName" class=" form-control" id="city-name" />
+                        <button class="btn btn-outline-primary mt-4 float-md-right" id="city-to-db">Add city to menu</button>
+
+                    </div>
                 </div>
             </div>
-            <button class="btn btn-light" id="city-to-db">Add new city</button>
         </div>
     </div>
 </div>

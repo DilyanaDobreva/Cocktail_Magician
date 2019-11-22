@@ -25,12 +25,12 @@ namespace CocktailMagician.Services
             this.barCocktailFactory = barCocktailFactory;
         }
 
-        public async Task AddAsync(string name, string imageURL, AddressDTO address)
+        public async Task AddAsync(string name, string imageURL, string phoneNumber, AddressDTO address)
         {
             if (context.Bars.Any(c => c.Name == name && c.IsDeleted == false))
                 throw new ArgumentException(OutputConstants.BarExists);
 
-            var bar = barFactory.Create(name, imageURL, address);
+            var bar = barFactory.Create(name, imageURL,phoneNumber, address);
 
             context.Bars.Add(bar);
             await context.SaveChangesAsync();
@@ -76,6 +76,7 @@ namespace CocktailMagician.Services
                     Id = bar.Id,
                     Name = bar.Name,
                     ImageURL = bar.ImageUrl,
+                    PhoneNumber = bar.PhoneNumber,
                     AverageRating = bar.BarReviews
                         .Where(r => r.Rating != null)
                         .Select(r => r.Rating)

@@ -66,8 +66,7 @@ namespace CocktailMagician.Services
                 .FirstOrDefaultAsync(c => c.Id == id && c.IsDeleted == false);
 
             context.BarCocktails.RemoveRange(cocktail.BarCocktails);
-            context.CocktailIngredients.RemoveRange(cocktail.CocktailIngredients);
-
+            cocktail.CocktailIngredients.ToList().ForEach(ci => ci.IsDeleted = true);
             cocktail.IsDeleted = true;
 
             await context.SaveChangesAsync();

@@ -61,7 +61,7 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
             {
                 try
                 {
-                    await barServices.AddAsync(bar.Name, bar.ImageURL, bar.Address.MapToDTO());
+                    await barServices.AddAsync(bar.Name, bar.ImageURL, bar.PhoneNumber, bar.Address.MapToDTO());
                     return RedirectToAction("Index");
                 }
                 catch(ArgumentException ex)
