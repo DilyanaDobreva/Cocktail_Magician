@@ -11,6 +11,6 @@ namespace CocktailMagician.Data.Models
         [Required]
         [Range(0.1, 10)]
         public double Quatity { get; set; }
-        //public bool IsDeleted { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

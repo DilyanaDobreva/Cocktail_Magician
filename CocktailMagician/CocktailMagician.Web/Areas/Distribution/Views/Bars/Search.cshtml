@@ -4,48 +4,86 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-    <div align="center">
-        <h1>Search</h1>
-        <div class="search-container" align="center">
+<div class="row ">
+    <div class="col-md-3 d-flex align-self-center" align="center">
+        <h1 class="font-cinzel"><span class="icon-search2"></span>Search</h1>
+    </div>
+    <div class="col-md-9" align="center">
+        <div align="center">
             <form asp-action="/Distribution/Bars/Search" method="get">
-                <div class="m-3">
-                    <label asp-for="@Model.NameKey" class="control-label">Name:</label>
-                    <input asp-for="@Model.NameKey" class="form-control" />
-                    <span asp-validation-for="@Model.NameKey" class="text-danger"></span>
-                </div>
-                <div class="m-3">
-                    <div>Minimal Rating:</div>
-                    <input type="radio" asp-for="@Model.MinRating" id="no-rating" value="null" checked />
-                    <label for="no-rating"><span>none</span></label>
-                    <input type="radio" asp-for="@Model.MinRating" id="rating-3" value="3" />
-                    <label for="rating-3">3<span>&#11088;</span></label>
-                    <input type="radio" asp-for="@Model.MinRating" id="rating-4" value="4" />
-                    <label for="rating-4">4<span>&#11088;</span></label>
-                    <input type="radio" asp-for="@Model.MinRating" id="rating-5" value="5" />
-                    <label for="rating-5">5<span>&#11088;</span></label>
-                </div>
-                <div class="m-3">
-                    <div>City:</div>
-                    <select asp-for="@Model.CityId" asp-items="@Model.AllCities" class="form-control">
-                        @*<option value="">Select...</option>*@
-                    </select>
-                </div>
-                <div class="m-3">
-                    <input type="submit" class="btn btn-outline-info" />
+                <div class="row">
+                    <div class="col-md-9">
+                        <div class="form-row m-2">
+                            <label asp-for="@Model.NameKey" class="control-label col-md-3">Name:</label>
+                            <input asp-for="@Model.NameKey" class="form-control col-md-8" />
+                            @*<span asp-validation-for="@Model.NameKey" class="text-danger"></span>*@
+                        </div>
+                        <div class="form-row m-2">
+                            <label asp-for="@Model.MinRating" class="control-label col-md-3" align="right">Minimal Rating:</label>
+                            <div class="form-control col-md-8">
+                                <input type="radio" asp-for="@Model.MinRating" id="no-rating" value="null" checked />
+                                <label for="no-rating"><span class="pr-2">none</span></label>
+                                <input type="radio" asp-for="@Model.MinRating" id="rating-3" value="3" />
+                                <label for="rating-3">3<span class="icon-star yellow-color pr-2"></span></label>
+                                <input type="radio" asp-for="@Model.MinRating" id="rating-4" value="4" />
+                                <label for="rating-4">4<span class="icon-star yellow-color pr-2"></span></label>
+                                <input type="radio" asp-for="@Model.MinRating" id="rating-5" value="5" />
+                                <label for="rating-5">5<span class="icon-star yellow-color pr-2"></span></label>
+                            </div>
+                        </div>
+                        <div class="form-row m-2">
+                            <label asp-for="@Model.CityId" class="control-label col-md-3" align="right">City:</label>
+                            <select asp-for="@Model.CityId" asp-items="@Model.AllCities" class="form-control col-md-8">
+                                @*<option value="">Select...</option>*@
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3 d-flex align-self-center">
+                        <div class="m-1">
+                            <input type="submit" value="Search!" class="btn btn-outline-primary" />
+                        </div>
+                    </div>
                 </div>
             </form>
-        </div>
-        <hr />
-        <div class="container">
-            @if (Model.Result != null)
-            {
-                <div class="row">
-                    @foreach (var bar in Model.Result)
-                    {
-                        <partial name="_BarRow" model="@bar" />
-                    }
-                </div>
-            }
+
         </div>
     </div>
+</div>
+<hr class="hr-primary" />
+<div class="container">
+    @if (Model.Result != null)
+    {
+
+        <div class="row">
+            @foreach (var bar in Model.Result)
+            {
+                <partial name="_BarRow" model="@bar" />
+            }
+        </div>
+    }
+</div>
+<div>
+    <ul class="pagination">
+        @if (Model.Paging.HasPrevious)
+        {
+            <li class="page-item"><a class="page-link" href="/Distribution/Bars/Search/@Model.Paging.PreviousPage?NameKey=@Model.NameKey&MinRating=@Model.MinRating&IngredientId=@Model.CityId">Previous</a></li>
+        }
+        @for (int i = 1; i <= Model.Paging.LastPage; i++)
+        {
+            @if (Model.Paging.CurrentPage == i)
+            {
+                <li class="page-item active"><a class="page-link" href="/Distribution/Bars/Search/@i?NameKey=@Model.NameKey&MinRating=@Model.MinRating&IngredientId=@Model.CityId">@i</a></li>
+            }
+            else
+            {
+                <li class="page-item"><a class="page-link" href="/Distribution/Bars/Search/@i?NameKey=@Model.NameKey&MinRating=@Model.MinRating&IngredientId=@Model.CityId">@i</a></li>
+            }
+        }
+        @if (Model.Paging.HasNext)
+        {
+            <li class="page-item"><a class="page-link" href="/Distribution/Bars/Search/@Model.Paging.NextPage?NameKey=@Model.NameKey&MinRating=@Model.MinRating&IngredientId=@Model.CityId">Next</a></li>
+        }
+    </ul>
+
+</div>
 

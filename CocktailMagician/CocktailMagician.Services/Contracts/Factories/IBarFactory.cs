@@ -8,6 +8,6 @@ namespace CocktailMagician.Services.Contracts.Factories
 {
     public interface IBarFactory
     {
-        Bar Create(string name, string imageURL, AddressDTO address);
+        Bar Create(string name, string imageURL, string phoneNumber, AddressDTO address);
     }
 }

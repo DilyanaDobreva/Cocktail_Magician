@@ -61,7 +61,7 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
             {
                 try
                 {
-                    await barServices.AddAsync(bar.Name, bar.ImageURL, bar.Address.MapToDTO());
+                    await barServices.AddAsync(bar.Name, bar.ImageURL, bar.PhoneNumber, bar.Address.MapToDTO());
                     return RedirectToAction("Index");
                 }
                 catch(ArgumentException ex)
@@ -187,7 +187,7 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
             }
         }
 
-        public async Task<IActionResult> Search([FromQuery] BarSearchViewModel vm)
+        public async Task<IActionResult> Search(int id,[FromQuery] BarSearchViewModel vm)
         {
             var allCities = (await cityServices.GetAllDTOAsync());
             vm.AllCities = new List<SelectListItem>();
@@ -199,8 +199,18 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
             {
                 return View(vm);
             }
+            var dto = new BarSearchDTO
+            {
+                NameKey = vm.NameKey,
+                CityId = vm.CityId,
+                MinRating = vm.MinRating
+            };
 
-            vm.Result = (await barServices.SearchAsync(vm.NameKey, vm.CityId, vm.MinRating))
+            vm.Paging.Count = await barServices.SerchResultCountAsync(dto);
+            vm.Paging.ItemsPerPage = itemsPerPage;
+            vm.Paging.CurrentPage = id == 0 ? 1 : id;
+
+            vm.Result = (await barServices.SearchAsync(dto, itemsPerPage, vm.Paging.CurrentPage))
                 .Select(b => b.MapToViewModel());
 
             return View(vm);

@@ -22,6 +22,7 @@ namespace CocktailMagician.Services.UnitTests.BarServicesTests
 
             var imagaUrlTest = "https://www.google.com/";
             var barTestName = "NameTest";
+            var phoneNumberTest = "5555555";
 
             var addressTest = new Address
             {
@@ -49,7 +50,7 @@ namespace CocktailMagician.Services.UnitTests.BarServicesTests
             using (var assertContext = new CocktailMagicianDb(options))
             {
                 var sut = new BarServices(assertContext, barFactoryMock.Object, barCocktailFactoryMock.Object);
-                await Assert.ThrowsExceptionAsync<ArgumentException>(() => sut.AddAsync(barTestName, imagaUrlTest, new AddressDTO()));
+                await Assert.ThrowsExceptionAsync<ArgumentException>(() => sut.AddAsync(barTestName, imagaUrlTest, phoneNumberTest, new AddressDTO()));
             }
         }
         [TestMethod]
@@ -60,6 +61,7 @@ namespace CocktailMagician.Services.UnitTests.BarServicesTests
 
             var imagaUrlTest = "https://www.google.com/";
             var barTestName = "NameTest";
+            var phoneNumberTest = "5555555";
             var cityTest = new City
             {
                 Name = "SofiaTest"
@@ -95,7 +97,7 @@ namespace CocktailMagician.Services.UnitTests.BarServicesTests
                 //var address = addressDTO.MapFromDTO()
 
                 barFactoryMock
-                    .Setup(b => b.Create(barTestName, imagaUrlTest, addressDTOTest))
+                    .Setup(b => b.Create(barTestName, imagaUrlTest,phoneNumberTest, addressDTOTest))
                     .Returns(new Bar
                     {
                         Name = barTestName,
@@ -104,7 +106,7 @@ namespace CocktailMagician.Services.UnitTests.BarServicesTests
                     });
 
                 var sut = new BarServices(actContext, barFactoryMock.Object, barCocktailFactoryMock.Object);
-                await sut.AddAsync(barTestName, imagaUrlTest, addressDTOTest);
+                await sut.AddAsync(barTestName, imagaUrlTest,phoneNumberTest, addressDTOTest);
             }
             using (var assertContext = new CocktailMagicianDb(options))
             {

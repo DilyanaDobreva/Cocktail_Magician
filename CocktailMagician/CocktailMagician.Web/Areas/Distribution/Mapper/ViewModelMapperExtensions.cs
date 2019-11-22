@@ -120,6 +120,7 @@ namespace CocktailMagician.Web.Areas.Distribution.Mapper
                 Id = bar.Id,
                 Name = bar.Name,
                 ImageURL = bar.ImageURL,
+                PhoneNumber = bar.PhoneNumber,
                 AverageRating = bar.AverageRating,
                 Address = bar.Address.MapToViewModel(),
                 Cocktails = bar.Cocktails.Select(c => c.MapToViewModel())
@@ -144,6 +145,7 @@ namespace CocktailMagician.Web.Areas.Distribution.Mapper
             {
                 Name = bar.Name,
                 ImageURL = bar.ImageURL,
+                PhoneNumber = bar.PhoneNumber,
                 Address = bar.Address.MapToViewModel()
             };
             return dto;

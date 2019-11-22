@@ -66,8 +66,7 @@ namespace CocktailMagician.Services
                 .FirstOrDefaultAsync(c => c.Id == id && c.IsDeleted == false);
 
             context.BarCocktails.RemoveRange(cocktail.BarCocktails);
-            context.CocktailIngredients.RemoveRange(cocktail.CocktailIngredients);
-
+            cocktail.CocktailIngredients.ToList().ForEach(ci => ci.IsDeleted = true);
             cocktail.IsDeleted = true;
 
             await context.SaveChangesAsync();
@@ -352,5 +351,27 @@ namespace CocktailMagician.Services
 
             return ingredients;
         }
+        public async Task<List<CocktailInListDTO>> GetMostPopular(int number)
+        {
+            var list = await context.Cocktails
+                .Include(c => c.CocktailReviews)
+                .Where(c => c.IsDeleted == false)
+                .Select(c => new CocktailInListDTO
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    ImageURL = c.ImageUrl,
+                    AverageRating = c.CocktailReviews
+                        .Where(r => r.Rating != null)
+                        .Select(r => r.Rating)
+                        .Average()
+                })
+                .OrderByDescending(r => r.AverageRating)
+                .Take(number)
+                .ToListAsync();
+
+            return list;
+        }
+
     }
 }

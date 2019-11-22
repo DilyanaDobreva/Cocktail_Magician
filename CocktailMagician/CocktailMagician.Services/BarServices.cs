@@ -25,12 +25,12 @@ namespace CocktailMagician.Services
             this.barCocktailFactory = barCocktailFactory;
         }
 
-        public async Task AddAsync(string name, string imageURL, AddressDTO address)
+        public async Task AddAsync(string name, string imageURL, string phoneNumber, AddressDTO address)
         {
             if (context.Bars.Any(c => c.Name == name && c.IsDeleted == false))
                 throw new ArgumentException(OutputConstants.BarExists);
 
-            var bar = barFactory.Create(name, imageURL, address);
+            var bar = barFactory.Create(name, imageURL, phoneNumber, address);
 
             context.Bars.Add(bar);
             await context.SaveChangesAsync();
@@ -76,11 +76,12 @@ namespace CocktailMagician.Services
                     Id = bar.Id,
                     Name = bar.Name,
                     ImageURL = bar.ImageUrl,
+                    PhoneNumber = bar.PhoneNumber,
                     AverageRating = bar.BarReviews
                         .Where(r => r.Rating != null)
                         .Select(r => r.Rating)
                         .Average(),
-                    Address = bar.Address.MapToDTO() ,
+                    Address = bar.Address.MapToDTO(),
                     Cocktails = bar.BarCocktails.Select(bc => new CocktailInListDTO
                     {
                         Id = bc.Cocktail.Id,
@@ -113,6 +114,7 @@ namespace CocktailMagician.Services
                     Name = bar.Name,
                     ImageURL = bar.ImageUrl,
                     Id = bar.Id,
+                    PhoneNumber = bar.PhoneNumber,
                     Address = bar.Address.MapToDTO()
                 })
                 .FirstOrDefaultAsync();
@@ -244,16 +246,16 @@ namespace CocktailMagician.Services
             bar.IsDeleted = true;
             await context.SaveChangesAsync();
         }
-        public async Task<List<BarInListDTO>> SearchAsync(string name, int? cityId, int? minRating)
+        public async Task<List<BarInListDTO>> SearchAsync(BarSearchDTO dto, int itemsPerPage, int currentPage)
         {
             var resultDTO = await context.Bars
                 .Include(b => b.Address)
                     .ThenInclude(a => a.City)
                 .Include(b => b.BarReviews)
                 .Include(b => b.BarReviews)
-                .FilterByName(name)
-                .FilterByCity(cityId)
-                .FilterByRating(minRating)
+                .FilterByName(dto.NameKey)
+                .FilterByCity(dto.CityId)
+                .FilterByRating(dto.MinRating)
                 .Select(bar => new BarInListDTO
                 {
                     Id = bar.Id,
@@ -266,14 +268,56 @@ namespace CocktailMagician.Services
                         .Select(r => r.Rating)
                         .Average()
                 })
+                .Skip((currentPage - 1) * itemsPerPage)
+                .Take(itemsPerPage)
                 .ToListAsync();
 
             return resultDTO;
         }
+        public async Task<int> SerchResultCountAsync(BarSearchDTO dto)
+        {
+            var resultCount = await context.Bars
+                .Include(b => b.Address)
+                    .ThenInclude(a => a.City)
+                .Include(b => b.BarReviews)
+                .Include(b => b.BarReviews)
+                .FilterByName(dto.NameKey)
+                .FilterByCity(dto.CityId)
+                .FilterByRating(dto.MinRating)
+                .CountAsync();
+
+            return resultCount;
+        }
+
         public async Task<int> AllBarsCountAsync()
         {
             var count = await context.Bars.Where(c => c.IsDeleted == false).CountAsync();
             return count;
+        }
+
+        public async Task<List<BarInListDTO>> GetMostPopular(int number)
+        {
+            var topBars = await context.Bars
+                .Include(b => b.Address)
+                    .ThenInclude(a => a.City)
+                .Where(b => b.IsDeleted == false)
+                .Select(b => new BarInListDTO
+                {
+                    Id = b.Id,
+                    Name = b.Name,
+                    ImageURL = b.ImageUrl,
+                    Address = b.Address.Name,
+                    City = b.Address.City.Name,
+                    AverageRating = b.BarReviews
+                        .Where(r => r.Rating != null)
+                        .Select(r => r.Rating)
+                        .Average()
+                })
+                .OrderByDescending(r => r.AverageRating)
+                .Take(number)
+                .ToListAsync();
+
+            return topBars;
         }
     }
 }

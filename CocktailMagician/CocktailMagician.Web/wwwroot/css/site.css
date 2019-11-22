@@ -124,6 +124,13 @@ body {
     object-fit: cover;
 }
 
+.edit-bar-image {
+    height: 600px;
+    max-width: 550px;
+    object-fit: cover;
+}
+
+
 .cocktails-scroll-frame {
     overflow: auto;
     width: 250px;
@@ -431,10 +438,4 @@ body.carousel-control-next-icon {
 body.no-padding {
     padding-left: 0;
     padding-right: 0;
-}
-
-/* Bar styling */
-
-.bar-actions {
-    background: #f3f4f5!important;
 }

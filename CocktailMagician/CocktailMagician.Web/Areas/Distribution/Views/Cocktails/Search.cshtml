@@ -8,11 +8,6 @@
     <div class="col-md-3 d-flex align-self-center" align="center">
         <h1 class="font-cinzel"><span class="icon-search2"></span>Search</h1>
     </div>
-    <div>
-        <input type="hidden" asp-for="@Model.NameKey" value="@Model.NameKey" />
-        <input type="hidden" asp-for="@Model.IngredientId" value="@Model.IngredientId" />
-        <input type="hidden" asp-for="@Model.MinRating" value="@Model.MinRating" />
-    </div>
     <div class="col-md-9" align="center">
         <div align="center">
             <form asp-action="/Distribution/Cocktails/Search" method="get">
@@ -49,8 +44,8 @@
                         </div>
                     </div>
                 </div>
-
             </form>
+
         </div>
     </div>
 </div>

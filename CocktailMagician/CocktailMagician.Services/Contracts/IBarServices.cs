@@ -7,7 +7,7 @@ namespace CocktailMagician.Services.Contracts
 {
     public interface IBarServices
     {
-        Task AddAsync(string name, string imageURL, AddressDTO address);
+        Task AddAsync(string name, string imageURL, string phoneNumber, AddressDTO address);
         Task<List<BarInListDTO>> GetAllDTOAsync(int itemsPerPage, int currentPage);
         Task<BarDetailsDTO> GetDetailedDTOAsync(int id);
         Task<string> GetNameAsync(int id);
@@ -18,7 +18,9 @@ namespace CocktailMagician.Services.Contracts
         Task<BarToEditDTO> GetBarToEditDTOAsync(int id);
         Task EditAsync(BarToEditDTO newBarInfo);
         Task DeleteAsync(int id);
-        Task<List<BarInListDTO>> SearchAsync(string name, int? cityId, int? minRating);
+        Task<List<BarInListDTO>> SearchAsync(BarSearchDTO dto, int itemsPerPage, int currentPage);
+        Task<int> SerchResultCountAsync(BarSearchDTO dto);
         Task<int> AllBarsCountAsync();
+        Task<List<BarInListDTO>> GetMostPopular(int number);
     }
 }

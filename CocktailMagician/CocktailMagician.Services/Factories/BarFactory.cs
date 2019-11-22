@@ -7,7 +7,7 @@ namespace CocktailMagician.Services.Factories
 {
     public class BarFactory : IBarFactory
     {
-        public Bar Create(string name, string imageURL, AddressDTO address)
+        public Bar Create(string name, string imageURL,string phoneNumber,  AddressDTO address)
         {
             var bar = new Bar
             {
