@@ -48,10 +48,6 @@ namespace CocktailMagician.Services.UnitTests.ServiceTests
 
             var user = new User(userName, userpassword, roleId);
 
-          
-
-
-
             userServicesMock
                 .Setup(r => r.FindUserAsync(userName))
                 .ReturnsAsync(user);

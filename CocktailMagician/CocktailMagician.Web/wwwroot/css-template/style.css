@@ -1308,19 +1308,19 @@ h1, h2, h3, h4, h5,
     font-size: 18px; }
     .wine_v_1 .heading a, .wine_h_1 .heading a {
       color: #000; }
-  .wine_v_1 .wine-actions, .wine_h_1 .wine-actions {
-    padding-top: 20px;
-    padding-bottom: 20px;
-    position: absolute;
-    left: 20px;
-    right: 20px;
-    bottom: 20px;
-    background: #fff;
-    opacity: 0;
-    visibility: hidden;
-    -webkit-transition: .3s all ease;
-    -o-transition: .3s all ease;
-    transition: .3s all ease; }
+    .wine_v_1 .wine-actions, .wine_h_1 .wine-actions {
+        padding-top: 20px;
+        padding-bottom: 20px;
+        position: absolute;
+        width: 100%;
+        bottom: 20px;
+        background: #f3f4f5;
+        opacity: 0;
+        visibility: hidden;
+        -webkit-transition: .3s all ease;
+        -o-transition: .3s all ease;
+        transition: .3s all ease;
+    }
     .wine_v_1 .wine-actions .heading-2, .wine_h_1 .wine-actions .heading-2 {
       font-size: 20px; }
       .wine_v_1 .wine-actions .heading-2 a, .wine_h_1 .wine-actions .heading-2 a {
@@ -1337,13 +1337,15 @@ h1, h2, h3, h4, h5,
         font-size: 16px;
         color: #ffbd39; }
     .wine_v_1 .wine-actions .btn, .wine_h_1 .wine-actions .btn {
-      background: #930077;
-      color: #fff;
-      padding: 10px 20px;
-      border-radius: 0; }
-      .wine_v_1 .wine-actions .btn:hover, .wine_h_1 .wine-actions .btn:hover {
-        background: #60004e;
-        color: #fff; }
+        background: #da1b5e;
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 0;
+    }
+        .wine_v_1 .wine-actions .btn:hover, .wine_h_1 .wine-actions .btn:hover {
+            background: #b90f4b;
+            color: #fff;
+        }
   .wine_v_1:hover .wine-actions, .wine_h_1:hover .wine-actions, .wine_v_1:focus .wine-actions, .wine_h_1:focus .wine-actions {
     opacity: 1;
     visibility: visible; }

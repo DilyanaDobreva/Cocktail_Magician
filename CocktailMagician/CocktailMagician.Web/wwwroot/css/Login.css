@@ -287,8 +287,21 @@ input[type=password] {
     }
 
 h1 {
-    color: #60a0ff;
+    color: #dc1b5d;
 }
+
+
+.btn-pink {
+    color: #dc1b5d !important;
+}
+
+.auth-btn {
+    box-shadow: none;
+    border: 1px solid rgba(220, 27, 93, 0.55);
+}
+    .auth-btn:hover {
+        box-shadow: 0 1px 3px 1px rgba(220, 27, 93, 0.55);
+    }
 
 /* OTHERS */
 

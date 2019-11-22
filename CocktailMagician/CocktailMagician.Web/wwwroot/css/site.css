@@ -1,10 +1,42 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
+* {
+    font-family: Cinzel;
+}
+
+body.modal-open {
+    padding-right: 0 !important;
+}
+
+nav,
+nav .container {
+    display: block !important;
+    text-align: center;
+    background: #fff !important;
+}
+
+nav .container {
+    border-bottom: 1px solid rgba(220, 27, 93, 0.55);
+    text-align: left;
+}
+
+    nav img {
+        height: 15vw;
+    }
+
+    nav #authForm {
+        float: right;
+    }
 
 a.navbar-brand {
     white-space: normal;
     text-align: center;
     word-break: break-all;
+}
+
+.page-item.active a {
+    background: #dc1b5d!important;
+    border-color: #cc084b!important;
 }
 
 /* Sticky footer styles
@@ -339,14 +371,14 @@ body {
             }
 
         .bar_v_1 .bar-actions .btn, .bar_h_1 .bar-actions .btn {
-            background: #930077;
+            background: #da1b5e;
             color: #fff;
             padding: 10px 20px;
             border-radius: 0;
         }
 
             .bar_v_1 .bar-actions .btn:hover, .bar_h_1 .bar-actions .btn:hover {
-                background: #60004e;
+                background: #b90f4b;
                 color: #fff;
             }
 
@@ -399,4 +431,10 @@ body.carousel-control-next-icon {
 body.no-padding {
     padding-left: 0;
     padding-right: 0;
+}
+
+/* Bar styling */
+
+.bar-actions {
+    background: #f3f4f5!important;
 }

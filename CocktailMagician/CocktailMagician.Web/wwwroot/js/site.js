@@ -96,11 +96,6 @@ $('#city-to-db').click(function () {
     })
 });
 
-$(document).ready(function () {
-    $('.multiple-select2').select2();
-});
-
-
 function ShowModal(id) {
     $(`.${id}`).modal('show');
 }
@@ -131,20 +126,39 @@ function DeleteValue(id) {
 
 
 $(document).ready(function () {
+    $('.multiple-select2').select2();
     $('#show-reviews').click(function() {
         $('#bars-content').hide();
         $('#review-content').show();
         $('#show-bars').css("background-color", "#930077").css("color", "white").css("cursor", "pointer");
         $('#show-reviews').css("background-color", "white").css("color", "gray").css("cursor", "default");
     });
-});
-
-$(document).ready(function () {
     $('#show-bars').click(function () {
         $('#review-content').hide();
         $('#bars-content').show();
         $('#show-reviews').css("background-color", "#930077").css("color", "white").css("cursor", "pointer");
         $('#show-bars').css("background-color", "white").css("color", "gray").css("cursor", "default");
+    });
+
+    // Actual JS:
+
+    const navbarContainer = $('nav .container');
+
+    window.addEventListener('scroll', function () {
+        const logoHeight = $('#logo').height();
+        const topOffset = window.scrollY;
+
+        if (topOffset > logoHeight) {
+            navbarContainer.css({
+                position: 'fixed',
+                top: 0,
+                zIndex: 99
+            });
+        } else {
+            navbarContainer.css({
+                position: 'relative'
+            });
+        }
     });
 });
 

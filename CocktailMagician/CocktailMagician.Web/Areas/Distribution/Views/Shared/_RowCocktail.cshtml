@@ -3,7 +3,9 @@
 
     <div class="wine_v_1 text-center pb-4">
         @*<a asp-action="Details" asp-route-id="@Model.Id" class="thumbnail d-block mb-4">*@
-            <img class="image-cocktail-index img-fluid" src="@Model.ImageURL" alt="Card image cap">
+            <div>
+                <img class="image-cocktail-index img-fluid" src="@Model.ImageURL" alt="Card image cap">
+            </div>
             <div class="m-3">
                 <div class="cocktail-title text-center">
                     <h4 class="d-block">@Model.Name</h4>
@@ -26,26 +28,26 @@
                 </div>
             </div>
 
-        <div class="wine-actions">
-            <div class="heading m-1 text-dark">@Model.Name</div>
-            <div class="rating">
+            <div class="wine-actions">
+                <div class="heading m-1 text-dark">@Model.Name</div>
+                <div class="rating">
 
-                @if (Model.AverageRating != null)
-                {
-                    for (int i = 1; i <= Model.AverageRating; i++)
+                    @if (Model.AverageRating != null)
                     {
-                        <span class="icon-star"></span>
+                        for (int i = 1; i <= Model.AverageRating; i++)
+                        {
+                            <span class="icon-star"></span>
+                        }
+                        for (int i = 5; i > Model.AverageRating; i--)
+                        {
+                            <span class="icon-star-o"></span>
+                        }
                     }
-                    for (int i = 5; i > Model.AverageRating; i--)
-                    {
-                        <span class="icon-star-o"></span>
-                    }
-                }
-                @String.Format("{0:0.0}", Model.AverageRating)
+                    @String.Format("{0:0.0}", Model.AverageRating)
+                </div>
+
+                <a asp-action="Details" asp-route-id="@Model.Id" class="btn add"><span class="icon-local_drink mr-3"></span> Details</a>
             </div>
-
-            <a asp-action="Details" asp-route-id="@Model.Id" class="btn add"><span class="icon-local_drink mr-3"></span> Details</a>
         </div>
-    </div>
 
 

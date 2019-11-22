@@ -23,7 +23,7 @@ namespace CocktailMagician.Services
 
         public async Task AddReviewAsync(string comment, int? rating, string userName, int barId)
         {
-            List<string> rudeWords = new List<string>{ "ass", "arse", "asshole", "bastard", "bitch", "bollocks", "child-fucker", "Christ on a bike", "Christ on a cracker", "crap", "cunt", "damn", "frigger", "fuck", "goddamn", "godsdamn", "hell", "holy shit", "horseshit", "Jesus Christ", "Jesus fuck", "jesus h. christ", "jesus harold christ", "jesus wept", "Jesus, Mary and Joseph", "Judas Priest", "motherfucker", "nigga", "nigger", "prick", "shit", "shit ass", "shitass", "slut", "son of a bitch", "son of a motherless goat", "son of a whore", "sweet Jesus" };
+            List<string> rudeWords = new List<string>{ "ass", "arse", "asshole", "bastard", "bitch", "bollocks", "child-fucker", "Christ on a bike", "Christ on a cracker", "crap", "cunt", "damn", "frigger", "fuck", "goddamn", "godsdamn", "hell", "holy shit", "horseshit", "jesus christ", "jesus fuck", "jesus h. christ", "jesus harold christ", "jesus wept", "Jesus, Mary and Joseph", "Judas Priest", "motherfucker", "nigga", "nigger", "prick", "shit", "shit ass", "shitass", "slut", "son of a bitch", "son of a motherless goat", "son of a whore", "sweet Jesus" };
 
             var userId = await context.Users.Where(u => u.UserName == userName).Select(u => u.Id).FirstAsync();
             var bar = await context.Bars.Where(b => b.Id == barId).Select(b => b.Id).FirstAsync();
