@@ -21,5 +21,6 @@ namespace CocktailMagician.Services.Contracts
         Task<List<BarInListDTO>> SearchAsync(BarSearchDTO dto, int itemsPerPage, int currentPage);
         Task<int> SerchResultCountAsync(BarSearchDTO dto);
         Task<int> AllBarsCountAsync();
+        Task<List<BarInListDTO>> GetMostPopular(int number);
     }
 }

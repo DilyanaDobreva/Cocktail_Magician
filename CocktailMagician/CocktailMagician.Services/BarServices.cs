@@ -294,5 +294,30 @@ namespace CocktailMagician.Services
             var count = await context.Bars.Where(c => c.IsDeleted == false).CountAsync();
             return count;
         }
+
+        public async Task<List<BarInListDTO>> GetMostPopular(int number)
+        {
+            var topBars = await context.Bars
+                .Include(b => b.Address)
+                    .ThenInclude(a => a.City)
+                .Where(b => b.IsDeleted == false)
+                .Select(b => new BarInListDTO
+                {
+                    Id = b.Id,
+                    Name = b.Name,
+                    ImageURL = b.ImageUrl,
+                    Address = b.Address.Name,
+                    City = b.Address.City.Name,
+                    AverageRating = b.BarReviews
+                        .Where(r => r.Rating != null)
+                        .Select(r => r.Rating)
+                        .Average()
+                })
+                .OrderByDescending(r => r.AverageRating)
+                .Take(number)
+                .ToListAsync();
+
+            return topBars;
+        }
     }
 }
