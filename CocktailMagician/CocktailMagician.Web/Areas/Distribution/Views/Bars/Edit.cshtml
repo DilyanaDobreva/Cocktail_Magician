@@ -4,27 +4,64 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Edit Bar</h1>
-
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-xl-6 col-md-12" align="center">
+        <div>
+            <img class="edit-bar-image mt-4" src="@Model.ImageURL" alt="Card image cap">
+        </div>
+    </div>
+    @*<div class="col-xl-1" align="center">
+        </div>*@
+
+    <div class="col-xl-6 col-md-12 pl-3" align="center">
+        <h2 class="font-cinzel m-4">@Model.Name</h2>
+
+        <h5>Edit bar information</h5>
         <form asp-action="/Distribution/Bars/Edit">
 
             <partial name="_BarProperties" model="@Model" />
 
-            <button class="btn btn-outline-info load-add-city-form">Add City</button>
+            <div class="text-link" data-toggle="modal" data-target="#exampleModal3">Add city to the menu here</div>
             <input type="submit" class="btn btn-light" />
         </form>
-    </div>
-    <div class="col-md-6">
-        <div style="display:none" id="city-div">
-            <div class="m-4">
-                <div>
-                    City Name:
-                    <input type="text" name="cityName" class=" form-control" id="city-name" />
+
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModal3Label" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModal3Label">Add city to menu</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="m-4">
+                            <div>
+                                City Name:
+                                <input type="text" name="cityName" class=" form-control" id="city-name" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="city-to-db">Save changes</button>
+                    </div>
                 </div>
             </div>
-            <button class="btn btn-light" id="city-to-db">Add new city</button>
         </div>
+
+
+        @*<div style="display:none" id="city-div">
+                <div class="m-4">
+                    <div>
+                        City Name:
+                        <input type="text" name="cityName" class=" form-control" id="city-name" />
+                    </div>
+                </div>
+                <button class="btn btn-light" id="city-to-db">Add new city</button>
+            </div>*@
     </div>
 </div>

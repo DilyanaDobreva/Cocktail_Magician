@@ -92,6 +92,13 @@ body {
     object-fit: cover;
 }
 
+.edit-bar-image {
+    height: 600px;
+    max-width: 550px;
+    object-fit: cover;
+}
+
+
 .cocktails-scroll-frame {
     overflow: auto;
     width: 250px;

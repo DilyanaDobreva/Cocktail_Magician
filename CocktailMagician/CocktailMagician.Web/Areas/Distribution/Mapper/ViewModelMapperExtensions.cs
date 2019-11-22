@@ -145,6 +145,7 @@ namespace CocktailMagician.Web.Areas.Distribution.Mapper
             {
                 Name = bar.Name,
                 ImageURL = bar.ImageURL,
+                PhoneNumber = bar.PhoneNumber,
                 Address = bar.Address.MapToViewModel()
             };
             return dto;

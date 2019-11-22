@@ -114,6 +114,7 @@ namespace CocktailMagician.Services
                     Name = bar.Name,
                     ImageURL = bar.ImageUrl,
                     Id = bar.Id,
+                    PhoneNumber = bar.PhoneNumber,
                     Address = bar.Address.MapToDTO()
                 })
                 .FirstOrDefaultAsync();

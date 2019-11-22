@@ -20,17 +20,21 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
         [HttpPost]
         public async Task<IActionResult> Add([FromBody]CityViewModel vm)
         {
-            try
+            if (ModelState.IsValid)
             {
-                var city = (await cityServices.AddAsync(vm.Name)).MapToViewModel();
+                try
+                {
+                    var city = (await cityServices.AddAsync(vm.Name)).MapToViewModel();
 
-                return Json(city);
+                    return Json(city);
+                }
+                catch (ArgumentException ex)
+                {
+                    TempData["Status"] = ex.Message;
+                    return RedirectToAction("Add", "Bars");
+                }
             }
-            catch ( ArgumentException ex)
-            {
-                TempData["Status"] = ex.Message;
-                return RedirectToAction("Add", "Bars");
-            }
+            return RedirectToAction("Add", "Bars");
         }
     }
 }
