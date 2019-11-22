@@ -76,6 +76,10 @@ namespace CocktailMagician.Services
                     Id = bar.Id,
                     Name = bar.Name,
                     ImageURL = bar.ImageUrl,
+                    AverageRating = bar.BarReviews
+                        .Where(r => r.Rating != null)
+                        .Select(r => r.Rating)
+                        .Average(),
                     Address = bar.Address.MapToDTO() ,
                     Cocktails = bar.BarCocktails.Select(bc => new CocktailInListDTO
                     {

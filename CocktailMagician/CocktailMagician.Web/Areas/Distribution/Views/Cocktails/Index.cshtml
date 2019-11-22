@@ -34,7 +34,9 @@
     <div class="row">
         @foreach (var cocktail in Model.AllCocktails)
         {
-            <partial name="_RowCocktail" model="@cocktail" />
+            <div class="col-lg-3 col-md-6" align="center">
+                <partial name="_RowCocktail" model="@cocktail" />
+            </div>
         }
     </div>
     <ul class="pagination">
