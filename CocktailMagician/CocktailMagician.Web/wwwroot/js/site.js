@@ -130,13 +130,13 @@ $(document).ready(function () {
     $('#show-reviews').click(function() {
         $('#bars-content').hide();
         $('#review-content').show();
-        $('#show-bars').css("background-color", "#930077").css("color", "white").css("cursor", "pointer");
+        $('#show-bars').css("background-color", "#da1b5e").css("color", "white").css("cursor", "pointer");
         $('#show-reviews').css("background-color", "white").css("color", "gray").css("cursor", "default");
     });
     $('#show-bars').click(function () {
         $('#review-content').hide();
         $('#bars-content').show();
-        $('#show-reviews').css("background-color", "#930077").css("color", "white").css("cursor", "pointer");
+        $('#show-reviews').css("background-color", "#da1b5e").css("color", "white").css("cursor", "pointer");
         $('#show-bars').css("background-color", "white").css("color", "gray").css("cursor", "default");
     });
 
@@ -161,4 +161,15 @@ $(document).ready(function () {
         }
     });
 });
+
+$('#logOut-button').click(function () {
+    $.ajax(
+        {
+            type: 'Post',
+            url: 'Users/Auth/Logout',
+            //headers: {
+            //    RequestVerificationToken:
+            //        $('input:hidden[name="__RequestVerificationToken"]').val(),
+        })
+})
 

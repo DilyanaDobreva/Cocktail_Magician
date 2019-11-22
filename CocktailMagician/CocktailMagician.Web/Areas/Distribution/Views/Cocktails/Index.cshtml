@@ -5,12 +5,12 @@
 }
 
 <div class="row mb-2">
-    <div class="col-12 section-title text-center ">
-        <h2 class="d-block">Our Cocktails</h2>
+    <div class="col-12 text-center mb-3">
+        <h2 class="font-cinzel">Our Cocktails</h2>
         <p>You can't buy happiness, but you can drink a cocktail and that's the kind of the same thing!</p>
     </div>
 </div>
-<div>
+<div >
     <span class="left">
         @if (User.IsInRole("admin"))
         {
@@ -23,7 +23,7 @@
     </span>
 </div>
 
-<hr />
+<hr class="mt-1"/>
 <div class="container">
     @if (Model.AllCocktails.Count() == 0)
     {
@@ -39,7 +39,7 @@
             </div>
         }
     </div>
-    <ul class="pagination">
+    <ul class="pagination m-1">
         @if (Model.Paging.HasPrevious)
         {
             <li class="page-item"><a class="page-link" href="/Distribution/Cocktails/Index/@Model.Paging.PreviousPage">Previous</a></li>

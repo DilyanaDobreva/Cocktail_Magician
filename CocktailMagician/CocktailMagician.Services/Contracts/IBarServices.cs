@@ -10,7 +10,7 @@ namespace CocktailMagician.Services.Contracts
         Task AddAsync(string name, string imageURL, string phoneNumber, AddressDTO address);
         Task<List<BarInListDTO>> GetAllDTOAsync(int itemsPerPage, int currentPage);
         Task<BarDetailsDTO> GetDetailedDTOAsync(int id);
-        Task<string> GetNameAsync(int id);
+        Task<BarBasicImageDTO> GetBasicDTOAsync(int id);
         Task<List<CocktailBasicDTO>> GetPresentCocktailsAsync(int id);
         Task<List<CocktailBasicDTO>> NotPresentCocktailsAsync(int id);
         Task AddCocktailsAsync(int barId, List<int> cocktailsToAdd);

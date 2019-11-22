@@ -49,7 +49,7 @@ namespace CocktailMagician.Services.UnitTests.BarServicesTests
             using (var assertContext = new CocktailMagicianDb(options))
             {
                 var sut = new BarServices(assertContext, barFactoryMock.Object, barCocktailFactoryMock.Object);
-                await Assert.ThrowsExceptionAsync<InvalidOperationException>(() => sut.GetNameAsync(invalidId));
+                await Assert.ThrowsExceptionAsync<InvalidOperationException>(() => sut.GetBasicDTOAsync(invalidId));
             };
         }
 
@@ -90,7 +90,7 @@ namespace CocktailMagician.Services.UnitTests.BarServicesTests
                 var barId = await assertContext.Bars.Where(b => b.Name == barTestName).Select(b => b.Id).FirstAsync();
 
                 var sut = new BarServices(assertContext, barFactoryMock.Object, barCocktailFactoryMock.Object);
-                await Assert.ThrowsExceptionAsync<InvalidOperationException>(() => sut.GetNameAsync(barId));
+                await Assert.ThrowsExceptionAsync<InvalidOperationException>(() => sut.GetBasicDTOAsync(barId));
             };
         }
 
@@ -130,7 +130,7 @@ namespace CocktailMagician.Services.UnitTests.BarServicesTests
                 var barId = await assertContext.Bars.Where(b => b.Name == barTestName).Select(b => b.Id).FirstAsync();
 
                 var sut = new BarServices(assertContext, barFactoryMock.Object, barCocktailFactoryMock.Object);
-                var foundBarName = await sut.GetNameAsync(barId);
+                var foundBarName = await sut.GetBasicDTOAsync(barId);
 
                 Assert.AreEqual(barTestName, foundBarName);
             };

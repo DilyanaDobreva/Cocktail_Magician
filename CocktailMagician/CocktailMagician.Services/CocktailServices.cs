@@ -256,7 +256,6 @@ namespace CocktailMagician.Services
                 })
                 .Skip((currentPage - 1) * itemsPerPage)
                 .Take(itemsPerPage)
-
                 .ToListAsync();
 
             return resultDTO;

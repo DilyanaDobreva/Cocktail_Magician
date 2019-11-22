@@ -20,7 +20,7 @@
 
                     @if (User.IsInRole("admin"))
                     {<div class="btn-group mb-3">
-                            <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal">
+                            <button type="button" class="btn btn-pink" data-toggle="modal" data-target="#exampleModal">
                                 Delete cokctail
                             </button>
 
@@ -47,8 +47,8 @@
                                 </div>
                             </div>
 
-                            <a class="btn btn-outline-primary" asp-action="EditIngredients" asp-controller="Cocktails" asp-route-id="@Model.Id">Edit Ingredients</a>
-                            <a class="btn btn-outline-primary" asp-action="EditBars" asp-controller="Cocktails" asp-route-id="@Model.Id">Edit bars</a>
+                            <a class="btn btn-pink" asp-action="EditIngredients" asp-controller="Cocktails" asp-route-id="@Model.Id">Edit Ingredients</a>
+                            <a class="btn btn-pink" asp-action="EditBars" asp-controller="Cocktails" asp-route-id="@Model.Id">Edit bars</a>
                         </div>
                         <h5>Recipe: </h5>
                         @foreach (var ingr in Model.Ingredients)

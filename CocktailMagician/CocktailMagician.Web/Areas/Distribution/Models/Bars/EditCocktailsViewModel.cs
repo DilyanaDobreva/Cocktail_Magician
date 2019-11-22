@@ -14,6 +14,7 @@ namespace CocktailMagician.Web.Areas.Distribution.Models.Bars
             CocktailsToRemove = new List<int>();
         }
         public string BarName { get; set; }
+        public string ImageUrl { get; set; }
         public IEnumerable<SelectListItem> PresentCocktails { get; set; }
         public IEnumerable<SelectListItem> NotPresentCocktails { get; set; }
         public List<int> CocktailsToAdd { get; set; }

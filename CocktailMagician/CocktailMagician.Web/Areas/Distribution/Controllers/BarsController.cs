@@ -64,7 +64,7 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
                     await barServices.AddAsync(bar.Name, bar.ImageURL, bar.PhoneNumber, bar.Address.MapToDTO());
                     return RedirectToAction("Index");
                 }
-                catch(ArgumentException ex)
+                catch (ArgumentException ex)
                 {
                     TempData["Status"] = ex.Message;
                     return View(bar);
@@ -87,7 +87,7 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
 
                 return View(barVM);
             }
-            catch(InvalidOperationException)
+            catch (InvalidOperationException)
             {
                 return BadRequest();
             }
@@ -99,7 +99,10 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
             try
             {
                 var barVM = new EditCocktailsViewModel();
-                barVM.BarName = await barServices.GetNameAsync(id);
+                var dto = await barServices.GetBasicDTOAsync(id);
+
+                barVM.BarName = dto.Name;
+                barVM.ImageUrl = dto.ImageURL;
 
                 barVM.PresentCocktails = (await barServices.GetPresentCocktailsAsync(id))
                     .Select(c => new SelectListItem(c.Name, c.Id.ToString()));
@@ -109,7 +112,7 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
 
                 return View(barVM);
             }
-            catch(InvalidCastException)
+            catch (InvalidCastException)
             {
                 return BadRequest();
             }
@@ -127,7 +130,7 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
 
                 return RedirectToAction("Details", new { id = id });
             }
-            catch(InvalidOperationException)
+            catch (InvalidOperationException)
             {
                 return BadRequest();
             }
@@ -146,7 +149,7 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
 
                 return View(barToEditVM);
             }
-            catch(InvalidOperationException)
+            catch (InvalidOperationException)
             {
                 return BadRequest();
             }
@@ -165,7 +168,7 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
                 await barServices.EditAsync(barToEdit);
                 return RedirectToAction("Details", new { id = id });
             }
-            catch(InvalidOperationException)
+            catch (InvalidOperationException)
             {
                 return BadRequest();
             }
@@ -174,20 +177,20 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
         [HttpPost]
         [Authorize(Roles = "admin")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete (int id)
+        public async Task<IActionResult> Delete(int id)
         {
             try
             {
                 await barServices.DeleteAsync(id);
                 return RedirectToAction("Index");
             }
-            catch(InvalidOperationException)
+            catch (InvalidOperationException)
             {
                 return BadRequest();
             }
         }
 
-        public async Task<IActionResult> Search(int id,[FromQuery] BarSearchViewModel vm)
+        public async Task<IActionResult> Search(int id, [FromQuery] BarSearchViewModel vm)
         {
             var allCities = (await cityServices.GetAllDTOAsync());
             vm.AllCities = new List<SelectListItem>();
@@ -229,7 +232,8 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
                     Bar = barViewModel,
                 };
                 return View(vm);
-            }catch(InvalidOperationException)
+            }
+            catch (InvalidOperationException)
             {
                 return BadRequest();
             }

@@ -44,10 +44,10 @@
 <body>
     <header>
         <nav class="navbar container navbar-light bg-white box-shadow mb-3">
-            <a id="logo" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/images/cocktail.png" alt="Logo" /></a>
             <div class="container">
+                <a id="logo" class="left" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/images/cocktail.png" alt="Logo" /></a>
                 @*<a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">CocktailMagician.Web</a>*@
-                <span id="menuButtons">
+                <span id="menuButtons" class="right">
                     <span>
                         <a class="navbar-brand" asp-area="Distribution" asp-controller="Cocktails" asp-action="Index">Cocktails</a>
                     </span>
@@ -60,8 +60,8 @@
                             <a class="navbar-brand" asp-area="Distribution" asp-controller="Ingredients" asp-action="Index">Ingredients</a>
                         </span>
                     }
-                    </span>
-                <span id="authForm">
+                    @*</span>
+                <span id="authForm">*@
                     @if (!User.Identity.IsAuthenticated)
                     {
                         <a class="navbar-brand" asp-area="Users" asp-controller="Auth" asp-action="Login">
@@ -71,24 +71,27 @@
                             Register
                         </a>
                     }
+                    <span>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            if (User.IsInRole("admin"))
+                            {
+                                <a class="navbar-brand" asp-area="Users" asp-controller="User" asp-action="Index">Users</a>
+                            }
+                            else
+                            {
+                                <a class="navbar-brand" asp-area="Users" asp-controller="User" asp-action="Edit">Edit</a>
+                            }
+                            <div class="nav-item logout-btn">
+                            <form asp-area="Users" asp-controller="Auth" asp-action="Logout">
+                                <button class="btn btn-outline-dark">Logout</button>
+                            </form>
+                        </div>
+
+                        }
+                    </span>
                 </span>
 
-                @if (User.Identity.IsAuthenticated)
-                {
-                    if (User.IsInRole("admin"))
-                    {
-                        <a class="nav-link text-dark" asp-area="Users" asp-controller="User" asp-action="Index">Users</a>
-                    }
-                    else
-                    {
-                        <a class="nav-link text-dark" asp-area="Users" asp-controller="User" asp-action="Edit">Edit</a>
-                    }
-                    <div class="nav-item logout-btn">
-                        <form asp-area="Users" asp-controller="Auth" asp-action="Logout">
-                            <button class="btn btn-outline-dark">Logout</button>
-                        </form>
-                    </div>
-                }
             </div>
         </nav>
     </header>
@@ -100,10 +103,10 @@
     </div>
 
     @*<footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2019 - CocktailMagician.Web - <a asp-area="" asp-page="/Privacy">Privacy</a>
-        </div>
-    </footer>*@
+            <div class="container">
+                &copy; 2019 - CocktailMagician.Web - <a asp-area="" asp-page="/Privacy">Privacy</a>
+            </div>
+        </footer>*@
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>

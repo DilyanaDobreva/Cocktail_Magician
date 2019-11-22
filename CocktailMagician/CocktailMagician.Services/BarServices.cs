@@ -121,19 +121,23 @@ namespace CocktailMagician.Services
 
             return barToEditDTO;
         }
-        public async Task<string> GetNameAsync(int id)
+        public async Task<BarBasicImageDTO> GetBasicDTOAsync(int id)
         {
             if (!await context.Bars.AnyAsync(b => b.Id == id && b.IsDeleted == false))
             {
                 throw new InvalidOperationException(OutputConstants.InvalidId);
             }
 
-            var name = context.Bars
+            var bar = await context.Bars
                 .Where(b => b.Id == id && b.IsDeleted == false)
-                .Select(b => b.Name)
+                .Select(b => new BarBasicImageDTO
+                {
+                    Name = b.Name,
+                    ImageURL = b.ImageUrl
+                })
                 .FirstOrDefaultAsync();
 
-            return await name;
+            return bar;
         }
         public async Task<List<CocktailBasicDTO>> GetPresentCocktailsAsync(int id)
         {

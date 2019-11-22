@@ -2,6 +2,11 @@
 for details on configuring this project to bundle and minify static web assets. */
 * {
     font-family: Cinzel;
+    font-weight: 400;
+    /*color:darkslategray*/
+}
+.btn-outline-primary {
+    border-color: #da1b5e
 }
 
 body.modal-open {
@@ -21,12 +26,12 @@ nav .container {
 }
 
     nav img {
-        height: 6vw;
+        height: 4vw;
     }
 
-    nav #authForm {
+    /*nav #authForm {
         float: right;
-    }
+    }*/
 
 a.navbar-brand {
     white-space: normal;
@@ -113,7 +118,7 @@ body {
 }
 
 .details-image {
-    max-height: 700px;
+    max-height: 650px;
     max-width: 500px;
     box-shadow: 7px 7px 15px grey;
 }
@@ -156,7 +161,7 @@ body {
 
 
 .image-bar-index {
-    height: 280px;
+    height: 270px;
     max-width: 310px;
     object-fit: cover;
     
@@ -177,7 +182,7 @@ body {
 }
 
 .yellow-color {
-    color: #ffd800
+    color: #ffd800 !important
 }
 
 .right {
@@ -261,7 +266,7 @@ body {
 }
 
 .recepie-container{
-    height: 190px;
+    height: 180px;
 }
 .display-none{
     display:none
@@ -276,7 +281,7 @@ body {
 .bars-scroll-frame {
     /*overflow: auto;*/
     max-width: calc(100vh - 80px);
-    height: calc(100vh - 420px);
+    height: calc(100vh - 450px);
     border-style: hidden;
     /*border-color: cadetblue;*/
     padding: 15px;
@@ -287,7 +292,7 @@ body {
 
 .scroll {
     overflow: auto;
-    height: calc(100vh - 490px);
+    height: calc(100vh - 520px);
     overflow-x:hidden
 }
 .font-size-15{
@@ -295,19 +300,19 @@ body {
 }
 
 .text-link {
-    color: #930077;
-    text-decoration:underline;
-    cursor:pointer
+    color: #da1b5e;
+    text-decoration: underline;
+    cursor: pointer
 }
 .hr-primary {
-    background-color: #930077;
+    background-color: #da1b5e;
 }
 
 
 .bar_v_1, .bar_h_1 {
-    height: 420px;
+    height: 430px;
     position: relative;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
     .bar_v_1:before, .bar_h_1:before {
@@ -338,11 +343,10 @@ body {
         padding-top: 20px;
         padding-bottom: 20px;
         position: absolute;
-        left: 20px;
-        right: 20px;
+        width: 100%;
         bottom: 20px;
-        background: #fff;
-        opacity: 0;
+        background: #f3f4f5;
+        opacity: 0.5;
         visibility: hidden;
         -webkit-transition: .3s all ease;
         -o-transition: .3s all ease;
@@ -359,7 +363,7 @@ body {
 
         .bar_v_1 .bar-actions .price, .bar_h_1 .bar-actions .price {
             font-size: 20px;
-            color: #930077;
+            color: #da1b5e;
             font-family: "Cinzel";
         }
 
@@ -426,15 +430,30 @@ body {
     }*/
 
 body.carousel-indicators li {
-    background-color: #930077;
+    background-color: #da1b5e;
 }
 
 body.carousel-control-prev-icon,
 body.carousel-control-next-icon {
-    background-color: red;
+    background-color: #da1b5e;
 }
 
 body.no-padding {
     padding-left: 0;
     padding-right: 0;
 }
+
+#logOut-button{
+    cursor:pointer;
+}
+
+.btn-pink {
+    color: #dc1b5d !important;
+}
+
+    .btn-pink:hover {
+        border-color: #dc1b5d;
+        background-color: #dc1b5d;
+        color:white !important;
+    }
+

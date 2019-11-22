@@ -295,6 +295,11 @@ h1 {
     color: #dc1b5d !important;
 }
 
+    .btn-pink:hover {
+        border-color: #dc1b5d;
+        color:white;
+    }
+
 .auth-btn {
     box-shadow: none;
     border: 1px solid rgba(220, 27, 93, 0.55);
