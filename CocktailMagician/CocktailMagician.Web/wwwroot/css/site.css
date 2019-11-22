@@ -21,7 +21,7 @@ nav .container {
 }
 
     nav img {
-        height: 15vw;
+        height: 6vw;
     }
 
     nav #authForm {
@@ -267,11 +267,10 @@ body {
     display:none
 }
 
-#show-reviews {
-    background-color: #930077;
-    color:white;
-    cursor:pointer;
-
+#show-reviews{
+    background-color: #df1a57;
+    color: white;
+    cursor: pointer;
 }
 
 .bars-scroll-frame {
