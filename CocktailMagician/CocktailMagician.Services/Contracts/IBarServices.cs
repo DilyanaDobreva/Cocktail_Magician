@@ -18,7 +18,8 @@ namespace CocktailMagician.Services.Contracts
         Task<BarToEditDTO> GetBarToEditDTOAsync(int id);
         Task EditAsync(BarToEditDTO newBarInfo);
         Task DeleteAsync(int id);
-        Task<List<BarInListDTO>> SearchAsync(string name, int? cityId, int? minRating);
+        Task<List<BarInListDTO>> SearchAsync(BarSearchDTO dto, int itemsPerPage, int currentPage);
+        Task<int> SerchResultCountAsync(BarSearchDTO dto);
         Task<int> AllBarsCountAsync();
     }
 }

@@ -30,7 +30,7 @@ namespace CocktailMagician.Services
             if (context.Bars.Any(c => c.Name == name && c.IsDeleted == false))
                 throw new ArgumentException(OutputConstants.BarExists);
 
-            var bar = barFactory.Create(name, imageURL,phoneNumber, address);
+            var bar = barFactory.Create(name, imageURL, phoneNumber, address);
 
             context.Bars.Add(bar);
             await context.SaveChangesAsync();
@@ -81,7 +81,7 @@ namespace CocktailMagician.Services
                         .Where(r => r.Rating != null)
                         .Select(r => r.Rating)
                         .Average(),
-                    Address = bar.Address.MapToDTO() ,
+                    Address = bar.Address.MapToDTO(),
                     Cocktails = bar.BarCocktails.Select(bc => new CocktailInListDTO
                     {
                         Id = bc.Cocktail.Id,
@@ -245,16 +245,16 @@ namespace CocktailMagician.Services
             bar.IsDeleted = true;
             await context.SaveChangesAsync();
         }
-        public async Task<List<BarInListDTO>> SearchAsync(string name, int? cityId, int? minRating)
+        public async Task<List<BarInListDTO>> SearchAsync(BarSearchDTO dto, int itemsPerPage, int currentPage)
         {
             var resultDTO = await context.Bars
                 .Include(b => b.Address)
                     .ThenInclude(a => a.City)
                 .Include(b => b.BarReviews)
                 .Include(b => b.BarReviews)
-                .FilterByName(name)
-                .FilterByCity(cityId)
-                .FilterByRating(minRating)
+                .FilterByName(dto.NameKey)
+                .FilterByCity(dto.CityId)
+                .FilterByRating(dto.MinRating)
                 .Select(bar => new BarInListDTO
                 {
                     Id = bar.Id,
@@ -267,10 +267,27 @@ namespace CocktailMagician.Services
                         .Select(r => r.Rating)
                         .Average()
                 })
+                .Skip((currentPage - 1) * itemsPerPage)
+                .Take(itemsPerPage)
                 .ToListAsync();
 
             return resultDTO;
         }
+        public async Task<int> SerchResultCountAsync(BarSearchDTO dto)
+        {
+            var resultCount = await context.Bars
+                .Include(b => b.Address)
+                    .ThenInclude(a => a.City)
+                .Include(b => b.BarReviews)
+                .Include(b => b.BarReviews)
+                .FilterByName(dto.NameKey)
+                .FilterByCity(dto.CityId)
+                .FilterByRating(dto.MinRating)
+                .CountAsync();
+
+            return resultCount;
+        }
+
         public async Task<int> AllBarsCountAsync()
         {
             var count = await context.Bars.Where(c => c.IsDeleted == false).CountAsync();
