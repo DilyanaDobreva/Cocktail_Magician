@@ -246,7 +246,7 @@ $('#load-bar-reviews').click(function () {
         type: "get",
         url: "/Distribution/Bars/ShowReviews/" + barId,
         success: function (receivedData) {
-            $('.add-new-bar-review').empty();
+            //$('.add-new-bar-review').empty();
             //$('#add-new-bar-review').hide();
             $('#add-new-bar-review').append(receivedData);
         }
