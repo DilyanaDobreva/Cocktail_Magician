@@ -1,9 +1,6 @@
 ﻿using CocktailMagician.Data.Models;
 using CocktailMagician.Services.Factories;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace CocktailMagician.Services.UnitTests.FactoriesTests.IngredientFactoryTests
 {

@@ -122,7 +122,8 @@ namespace CocktailMagician.Web.Areas.Distribution.Mapper
                 PhoneNumber = bar.PhoneNumber,
                 AverageRating = bar.AverageRating,
                 Address = bar.Address.MapToViewModel(),
-                Cocktails = bar.Cocktails.Select(c => c.MapToViewModel())
+                Cocktails = bar.Cocktails.Select(c => c.MapToViewModel()),
+                HasReviews = bar.HasReviews
             };
             return vm;
         }

@@ -1,0 +1,6 @@
+﻿@model IEnumerable<ReviewViewModel>
+
+@foreach (var bar in Model)
+    {
+        <partial name="_ReviewPartial" model="@bar" />
+    }

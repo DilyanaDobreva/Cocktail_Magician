@@ -70,6 +70,7 @@ namespace CocktailMagician.Services
                     .ThenInclude(bc => bc.Cocktail)
                 .Include(b => b.Address)
                     .ThenInclude(b => b.City)
+                .Include(b => b.BarReviews)
                 .Where(b => b.Id == id && b.IsDeleted == false)
                 .Select(bar => new BarDetailsDTO
                 {
@@ -77,6 +78,7 @@ namespace CocktailMagician.Services
                     Name = bar.Name,
                     ImageURL = bar.ImageUrl,
                     PhoneNumber = bar.PhoneNumber,
+                    HasReviews = bar.BarReviews.Any(),
                     AverageRating = bar.BarReviews
                         .Where(r => r.Rating != null)
                         .Select(r => r.Rating)

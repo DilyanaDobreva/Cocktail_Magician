@@ -2,11 +2,9 @@
 using CocktailMagician.Data.Models;
 using CocktailMagician.Services.Contracts;
 using CocktailMagician.Services.Contracts.Factories;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace CocktailMagician.Services.UnitTests.ServiceTests

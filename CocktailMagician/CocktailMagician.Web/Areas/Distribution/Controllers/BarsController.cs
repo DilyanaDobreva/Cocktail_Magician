@@ -84,7 +84,7 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
                 var bar = (await barServices.GetDetailedDTOAsync(id));
                 var barVM = bar.MapToViewModel();
 
-                barVM.BarReviews = listWithReviews.Select(r => r.MapToViewModel());
+                //barVM.BarReviews = listWithReviews.Select(r => r.MapToViewModel());
 
                 return View(barVM);
             }
@@ -253,6 +253,12 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
             }
 
             return RedirectToAction("Details", "Bars", new { id = vm.Id });
+        }
+        public async Task<IActionResult> ShowReviews(int id)
+        {
+            var reviews = (await barReviewServices.AllReviewsAsync(id)).Select(r => r.MapToViewModel());
+
+            return PartialView("_ShowReviewsPartial", reviews);
         }
     }
 }

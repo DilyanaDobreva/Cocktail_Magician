@@ -13,5 +13,6 @@ namespace CocktailMagician.Services.DTOs
         public double? AverageRating { get; set; }
         public AddressDTO Address { get; set; }
         public IEnumerable<CocktailInListDTO> Cocktails { get; set; }
+        public bool HasReviews { get; set; }
     }
 }

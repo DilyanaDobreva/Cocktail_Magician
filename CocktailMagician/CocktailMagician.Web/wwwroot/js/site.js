@@ -198,8 +198,8 @@ $('#bar-review').click(function () {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        success: function (responseData) {
-            $('#add-new-bar-review').prepend(responseData)
+        success: function () {
+            //$('#add-new-bar-review').prepend(responseData)
             $('#no-review').hide();
         }
         //error: function () {
@@ -238,4 +238,21 @@ $('#cocktail-review').click(function () {
         //error: function () {
         //    alert('No Valid Data');
     })
+})
+
+$('#load-bar-reviews').click(function () {
+    let barId = $('#barId').val();
+    $.ajax({
+        type: "get",
+        url: "/Distribution/Bars/ShowReviews/" + barId,
+        success: function (receivedData) {
+            $('.add-new-bar-review').empty();
+            //$('#add-new-bar-review').hide();
+            $('#add-new-bar-review').append(receivedData);
+        }
+    })
+})
+
+$('#close-bar-reviews').click(function () {
+    $('.add-new-bar-review').empty();
 })

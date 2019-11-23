@@ -101,9 +101,9 @@
         </div>
     </div>
 
-    @if (Model.BarReviews.Count() != 0)
+    @if (Model.HasReviews)
     {
-        <button class="btn btn-pink ml-2" data-toggle="modal" data-target="#exampleModalScrollable">Show reviews</button>
+        <button class="btn btn-pink ml-2" id="load-bar-reviews" data-toggle="modal" data-target="#exampleModalScrollable">Show reviews</button>
     }
 
 
@@ -114,17 +114,18 @@
                 <div class="modal-header">
                     <h5 class="modal-title font-cinzel" id="exampleModalCenteredLabel">Customers rewies</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
+                        <span aria-hidden="true" class="close-bar-reviews">×</span>
                     </button>
-                </div>
+                </div >
                 <div class="modal-body" id="add-new-bar-review">
-                    @foreach (var bar in Model.BarReviews)
-                    {
-                        <partial name="_ReviewPartial" model="@bar" />
-                    }
+
+                    @*@foreach (var bar in Model.BarReviews)
+        {
+            <partial name="_ReviewPartial" model="@bar" />
+        }*@
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button i type="button" class="btn btn-secondary close-bar-reviews" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
