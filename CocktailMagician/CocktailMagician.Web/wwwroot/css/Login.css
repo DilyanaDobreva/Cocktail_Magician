@@ -11,7 +11,7 @@ a {
 }
 
 h2 {
-    text-align: center;a
+    text-align: center;
     font-size: 16px;
     font-weight: 600;
     text-transform: uppercase;
@@ -306,6 +306,8 @@ h1 {
 }
     .auth-btn:hover {
         box-shadow: 0 1px 3px 1px rgba(220, 27, 93, 0.55);
+        color: white!   important;
+        background: #dc1b5d;
     }
 
 /* OTHERS */
