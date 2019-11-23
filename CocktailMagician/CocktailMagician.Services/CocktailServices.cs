@@ -83,6 +83,7 @@ namespace CocktailMagician.Services
                     .ThenInclude(b => b.Bar)
                         .ThenInclude(b => b.Address)
                             .ThenInclude(a => a.City)
+                .Include(c => c.CocktailReviews)
                 .Where(c => c.Id == id && c.IsDeleted == false)
                 .Select(c => new CocktailDetailsDTO
                 {
@@ -95,7 +96,7 @@ namespace CocktailMagician.Services
                         Name = b.Bar.Name,
                         ImageURL = b.Bar.ImageUrl,
                         Address = b.Bar.Address.Name,
-                        City = b.Bar.Address.City.Name
+                        City = b.Bar.Address.City.Name,
                     })
                 })
                 .FirstOrDefaultAsync();
@@ -115,7 +116,6 @@ namespace CocktailMagician.Services
         }
         public async Task<List<CocktailInListDTO>> GetAllDTOAsync(int itemsPerPage, int currentPage)
         {
-
             var list = await context.Cocktails
                 .Include(c => c.CocktailReviews)
                 .Where(c => c.IsDeleted == false)

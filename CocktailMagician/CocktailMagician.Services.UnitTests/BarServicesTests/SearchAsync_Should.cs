@@ -1,6 +1,7 @@
 ﻿using CocktailMagician.Data;
 using CocktailMagician.Data.Models;
 using CocktailMagician.Services.Contracts.Factories;
+using CocktailMagician.Services.DTOs;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -105,8 +106,15 @@ namespace CocktailMagician.Services.UnitTests.BarServicesTests
             {
                 var substringToSearch = "Bc";
 
+                var dtoTest = new BarSearchDTO
+                {
+                    CityId = null,
+                    MinRating = null,
+                    NameKey = substringToSearch
+                };
+
                 var sut = new BarServices(assertContext, barFactoryMock.Object, barCocktailFactoryMock.Object);
-                var result = await sut.SearchAsync(substringToSearch, null, null);
+                var result = await sut.SearchAsync(dtoTest, 5, 1);
 
                 Assert.AreEqual(2, result.Count());
                 Assert.IsFalse(result.Any(c => !c.Name.Contains(substringToSearch, StringComparison.OrdinalIgnoreCase)));
@@ -202,8 +210,15 @@ namespace CocktailMagician.Services.UnitTests.BarServicesTests
             {
                 var minRatingToSearch = 4;
 
+                var dtoTest = new BarSearchDTO
+                {
+                    CityId = null,
+                    MinRating = minRatingToSearch,
+                    NameKey = null
+                };
+
                 var sut = new BarServices(assertContext, barFactoryMock.Object, barCocktailFactoryMock.Object);
-                var result = await sut.SearchAsync(null, null, minRatingToSearch);
+                var result = await sut.SearchAsync(dtoTest, 5, 1);
 
                 Assert.AreEqual(3, result.Count());
                 foreach (var bar in result)
@@ -309,8 +324,15 @@ namespace CocktailMagician.Services.UnitTests.BarServicesTests
             {
                 var cityIdToSearch = await assertContext.Cities.Where(c => c.Name == city1Name).Select(c => c.Id).FirstAsync();
 
+                var dtoTest = new BarSearchDTO
+                {
+                    CityId = cityIdToSearch,
+                    MinRating = null,
+                    NameKey = null
+                };
+
                 var sut = new BarServices(assertContext, barFactoryMock.Object, barCocktailFactoryMock.Object);
-                var result = await sut.SearchAsync(null, cityIdToSearch, null);
+                var result = await sut.SearchAsync(dtoTest, 5, 1);
 
                 Assert.AreEqual(3, result.Count());
                 foreach (var bar in result)
@@ -419,8 +441,15 @@ namespace CocktailMagician.Services.UnitTests.BarServicesTests
                 var cityIdToSearch = await assertContext.Cities.Where(c => c.Name == city1Name).Select(c => c.Id).FirstAsync();
                 var minRatingToSearch = 4;
 
+                var dtoTest = new BarSearchDTO
+                {
+                    CityId = cityIdToSearch,
+                    MinRating = minRatingToSearch,
+                    NameKey = substringToSearch
+                };
+
                 var sut = new BarServices(assertContext, barFactoryMock.Object, barCocktailFactoryMock.Object);
-                var result = await sut.SearchAsync(substringToSearch, cityIdToSearch, minRatingToSearch);
+                var result = await sut.SearchAsync(dtoTest, 5, 1);
 
                 Assert.AreEqual(1, result.Count());
                 foreach (var bar in result)

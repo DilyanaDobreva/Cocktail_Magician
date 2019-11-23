@@ -449,6 +449,8 @@ body.no-padding {
 
 .btn-pink {
     color: #dc1b5d !important;
+    border-color: #dc1b5d !important;
+    border-width: 1px
 }
 
     .btn-pink:hover {

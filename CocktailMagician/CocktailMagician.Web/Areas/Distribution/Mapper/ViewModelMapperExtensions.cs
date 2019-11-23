@@ -102,14 +102,13 @@ namespace CocktailMagician.Web.Areas.Distribution.Mapper
             };
             return vm;
         }
-        public static CocktailReviewViewModel MapToViewModel(this CocktailReviewDTO review)
+        public static ReviewViewModel MapToViewModel(this ReviewDTO review)
         {
-            var vm = new CocktailReviewViewModel()
+            var vm = new ReviewViewModel()
             {
                 Comment = review.Comment,
                 Rating = review.Rating,
                 UserName = review.UserName,
-                IsDeleted = review.IsDeleted
             };
             return vm;
         }

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
+using CocktailMagician.Web.Areas.Distribution.Models;
 
 namespace CocktailMagician.Web.Areas.Distribution.Controllers
 {
@@ -241,15 +242,17 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> BarReview(int id, BarReviewViewModel vm)
+        public async Task<IActionResult> BarReview([FromBody]ReviewViewModel vm)
         {
             if (vm.Rating != null || !string.IsNullOrWhiteSpace(vm.Comment))
             {
-                var memberName = User.Identity.Name;
-                await barReviewServices.AddReviewAsync(vm.Comment, vm.Rating, memberName, id);
+                vm.UserName = User.Identity.Name;
+                await barReviewServices.AddReviewAsync(vm.Comment, vm.Rating, vm.UserName, vm.Id);
+
+                return PartialView("_ReviewPartial", vm);
             }
 
-            return RedirectToAction("Details", "Bars", new { id = id });
+            return RedirectToAction("Details", "Bars", new { id = vm.Id });
         }
     }
 }

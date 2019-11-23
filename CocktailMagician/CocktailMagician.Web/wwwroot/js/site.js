@@ -35,7 +35,7 @@ $('#ingrediens-to-db').click(function () {
     let unit = $('#ingredient-unit').val();
     let data = {
         'Name': name,
-        'Unit' : unit
+        'Unit': unit
     }
 
     $.ajax({
@@ -127,7 +127,7 @@ function DeleteValue(id) {
 
 $(document).ready(function () {
     $('.multiple-select2').select2();
-    $('#show-reviews').click(function() {
+    $('#show-reviews').click(function () {
         $('#bars-content').hide();
         $('#review-content').show();
         $('#show-bars').css("background-color", "#da1b5e").css("color", "white").css("cursor", "pointer");
@@ -173,3 +173,69 @@ $('#logOut-button').click(function () {
         })
 })
 
+$('#bar-review').click(function () {
+    //const userName = $('#userName').val();
+    let rating = document.querySelector('input[name="rating"]:checked').value;
+    let comment = $('#comment').val();
+    let barId = $('#barId').val();
+
+    let viewModel = {
+        "Comment": comment,
+        "Id": barId,
+        "Rating": rating
+    }
+    console.log(viewModel)
+
+    $.ajax({
+        type: "post",
+        url: "/Distribution/Bars/BarReview",
+        data: JSON.stringify(viewModel),
+        contentType: "application/json",
+        cache: false,
+        headers: {
+            RequestVerificationToken:
+                $('input:hidden[name="__RequestVerificationToken"]').val(),
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        success: function (responseData) {
+            $('#add-new-bar-review').prepend(responseData)
+            $('#no-review').hide();
+        }
+        //error: function () {
+        //    alert('No Valid Data');
+    })
+})
+
+$('#cocktail-review').click(function () {
+    //const userName = $('#userName').val();
+    let rating = document.querySelector('input[name="rating"]:checked').value;
+    let comment = $('#comment').val();
+    let barId = $('#cocktailId').val();
+
+    let viewModel = {
+        "Comment": comment,
+        "Id": barId,
+        "Rating": rating
+    }
+
+    $.ajax({
+        type: "post",
+        url: "/Distribution/Cocktails/CocktailReview",
+        data: JSON.stringify(viewModel),
+        contentType: "application/json",
+        cache: false,
+        headers: {
+            RequestVerificationToken:
+                $('input:hidden[name="__RequestVerificationToken"]').val(),
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        success: function (responseData) {
+            $('#review-content').prepend(responseData)
+            $('#no-review').hide()
+        }
+        //error: function () {
+        //    alert('No Valid Data');
+    })
+})

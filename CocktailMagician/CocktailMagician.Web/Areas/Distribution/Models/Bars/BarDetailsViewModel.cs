@@ -12,6 +12,6 @@ namespace CocktailMagician.Web.Areas.Distribution.Models.Bars
         public double? AverageRating { get; set; }
         public AddressViewModel Address { get; set; }
         public IEnumerable<CocktailInListViewModel> Cocktails { get; set; }
-        public IEnumerable<BarReviewViewModel> BarReviews { get; set; }
+        public IEnumerable<ReviewViewModel> BarReviews { get; set; }
     }
 }

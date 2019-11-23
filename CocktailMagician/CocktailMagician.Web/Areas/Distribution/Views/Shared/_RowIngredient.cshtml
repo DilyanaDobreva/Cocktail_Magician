@@ -10,7 +10,7 @@
     <td align="center" width="100px">
         @if (Model.CanDelete)
         {
-            <button type="button" id="@Model.Id" class="btn btn-outline-info" data-toggle="modal" data-target="#exampleModal" onclick="ShowModal(this.id)">
+            <button type="button" id="@Model.Id" class="btn btn-pink" data-toggle="modal" data-target="#exampleModal" onclick="ShowModal(this.id)">
                 Delete
             </button>
 
@@ -32,7 +32,7 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
-                            <button type="submit" value="@Model.Id" class="btn btn-primary" data-dismiss="modal" onclick="DeleteValue(this.value)">Delete</button>
+                            <button type="submit" value="@Model.Id" class="btn btn-pink" data-dismiss="modal" onclick="DeleteValue(this.value)">Delete</button>
 
                         </div>
                     </div>

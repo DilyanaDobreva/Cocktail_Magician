@@ -44,19 +44,18 @@ namespace CocktailMagician.Services
             context.CocktailReviews.Add(review);
             await context.SaveChangesAsync();
         }
-        public async Task<List<CocktailReviewDTO>> AllReviewsAsync(int cocktailId)
+        public async Task<List<ReviewDTO>> AllReviewsAsync(int cocktailId)
         {
 
             var allReviews = await context.CocktailReviews
                 .Include(c => c.Cocktail)
                 .Include(u => u.User)
                 .Where(r => r.CocktailId == cocktailId)
-                .Select(r => new CocktailReviewDTO
+                .Select(r => new ReviewDTO()
                 {
                     Comment = r.Comment,
                     Rating = r.Rating,
                     UserName = r.User.UserName,
-                    IsDeleted = r.IsDeleted
                 })
                 .ToListAsync();
             return allReviews;

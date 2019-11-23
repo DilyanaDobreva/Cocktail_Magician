@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Authorization;
 using System;
 using CocktailMagician.Services.DTOs;
+using CocktailMagician.Web.Areas.Distribution.Models;
 
 namespace CocktailMagician.Web.Areas.Cocktails.Controllers
 {
@@ -250,28 +251,29 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
             return View(vm);
 
         }
-        public async Task<IActionResult> CocktailReview(int id)
-        {
-            var cocktail = await cocktailServices.GetDetailedDTOAsync(id);
-            var cocktailVM = cocktail.MapToViewModel();
+        //public async Task<IActionResult> CocktailReview(int id)
+        //{
+        //    var cocktail = await cocktailServices.GetDetailedDTOAsync(id);
+        //    var cocktailVM = cocktail.MapToViewModel();
 
-            var vm = new CocktailReviewViewModel
-            {
-                Cocktail = cocktailVM
-            };
-            return View(vm);
-        }
+        //    var vm = new CocktailReviewViewModel
+        //    {
+        //        Cocktail = cocktailVM.
+        //    };
+        //    return View(vm);
+        //}
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CocktailReview(int id, CocktailReviewViewModel vm)
+        public async Task<IActionResult> CocktailReview([FromBody]ReviewViewModel vm)
         {
             if (vm.Rating != null || !string.IsNullOrWhiteSpace(vm.Comment))
             {
-                var memberName = User.Identity.Name;
-                await cocktailReview.AddReviewAsync(vm.Comment, vm.Rating, memberName, id);
+                vm.UserName = User.Identity.Name;
+                await cocktailReview.AddReviewAsync(vm.Comment, vm.Rating, vm.UserName, vm.Id);
+                return PartialView("_ReviewPartial", vm);
             }
 
-            return RedirectToAction("Details", "Cocktails", new { id = id });
+            return RedirectToAction("Details", "Cocktails", new { id = vm.Id });
         }
 
         //public async Task<IActionResult> ShowReviews(int id)

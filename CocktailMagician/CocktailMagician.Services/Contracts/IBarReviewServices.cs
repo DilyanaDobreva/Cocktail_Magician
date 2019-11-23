@@ -10,6 +10,6 @@ namespace CocktailMagician.Services.Contracts
     public interface IBarReviewServices
     {
         Task AddReviewAsync(string comment, int? rating, string userName, int cocktailId);
-        Task<List<BarReviewDTO>> AllReviewsAsync(int barId);
+        Task<List<ReviewDTO>> AllReviewsAsync(int barId);
     }
 }

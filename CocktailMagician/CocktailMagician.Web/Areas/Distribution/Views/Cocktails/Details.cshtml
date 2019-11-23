@@ -66,7 +66,32 @@
 
                 </div>
             </div>
-            <a asp-action="CockTailReview" asp-route-id="@Model.Id">Add Review</a>
+
+            <div class="text-link" data-toggle="modal" data-target=".reviewModal">Add Review</div>
+
+            <div class="modal fade reviewModal" id="bar-review-modal" tabindex="-1" role="dialog"
+                 aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title font-cinzel" id="exampleModalCenteredLabel">Give us your opinion</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+
+                        <partial name="_Review" />
+                        <input type="hidden" id="userName" value="@User.Identity.Name" />
+                        <input type="hidden" id="cocktailId" value="@Model.Id" />
+                        <div class="modal-footer">
+                            <button class="btn btn-pink" id="cocktail-review" data-dismiss="modal">Publish</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
 
             <div class="center">
                 <div class="m-4">
@@ -86,14 +111,14 @@
                                 {
                                     @foreach (var bar in Model.Bars)
                                     {
-                                        <div @*class="m-4"*@>
+                                        <div >
                                             <div class="row">
                                                 <div class="col-sm-3">
                                                     <img src=@bar.ImageURL height="70" />
                                                 </div>
                                                 <div class="col-sm-8">
                                                     <div class="p-2" align="center">
-                                                        <a class="font-cinzel font-size-15" asp-controller="Bars" asp-action="Details" asp-route-id="@bar.Id"><b>@bar.Name</b></a>
+                                                        <a class="font-cinzel font-size-15" asp-controller="Bars" asp-action="Details" asp-route-id="@bar.Id">@bar.Name</a>
                                                         <div>@bar.Address, @bar.City</div>
                                                     </div>
                                                 </div>
@@ -112,14 +137,12 @@
                                 {
                                     @foreach (var cocktail in Model.CocktailReviews)
                                     {
-                                        <div class="margin-container">
-                                            <partial name="_CocktailReviewPartial" model="@cocktail" />
-                                        </div>
+                                            <partial name="_ReviewPartial" model="@cocktail" />
                                     }
                                 }
                                 else
                                 {
-                                    <div>Be firts to leave a review!</div>
+                                    <div id="no-review">Be firts to leave a review!</div>
                                 }
                             </div>
                         </div>

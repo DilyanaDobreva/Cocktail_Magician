@@ -52,31 +52,55 @@
     </div>
 </div>
 <div class="m-4" align="center">
-    @if (Model.AverageRating != null)
-    {
-        <div>
-            Rating:
-            <span class="yellow-color">
-                @if (Model.AverageRating != null)
-                {
-                    for (int i = 1; i <= Model.AverageRating; i++)
+    <div>
+        @if (Model.AverageRating != null)
+        {
+            <div>
+                Rating:
+                <span class="yellow-color">
+                    @if (Model.AverageRating != null)
                     {
-                        <span class="icon-star"></span>
+                        for (int i = 1; i <= Model.AverageRating; i++)
+                        {
+                            <span class="icon-star"></span>
+                        }
+                        for (int i = 5; i > Model.AverageRating; i--)
+                        {
+                            <span class="icon-star-o"></span>
+                        }
                     }
-                    for (int i = 5; i > Model.AverageRating; i--)
-                    {
-                        <span class="icon-star-o"></span>
-                    }
-                }
-            </span>
-            @String.Format("{0:0.0}", Model.AverageRating)
+                </span>
+                @String.Format("{0:0.0}", Model.AverageRating)
+            </div>
+        }
+        else
+        {
+            <div id="no-review">No reviews yet!</div>
+        }
+    </div>
+    <div class="text-link" data-toggle="modal" data-target=".reviewModal">Add Review</div>
+
+    <div class="modal fade reviewModal" id="bar-review-modal" tabindex="-1" role="dialog"
+         aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title font-cinzel" id="exampleModalCenteredLabel">Give us your opinion</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+
+                <partial name="_Review" />
+                <input type="hidden" id="userName" value="@User.Identity.Name" />
+                <input type="hidden" id="barId" value="@Model.Id" />
+                <div class="modal-footer">
+                    <button class="btn btn-pink" id="bar-review" data-dismiss="modal">Publish</button>
+                </div>
+            </div>
         </div>
-    }
-    else
-    {
-        <div>No reviews yet!</div>
-    }
-    <a class="text-link" asp-action="BarReview" asp-route-id="@Model.Id">Add Review</a>
+    </div>
+
     @if (Model.BarReviews.Count() != 0)
     {
         <button class="btn btn-pink ml-2" data-toggle="modal" data-target="#exampleModalScrollable">Show reviews</button>
@@ -88,17 +112,15 @@
         <div class="modal-dialog modal-dialog-scrollable" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenteredLabel">Customer's rewies</h5>
+                    <h5 class="modal-title font-cinzel" id="exampleModalCenteredLabel">Customers rewies</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" id="add-new-bar-review">
                     @foreach (var bar in Model.BarReviews)
                     {
-                        <div class="margin-container">
-                            <partial name="_BarReviewPartial" model="@bar" />
-                        </div>
+                        <partial name="_ReviewPartial" model="@bar" />
                     }
                 </div>
                 <div class="modal-footer">
@@ -201,7 +223,7 @@
 
                 <!-- Left and right controls -->
                 <a class="carousel-control-prev" href="#demo" data-slide="prev">
-                    <span class="icon-angle-left carousel-arrows" ></span>
+                    <span class="icon-angle-left carousel-arrows"></span>
                 </a>
                 <a class="carousel-control-next" href="#demo" data-slide="next">
                     <span class="icon-angle-right carousel-arrows"></span>

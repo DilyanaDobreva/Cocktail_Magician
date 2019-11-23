@@ -9,7 +9,7 @@ namespace CocktailMagician.Web.Areas.Distribution.Models.Cocktails
     {
         public int? Rating { get; set; }
         public string Comment { get; set; }
-        public CocktailDetailsViewModel Cocktail { get; set; }
+        public ReviewViewModel Cocktail { get; set; }
         public string UserName { get; set; }
         public bool IsDeleted { get; set; }
     }
