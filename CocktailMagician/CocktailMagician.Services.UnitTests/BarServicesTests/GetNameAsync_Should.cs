@@ -130,9 +130,9 @@ namespace CocktailMagician.Services.UnitTests.BarServicesTests
                 var barId = await assertContext.Bars.Where(b => b.Name == barTestName).Select(b => b.Id).FirstAsync();
 
                 var sut = new BarServices(assertContext, barFactoryMock.Object, barCocktailFactoryMock.Object);
-                var foundBarName = await sut.GetBasicDTOAsync(barId);
+                var foundBar= await sut.GetBasicDTOAsync(barId);
 
-                Assert.AreEqual(barTestName, foundBarName);
+                Assert.AreEqual(barTestName, foundBar.Name);
             };
 
         }

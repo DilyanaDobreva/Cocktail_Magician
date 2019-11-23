@@ -292,13 +292,11 @@ namespace CocktailMagician.Services
 
             return resultCount;
         }
-
         public async Task<int> AllBarsCountAsync()
         {
             var count = await context.Bars.Where(c => c.IsDeleted == false).CountAsync();
             return count;
         }
-
         public async Task<List<BarInListDTO>> GetMostPopular(int number)
         {
             var topBars = await context.Bars

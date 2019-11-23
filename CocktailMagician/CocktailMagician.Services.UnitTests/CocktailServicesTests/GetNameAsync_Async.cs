@@ -141,9 +141,9 @@ namespace CocktailMagician.Services.UnitTests.CocktailServicesTests
                     var cocktailId = await assertContext.Cocktails.Where(c => c.Name == cocktailNameTest).Select(c => c.Id).FirstAsync();
 
                     var sut = new CocktailServices(assertContext, cocktailFactoryMock.Object, cocktailIngredinetFactoryMock.Object, barCocktailFactoryMock.Object);
-                    var foundCocktailsName = await sut.GetDTOAsync(cocktailId);
+                    var foundCocktail = await sut.GetDTOAsync(cocktailId);
 
-                    Assert.AreEqual(cocktailNameTest, foundCocktailsName);
+                    Assert.AreEqual(cocktailNameTest, foundCocktail.Name);
 
                 }
             }

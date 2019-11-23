@@ -168,9 +168,8 @@ namespace CocktailMagician.Services.UnitTests.CocktailServicesTests
                 var cocktailInDb = await assertContext.Cocktails.FirstAsync(c => c.Name == cocktailNameTest);
 
                 Assert.IsTrue(cocktailInDb.IsDeleted);
-                Assert.IsFalse(assertContext.CocktailIngredients.Any(c => c.CocktailId == cocktailInDb.Id));
+                Assert.IsFalse(assertContext.CocktailIngredients.Any(c => c.CocktailId == cocktailInDb.Id && c.IsDeleted==false));
                 Assert.IsFalse(assertContext.BarCocktails.Any(c => c.CocktailId == cocktailInDb.Id));
-
             }
         }
 
