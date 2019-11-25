@@ -40,14 +40,23 @@ namespace CocktailMagician.Services
             this.context.Banns.Add(bann);
             await this.context.SaveChangesAsync();
         }
-        public Task<User> FindUserAsync(string name)
+        public async Task<User> FindUserAsync(string name)
         {
-            var findUser = context.Users
+            if (!await context.Users.AnyAsync(b => b.UserName == name && b.IsDeleted == false))
+            {
+                throw new InvalidOperationException(OutputConstants.InvalidName);
+            }
+
+            return await context.Users
                 .FirstOrDefaultAsync(u => u.UserName == name);
-            return findUser;
         }
         public async Task<UserDTO> FindUserDTOAsync(string name)
         {
+            if (!await context.Users.AnyAsync(b => b.UserName == name && b.IsDeleted == false))
+            {
+                throw new InvalidOperationException(OutputConstants.InvalidName);
+            }
+
             var findUser = await context.Users
                 .Include(u => u.Bann)
                 .Include(u => u.Role)
@@ -82,6 +91,11 @@ namespace CocktailMagician.Services
         }
         public async Task<UserDTO> GetUserInfoAsync(string id)
         {
+            if (!await context.Users.AnyAsync(b => b.Id == id && b.IsDeleted == false))
+            {
+                throw new InvalidOperationException(OutputConstants.InvalidId);
+            }
+
             var users = await context.Users
                 .Include(u => u.Role)
                 .Include(u => u.Bann)
@@ -123,6 +137,10 @@ namespace CocktailMagician.Services
         }
         public async Task DeleteUserAsync(string id)
         {
+            if (!await context.Users.AnyAsync(b => b.Id == id && b.IsDeleted == false))
+            {
+                throw new InvalidOperationException(OutputConstants.InvalidId);
+            }
             var user = await context.Users
                 .Include(m => m.Role)
                 .Include(m => m.Bann)
@@ -139,10 +157,11 @@ namespace CocktailMagician.Services
             this.context.Users.Update(user);
             await context.SaveChangesAsync();
         }
-        //Please check
-        public async Task<UserDTO> RegisterAdminAsync(string username, string password)
+        public async Task RegisterAdminAsync(string username, string password)
         {
-            var findUser = await FindUserAsync(username);
+            var findUser = await context.Users
+                .FirstOrDefaultAsync(u => u.UserName == username);
+
             if (findUser != null)
             {
                 throw new ArgumentException("User with this name already exist.");
@@ -151,12 +170,12 @@ namespace CocktailMagician.Services
             newAdmin.Password = hasher.Hasher(newAdmin.Password);
             this.context.Users.Add(newAdmin);
             await this.context.SaveChangesAsync();
-
-            return newAdmin.MapToDTO();
         }
-        public async Task<UserDTO> RegisterUserAsync(string username, string password)
+        public async Task RegisterUserAsync(string username, string password)
         {
-            var findUser = await FindUserAsync(username);
+            var findUser = await context.Users
+                .FirstOrDefaultAsync(u => u.UserName == username);
+
             if (findUser != null)
             {
                 throw new ArgumentException("User with this name already exist.");
@@ -168,8 +187,6 @@ namespace CocktailMagician.Services
             var member = await context.Users
                 .Include(m => m.Role)
                 .FirstOrDefaultAsync(m => m.UserName == username);
-
-            return member.MapToDTO();
         }
         public async Task UpdateUserAsync(string id, string passwrod, string newPassword, int roleId)
         {

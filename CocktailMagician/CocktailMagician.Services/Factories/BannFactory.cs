@@ -6,9 +6,9 @@ namespace CocktailMagician.Services.Factories
 {
     public class BannFactory : IBannFactory
     {
-        public Bann CreateBan(string reason, DateTime enDateTime, User member)
+        public Bann CreateBan(string reason, DateTime endDateTime, User member)
         {
-            return new Bann(reason, enDateTime, member);
+            return new Bann(reason, endDateTime, member);
         }
     }
 }
