@@ -35,7 +35,8 @@ namespace CocktailMagician.Web.Areas.Users.Controllers
 
             try
             {
-                var user = await this.userService.RegisterUserAsync(vm.RegisterUsername, vm.RegisterPassword);
+                await this.userService.RegisterUserAsync(vm.RegisterUsername, vm.RegisterPassword);
+                var user = await this.userService.FindUserDTOAsync(vm.RegisterUsername);
                 await SignInUser(user, rememberLogin: false);
 
                 return BackToHome();

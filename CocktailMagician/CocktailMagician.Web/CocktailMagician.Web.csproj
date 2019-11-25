@@ -8,19 +8,15 @@
   <ItemGroup>
     <Compile Remove="Areas\Authentication\**" />
     <Compile Remove="Areas\Home\**" />
-    <Compile Remove="ViewModels\Users\**" />
     <Compile Remove="Views\Auth\**" />
     <Content Remove="Areas\Authentication\**" />
     <Content Remove="Areas\Home\**" />
-    <Content Remove="ViewModels\Users\**" />
     <Content Remove="Views\Auth\**" />
     <EmbeddedResource Remove="Areas\Authentication\**" />
     <EmbeddedResource Remove="Areas\Home\**" />
-    <EmbeddedResource Remove="ViewModels\Users\**" />
     <EmbeddedResource Remove="Views\Auth\**" />
     <None Remove="Areas\Authentication\**" />
     <None Remove="Areas\Home\**" />
-    <None Remove="ViewModels\Users\**" />
     <None Remove="Views\Auth\**" />
   </ItemGroup>
 
@@ -49,8 +45,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ViewModels\" />
-    <Folder Include="ViewModels\Auth\" />
     <Folder Include="Mapper\" />
     <Folder Include="Views\Home\" />
   </ItemGroup>

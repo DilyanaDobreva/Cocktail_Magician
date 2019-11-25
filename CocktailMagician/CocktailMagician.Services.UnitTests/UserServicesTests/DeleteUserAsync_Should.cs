@@ -87,5 +87,45 @@ namespace CocktailMagician.Services.UnitTests.ServiceTests
                 Assert.IsTrue(bann.IsDeleted);
             }
         }
+        [TestMethod]
+        public async Task ThrowException_WhenIdIsInvalid()
+        {
+            var userName = "user";
+            var userPassword = "user";
+            var bannReason = "Just Banned";
+            var roleId = 2;
+            var invalidId = "-18237129883";
+
+            var userFactoryMock = new Mock<IUserFactory>();
+            var bannFactoryMock = new Mock<IBannFactory>();
+            var hasherMock = new Mock<IHasher>();
+
+            var options = TestUtilities.GetOptions(nameof(ThrowException_WhenIdIsInvalid));
+
+
+            var user = new User(userName, userPassword, roleId);
+            var bann = new Bann(bannReason, DateTime.MaxValue, user);
+            var role = new Role();
+
+            using (var actContext = new CocktailMagicianDb(options))
+            {
+                user.Bann = bann;
+                user.Role = role;
+                bann.User = user;
+                actContext.Users.Add(user);
+                actContext.Banns.Add(bann);
+                await actContext.SaveChangesAsync();
+                user.BannId = bann.Id;
+
+                var sut = new UserServices(actContext, userFactoryMock.Object, bannFactoryMock.Object, hasherMock.Object);
+                await sut.DeleteUserAsync(user.Id);
+            }
+            using (var assertContext = new CocktailMagicianDb(options))
+            {
+                var sut = new UserServices(assertContext, userFactoryMock.Object, bannFactoryMock.Object, hasherMock.Object);
+
+                await Assert.ThrowsExceptionAsync<InvalidOperationException>(() => sut.GetUserInfoAsync(invalidId));
+            }
+        }
     }
 }

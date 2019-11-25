@@ -9,6 +9,7 @@
         public const string IngredientAlreadyExists = "This ingredient already exists in data base.";
         public const string CityAlreadyExists = "This city already exists in data base.";
         public const string InvalidId = "Invalid id";
+        public const string InvalidName = "Invalid name";
         public const string NoIngredientQuantity = "Missing ingredient quantity.";
         public const string CocktailExists = "Cocktail with this name already exists.";
         public const string BarExists = "Bar with this name already exists.";

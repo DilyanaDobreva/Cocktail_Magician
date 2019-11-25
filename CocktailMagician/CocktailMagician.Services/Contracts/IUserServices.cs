@@ -8,8 +8,8 @@ namespace CocktailMagician.Services.Contracts
 {
     public interface IUserServices
     {
-        Task<UserDTO> RegisterUserAsync(string username, string password);
-        Task<UserDTO> RegisterAdminAsync(string username, string password);
+        Task RegisterUserAsync(string username, string password);
+        Task RegisterAdminAsync(string username, string password);
         Task<UserDTO> FindUserDTOAsync(string name);
         Task<User> FindUserAsync(string name);
         Task<UserDTO> LoginAsync(string username, string password);
