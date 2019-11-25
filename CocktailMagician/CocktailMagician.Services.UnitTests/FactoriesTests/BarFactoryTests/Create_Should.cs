@@ -11,6 +11,7 @@ namespace CocktailMagician.Services.UnitTests.FactoriesTests.BarFactoryTests
     [TestClass]
     public class Create_Should
     {
+        [TestMethod]
         public void ReturnInstanceOfType()
         {
             var name = "Bar";

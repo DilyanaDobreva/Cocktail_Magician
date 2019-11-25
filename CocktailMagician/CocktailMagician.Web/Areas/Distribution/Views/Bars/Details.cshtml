@@ -106,6 +106,7 @@
 
     @if (Model.HasReviews)
     {
+        <input type="hidden" id="barId" value="@Model.Id" />
         <button class="btn btn-pink ml-2" id="load-bar-reviews" data-toggle="modal" data-target="#exampleModalScrollable">Show reviews</button>
     }
 

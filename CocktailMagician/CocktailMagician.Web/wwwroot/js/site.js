@@ -108,7 +108,7 @@ function DeleteValue(id) {
     $.ajax(
         {
             type: 'Post',
-            url: 'Ingredients/Delete',
+            url: '/Distribution/Ingredients/Delete/' + id,
             data: {
                 'id': id
             },
@@ -162,16 +162,6 @@ $(document).ready(function () {
     });
 });
 
-$('#logOut-button').click(function () {
-    $.ajax(
-        {
-            type: 'Post',
-            url: 'Users/Auth/Logout',
-            //headers: {
-            //    RequestVerificationToken:
-            //        $('input:hidden[name="__RequestVerificationToken"]').val(),
-        })
-})
 
 $('#bar-review').click(function () {
     //const userName = $('#userName').val();
@@ -211,11 +201,11 @@ $('#cocktail-review').click(function () {
     //const userName = $('#userName').val();
     let rating = document.querySelector('input[name="rating"]:checked').value;
     let comment = $('#comment').val();
-    let barId = $('#cocktailId').val();
+    let cocktailId = $('#cocktailId').val();
 
     let viewModel = {
         "Comment": comment,
-        "Id": barId,
+        "Id": cocktailId,
         "Rating": rating
     }
 
@@ -240,15 +230,17 @@ $('#cocktail-review').click(function () {
     })
 })
 
+let areBarReviewsLoaded = false
 $('#load-bar-reviews').click(function () {
-    let barId = $('#barId').val();
+    const barId = $('#barId').val();
     $.ajax({
         type: "get",
         url: "/Distribution/Bars/ShowReviews/" + barId,
         success: function (receivedData) {
-            //$('.add-new-bar-review').empty();
-            //$('#add-new-bar-review').hide();
-            $('#add-new-bar-review').append(receivedData);
+            if (areBarReviewsLoaded === false) {
+                $('#add-new-bar-review').append(receivedData);
+                areBarReviewsLoaded = true;
+            }
         }
     })
 })
