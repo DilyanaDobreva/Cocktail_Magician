@@ -67,30 +67,31 @@
                 </div>
             </div>
 
-            <div class="text-link" data-toggle="modal" data-target=".reviewModal">Add Review</div>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div class="text-link" data-toggle="modal" data-target=".reviewModal">Add Review</div>
 
-            <div class="modal fade reviewModal" id="bar-review-modal" tabindex="-1" role="dialog"
-                 aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title font-cinzel" id="exampleModalCenteredLabel">Give us your opinion</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                        </div>
+                <div class="modal fade reviewModal" id="bar-review-modal" tabindex="-1" role="dialog"
+                     aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title font-cinzel" id="exampleModalCenteredLabel">Give us your opinion</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
 
-                        <partial name="_Review" />
-                        <input type="hidden" id="userName" value="@User.Identity.Name" />
-                        <input type="hidden" id="cocktailId" value="@Model.Id" />
-                        <div class="modal-footer">
-                            <button class="btn btn-pink" id="cocktail-review" data-dismiss="modal">Publish</button>
+                            <partial name="_Review" />
+                            <input type="hidden" id="userName" value="@User.Identity.Name" />
+                            <input type="hidden" id="cocktailId" value="@Model.Id" />
+                            <div class="modal-footer">
+                                <button class="btn btn-pink" id="cocktail-review" data-dismiss="modal">Publish</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
-
+            }
 
 
             <div class="center">
@@ -111,7 +112,7 @@
                                 {
                                     @foreach (var bar in Model.Bars)
                                     {
-                                        <div >
+                                        <div>
                                             <div class="row">
                                                 <div class="col-sm-3">
                                                     <img src=@bar.ImageURL height="70" />
@@ -137,7 +138,7 @@
                                 {
                                     @foreach (var cocktail in Model.CocktailReviews)
                                     {
-                                            <partial name="_ReviewPartial" model="@cocktail" />
+                                        <partial name="_ReviewPartial" model="@cocktail" />
                                     }
                                 }
                                 else

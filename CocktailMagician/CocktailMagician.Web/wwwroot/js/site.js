@@ -256,3 +256,18 @@ $('#load-bar-reviews').click(function () {
 $('#close-bar-reviews').click(function () {
     $('.add-new-bar-review').empty();
 })
+
+$('#log-out-button').click(function () {
+    $.ajax(
+        {
+            type: 'Post',
+            url: '/Users/Auth/Logout',
+            data: JSON.stringify(),
+            headers: {
+                RequestVerificationToken:
+                    $('input:hidden[name="__RequestVerificationToken"]').val(),
+                //'Accept': 'application/json',
+                //'Content-Type': 'application/json'
+            },
+        })
+})

@@ -461,3 +461,13 @@ body.no-padding {
         color:white !important;
     }
 
+.btn-text-only {
+    padding: 0;
+    border: none;
+    background: none;
+}
+
+.logout{
+    width:70px;
+    height:25px;
+}
