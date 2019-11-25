@@ -78,28 +78,31 @@
             <div id="no-review">No reviews yet!</div>
         }
     </div>
-    <div class="text-link" data-toggle="modal" data-target=".reviewModal">Add Review</div>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div class="text-link" data-toggle="modal" data-target=".reviewModal">Add Review</div>
 
-    <div class="modal fade reviewModal" id="bar-review-modal" tabindex="-1" role="dialog"
-         aria-labelledby="myLargeModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title font-cinzel" id="exampleModalCenteredLabel">Give us your opinion</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
+        <div class="modal fade reviewModal" id="bar-review-modal" tabindex="-1" role="dialog"
+             aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title font-cinzel" id="exampleModalCenteredLabel">Give us your opinion</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
 
-                <partial name="_Review" />
-                <input type="hidden" id="userName" value="@User.Identity.Name" />
-                <input type="hidden" id="barId" value="@Model.Id" />
-                <div class="modal-footer">
-                    <button class="btn btn-pink" id="bar-review" data-dismiss="modal">Publish</button>
+                    <partial name="_Review" />
+                    <input type="hidden" id="userName" value="@User.Identity.Name" />
+                    <input type="hidden" id="barId" value="@Model.Id" />
+                    <div class="modal-footer">
+                        <button class="btn btn-pink" id="bar-review" data-dismiss="modal">Publish</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    }
 
     @if (Model.HasReviews)
     {
@@ -116,13 +119,13 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true" class="close-bar-reviews">×</span>
                     </button>
-                </div >
+                </div>
                 <div class="modal-body" id="add-new-bar-review">
 
                     @*@foreach (var bar in Model.BarReviews)
-        {
-            <partial name="_ReviewPartial" model="@bar" />
-        }*@
+                        {
+                            <partial name="_ReviewPartial" model="@bar" />
+                        }*@
                 </div>
                 <div class="modal-footer">
                     <button i type="button" class="btn btn-secondary close-bar-reviews" data-dismiss="modal">Close</button>
