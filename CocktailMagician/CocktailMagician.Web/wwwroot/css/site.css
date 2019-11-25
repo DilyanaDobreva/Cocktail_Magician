@@ -8,7 +8,13 @@ for details on configuring this project to bundle and minify static web assets. 
 .btn-outline-primary {
     border-color: #da1b5e
 }
-
+.carousel-caption {
+    background-color: #dd1b5a6e;
+}
+#homepage-text {
+    text-align: center;
+    font-size: 25px;
+}
 body.modal-open {
     padding-right: 0 !important;
 }
@@ -28,10 +34,6 @@ nav .container {
     nav img {
         height: 4vw;
     }
-
-    /*nav #authForm {
-        float: right;
-    }*/
 
 a.navbar-brand {
     white-space: normal;

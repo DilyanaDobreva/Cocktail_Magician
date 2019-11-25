@@ -37,7 +37,7 @@ namespace CocktailMagician.Data
                 optionsBuilder
                     .ConfigureWarnings(options => options.Throw(RelationalEventId.QueryClientEvaluationWarning))
                     .UseSqlServer(@"Server=localhost\KristiqnTashev, 1433;Database=CocktailMagician;User=sa;Password=Whocanbe1;Trusted_Connection=False;");
-                    //.UseSqlServer("Server=.\\SQLEXPRESS;Database=CocktailMagician;Trusted_Connection=True;Integrated Security=True;");
+                //.UseSqlServer("Server=.\\SQLEXPRESS;Database=CocktailMagician;Trusted_Connection=True;Integrated Security=True;");
             }
         }
 
@@ -45,8 +45,14 @@ namespace CocktailMagician.Data
         {
             modelBuilder.Entity<BarCocktail>()
                 .HasKey(k => new { k.BarId, k.CocktailId });
+
             modelBuilder.Entity<CocktailIngredient>()
                 .HasKey(k => new { k.IngredientId, k.CocktailId });
+
+            modelBuilder
+             .Entity<User>()
+             .HasIndex(u => u.UserName)
+             .IsUnique();
 
             modelBuilder.Entity<User>()
             .HasOne(a => a.Bann)
