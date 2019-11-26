@@ -146,7 +146,7 @@
         <div class="carousel-inner">
             <div class="carousel-item active" align="center">
                 <a asp-area="Distribution" asp-controller="Bars" asp-action="Details" asp-route-id="@Model.ListOfBars[0].Id">
-                    <img class="d-block home-carousel-img" src="@Model.ListOfBars[0].ImageURL">
+                    <img class="d-block home-carousel-img" src="@Model.ListOfBars[0].ImagePath">
                 </a>
                 <div class="carousel-caption">
                     <h3 class="font-cinzel">@Model.ListOfBars[0].Name</h3>
@@ -169,7 +169,7 @@
             {
                 <div class="carousel-item" align="center">
                     <a asp-area="Distribution" asp-controller="Bars" asp-action="Details" asp-route-id="@item.Id">
-                        <img class="d-block home-carousel-img" src="@item.ImageURL">
+                        <img class="d-block home-carousel-img" src="@item.ImagePath">
                     </a>
                     <div class="carousel-caption">
                         <h3 class="font-cinzel">@item.Name</h3>
