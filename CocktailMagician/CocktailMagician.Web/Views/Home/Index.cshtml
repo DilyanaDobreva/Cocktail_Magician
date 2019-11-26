@@ -1,4 +1,4 @@
-﻿@model ICollection<BarInListViewModel>
+﻿@model BarAndCoctailInListViewModel
 
 @{
     ViewData["Title"] = "Home Page";
@@ -11,8 +11,130 @@
         @statusMessage
     </div>
 }
+<div class="home-page-image">
+    <img id="home-page-img" src="~/images/Cheers.jpg" />
 
-<p id="homepage-text"> Top Rated Bars</p>
+
+    <h3 class="under-centered">
+        COCKTAIL FOR EVERYONE
+    </h3>
+</div>
+<div class="site-section mt-5">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-12 section-title text-center mb-5">
+                <p class="homepage-text">
+                    Our Top Rated Cocktails
+                </p>
+
+                <p>
+                    <a id="home-page-a" asp-area="Distribution" asp-controller="Cocktails" asp-action="Index">
+                        View All Products
+                        <span class="icon-long-arrow-right">
+                        </span>
+                    </a>
+                </p>
+                <div class="row">
+
+                    <div class="col-lg-4 col-md-6">
+                        <div class="cocktail-information">
+                            <a asp-area="Distribution" asp-controller="Cocktails" asp-action="Details" asp-route-id="@Model.ListOfCocktails[0].Id">
+                                <img class="d-block home-carousel-img" src="@Model.ListOfCocktails[0].ImageURL">
+                            </a>
+                            <div class="cocktail-homepage">
+                                <div class="cocktail-title text-center">
+                                    <h3 class="font-cinzel">@Model.ListOfCocktails[0].Name</h3>
+                                </div>
+                                <div class="rating ">
+                                    <span class="yellow-color">
+                                        @if (Model.ListOfCocktails[0].AverageRating != null)
+                                        {
+                                            for (int i = 1; i <= Model.ListOfCocktails[0].AverageRating; i++)
+                                            {
+                                                <span class="icon-star"></span>
+                                            }
+                                            for (int i = 5; i > Model.ListOfCocktails[0].AverageRating; i--)
+                                            {
+                                                <span class="icon-star-o"></span>
+                                            }
+                                        }
+                                    </span>
+                                    @String.Format("{0:0.0}", Model.ListOfCocktails[0].AverageRating)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="cocktail-information">
+                            <a asp-area="Distribution" asp-controller="Cocktails" asp-action="Details" asp-route-id="@Model.ListOfCocktails[1].Id">
+                                <img class="d-block home-carousel-img" src="@Model.ListOfCocktails[1].ImageURL">
+                            </a>
+                            <div class="cocktail-homepage">
+                                <div class="cocktail-title text-center">
+                                    <h3 class="font-cinzel">@Model.ListOfCocktails[1].Name</h3>
+                                </div>
+                                <div class="rating ">
+                                    <span class="yellow-color">
+                                        @if (Model.ListOfCocktails[1].AverageRating != null)
+                                        {
+                                            for (int i = 1; i <= Model.ListOfCocktails[1].AverageRating; i++)
+                                            {
+                                                <span class="icon-star"></span>
+                                            }
+                                            for (int i = 5; i > Model.ListOfCocktails[1].AverageRating; i--)
+                                            {
+                                                <span class="icon-star-o"></span>
+                                            }
+                                        }
+                                    </span>
+                                    @String.Format("{0:0.0}", Model.ListOfCocktails[1].AverageRating)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="cocktail-information">
+                            <a asp-area="Distribution" asp-controller="Cocktails" asp-action="Details" asp-route-id="@Model.ListOfCocktails[2].Id">
+                                <img class="d-block home-carousel-img" src="@Model.ListOfCocktails[2].ImageURL">
+                            </a>
+                            <div class="cocktail-homepage">
+                                <div class="cocktail-title text-center">
+                                    <h3 class="font-cinzel">@Model.ListOfCocktails[2].Name</h3>
+                                </div>
+                                <div class="rating ">
+                                    <span class="yellow-color">
+                                        @if (Model.ListOfCocktails[2].AverageRating != null)
+                                        {
+                                            for (int i = 1; i <= Model.ListOfCocktails[2].AverageRating; i++)
+                                            {
+                                                <span class="icon-star"></span>
+                                            }
+                                            for (int i = 5; i > Model.ListOfCocktails[2].AverageRating; i--)
+                                            {
+                                                <span class="icon-star-o"></span>
+                                            }
+                                        }
+                                    </span>
+                                    @String.Format("{0:0.0}", Model.ListOfCocktails[2].AverageRating)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*<div class="row">
+                        @foreach (var cocktail in Model.ListOfCocktails)
+                        {
+                            <div class="col-lg-3 col-md-6" align="center">
+                                <partial name="~/Areas/Distribution/Views/Shared/_RowCocktail.cshtml" model="@cocktail" />
+                            </div>
+                        }
+                    </div>*@
+            </div>
+        </div>
+    </div>
+</div>
+
+<p class="homepage-text"> Top Rated Bars</p>
 
 <div class="container">
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -23,30 +145,32 @@
         </ol>
         <div class="carousel-inner">
             <div class="carousel-item active" align="center">
-                <a href="">
-                    <img class="d-block home-carousel-img" src="@Model.First().ImagePath">
+                <a asp-area="Distribution" asp-controller="Bars" asp-action="Details" asp-route-id="@Model.ListOfBars[0].Id">
+                    <img class="d-block home-carousel-img" src="@Model.ListOfBars[0].ImageURL">
                 </a>
                 <div class="carousel-caption">
-                    <h3 class="font-cinzel">@Model.First().Name</h3>
+                    <h3 class="font-cinzel">@Model.ListOfBars[0].Name</h3>
                     <p>
                         <span class="yellow-color">
-                            @for (int i = 1; i <= Model.First().AverageRating; i++)
+                            @for (int i = 1; i <= Model.ListOfBars[0].AverageRating; i++)
                             {
                                 <span class="icon-star"></span>
                             }
-                            @for (int i = 5; i > Model.First().AverageRating; i--)
+                            @for (int i = 5; i > Model.ListOfBars[0].AverageRating; i--)
                             {
                                 <span class="icon-star-o"></span>
                             }
                         </span>
-                        @String.Format("{0:0.0}", Model.First().AverageRating)
+                        @String.Format("{0:0.0}", Model.ListOfBars[0].AverageRating)
                     </p>
                 </div>
             </div>
-            @foreach (var item in Model.Skip(1))
+            @foreach (var item in Model.ListOfBars.Skip(1))
             {
                 <div class="carousel-item" align="center">
-                    <img class="d-block home-carousel-img" src="@item.ImagePath">
+                    <a asp-area="Distribution" asp-controller="Bars" asp-action="Details" asp-route-id="@item.Id">
+                        <img class="d-block home-carousel-img" src="@item.ImageURL">
+                    </a>
                     <div class="carousel-caption">
                         <h3 class="font-cinzel">@item.Name</h3>
                         <p>
