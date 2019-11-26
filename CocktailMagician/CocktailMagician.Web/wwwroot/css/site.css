@@ -1,19 +1,52 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 * {
-    font-family: Cinzel;
+    font-family: Cinzel!important;
     font-weight: 400;
     /*color:darkslategray*/
+}
+#home-page-img {
+    width: 100%;
+}
+.home-page-image {
+    position: relative;
+    text-align: center;
+    color: white;
+}
+#home-page-a {
+    color: #df1a56;
+    text-decoration: none;
+    background-color: transparent;
+}
+.under-centered {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 53px;
+    background-color: #dd1b5a6e;
 }
 .btn-outline-primary {
     border-color: #da1b5e
 }
+.cocktail-homepage {
+    position: absolute;
+    top: 80%;
+    left: 47%;
+    color: white!important;
+    transform: translate(-50%, -50%);
+    background-color: #dd1b5a6e;
+}
+.cocktail-homepage h3 {
+    color: white!important;
+}
 .carousel-caption {
     background-color: #dd1b5a6e;
 }
-#homepage-text {
+.homepage-text {
     text-align: center;
     font-size: 25px;
+    color: black;
 }
 body.modal-open {
     padding-right: 0 !important;
