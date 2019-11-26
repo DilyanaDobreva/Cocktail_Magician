@@ -473,3 +473,9 @@ body.no-padding {
     width:70px;
     height:25px;
 }
+
+.home-carousel-img{
+    width:90%;
+    height: 550px;
+    object-fit:cover;
+}
