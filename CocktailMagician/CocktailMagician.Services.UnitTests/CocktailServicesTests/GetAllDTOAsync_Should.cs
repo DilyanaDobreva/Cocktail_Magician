@@ -40,13 +40,13 @@ namespace CocktailMagician.Services.UnitTests.CocktailServicesTests
                 var cocktail1 = new Cocktail
                 {
                     Name = cocktail1NameTest,
-                    ImageUrl = CocktailImageUrlTest
+                    ImagePath = CocktailImageUrlTest
                 };
 
                 var cocktail2 = new Cocktail
                 {
                     Name = cocktail2NameTest,
-                    ImageUrl = CocktailImageUrlTest,
+                    ImagePath = CocktailImageUrlTest,
                     IsDeleted = true
                 };
 

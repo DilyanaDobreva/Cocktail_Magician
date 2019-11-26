@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -9,9 +10,9 @@ namespace CocktailMagician.Web.Areas.Distribution.Models.Bars
         [Required]
         [MaxLength(30)]
         public string Name { get; set; }
-        [Url]
         [Required]
-        public string ImageURL { get; set; }
+        public IFormFile Image { get; set; }
+        public string ImagePath { get; set; }
         [Phone]
         [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }

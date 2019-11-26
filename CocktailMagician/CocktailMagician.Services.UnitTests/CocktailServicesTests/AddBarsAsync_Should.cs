@@ -40,7 +40,7 @@ namespace CocktailMagician.Services.UnitTests.CocktailServicesTests
             var cocktail = new Cocktail
             {
                 Name = cocktailNameTest,
-                ImageUrl = imageURLTest
+                ImagePath = imageURLTest
             };
 
             var barImagaUrlTest = "https://www.google.com/";
@@ -57,7 +57,7 @@ namespace CocktailMagician.Services.UnitTests.CocktailServicesTests
             var bar = new Bar
             {
                 Name = barTestName,
-                ImageUrl = barImagaUrlTest,
+                ImagePath = barImagaUrlTest,
                 Address = addressTest
             };
 
@@ -108,7 +108,7 @@ namespace CocktailMagician.Services.UnitTests.CocktailServicesTests
             var cocktail = new Cocktail
             {
                 Name = cocktailNameTest,
-                ImageUrl = imageURLTest,
+                ImagePath = imageURLTest,
                 IsDeleted = true
             };
 
@@ -126,7 +126,7 @@ namespace CocktailMagician.Services.UnitTests.CocktailServicesTests
             var bar = new Bar
             {
                 Name = barTestName,
-                ImageUrl = barImagaUrlTest,
+                ImagePath = barImagaUrlTest,
                 Address = addressTest
             };
 
@@ -179,7 +179,7 @@ namespace CocktailMagician.Services.UnitTests.CocktailServicesTests
             var cocktail = new Cocktail
             {
                 Name = cocktailNameTest,
-                ImageUrl = CocktailImageUrlTest
+                ImagePath = CocktailImageUrlTest
             };
 
             var barImagaUrlTest = "https://www.google.com/";
@@ -196,7 +196,7 @@ namespace CocktailMagician.Services.UnitTests.CocktailServicesTests
             var bar = new Bar
             {
                 Name = barTestName,
-                ImageUrl = barImagaUrlTest,
+                ImagePath = barImagaUrlTest,
                 Address = addressTest
             };
 
@@ -247,7 +247,7 @@ namespace CocktailMagician.Services.UnitTests.CocktailServicesTests
             var cocktail = new Cocktail
             {
                 Name = cocktailNameTest,
-                ImageUrl = CocktailImageUrlTest
+                ImagePath = CocktailImageUrlTest
             };
 
             var barImagaUrlTest = "https://www.google.com/";
@@ -264,7 +264,7 @@ namespace CocktailMagician.Services.UnitTests.CocktailServicesTests
             var bar = new Bar
             {
                 Name = barTestName,
-                ImageUrl = barImagaUrlTest,
+                ImagePath = barImagaUrlTest,
                 Address = addressTest,
                 IsDeleted = true
             };
@@ -317,7 +317,7 @@ namespace CocktailMagician.Services.UnitTests.CocktailServicesTests
             var cocktail = new Cocktail
             {
                 Name = cocktailNameTest,
-                ImageUrl = CocktailImageUrlTest
+                ImagePath = CocktailImageUrlTest
             };
 
             var barImagaUrlTest = "https://www.google.com/";
@@ -334,7 +334,7 @@ namespace CocktailMagician.Services.UnitTests.CocktailServicesTests
             var bar = new Bar
             {
                 Name = barTestName,
-                ImageUrl = barImagaUrlTest,
+                ImagePath = barImagaUrlTest,
                 Address = addressTest,
             };
 

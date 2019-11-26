@@ -95,7 +95,7 @@ namespace CocktailMagician.Services.UnitTests.IngredientServicesTests
             var cocktail = new Cocktail
             {
                 Name = cocktailNameTest,
-                ImageUrl = imageURLTest,
+                ImagePath = imageURLTest,
             };
 
             var ingredientQuantity = 0.5;

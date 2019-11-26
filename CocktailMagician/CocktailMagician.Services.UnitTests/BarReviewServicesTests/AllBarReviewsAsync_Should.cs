@@ -39,7 +39,7 @@ namespace CocktailMagician.Services.UnitTests.ServiceTests
             var barTest = new Bar
             {
                 Name = barTestName,
-                ImageUrl = imageUrlTest,
+                ImagePath = imageUrlTest,
                 Address = addressTest,
             };
 

@@ -33,7 +33,7 @@ namespace CocktailMagician.Web.Areas.Distribution.Mapper
             var dto = new BarToEditDTO
             {
                 Name = bar.Name,
-                ImageURL = bar.ImageURL,
+                ImagePath = bar.ImagePath,
                 Address = bar.Address.MapToDTO()
             };
             return dto;

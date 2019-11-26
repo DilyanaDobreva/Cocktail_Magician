@@ -42,26 +42,26 @@ namespace CocktailMagician.Services.UnitTests.BarServicesTests
             var bar1 = new Bar
             {
                 Name = barTestName1,
-                ImageUrl = imagaUrlTest,
+                ImagePath = imagaUrlTest,
                 Address = addressTest,
             };
             var bar2 = new Bar
             {
                 Name = barTestName2,
-                ImageUrl = imagaUrlTest,
+                ImagePath = imagaUrlTest,
                 Address = addressTest,
             };
             var bar3 = new Bar
             {
                 Name = barTestName3,
-                ImageUrl = imagaUrlTest,
+                ImagePath = imagaUrlTest,
                 Address = addressTest,
                 IsDeleted = true
             };
             var bar4 = new Bar
             {
                 Name = barTestName4,
-                ImageUrl = imagaUrlTest,
+                ImagePath = imagaUrlTest,
                 Address = addressTest,
             };
 

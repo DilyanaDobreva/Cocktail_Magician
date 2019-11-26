@@ -21,7 +21,7 @@ namespace CocktailMagician.Services.UnitTests.FactoriesTests.CocktailFactoryTest
 
             Assert.IsInstanceOfType(cocktail, typeof(Cocktail));
             Assert.AreEqual(name, cocktail.Name);
-            Assert.AreEqual(imageUrl, cocktail.ImageUrl);
+            Assert.AreEqual(imageUrl, cocktail.ImagePath);
         }
     }
 }

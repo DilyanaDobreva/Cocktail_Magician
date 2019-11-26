@@ -83,7 +83,7 @@ namespace CocktailMagician.Services.UnitTests.CocktailServicesTests
             var cocktailTest = new Cocktail
             {
                 Name = cocktailNameTest,
-                ImageUrl = imageURLTest
+                ImagePath = imageURLTest
             };
 
             var options = TestUtilities.GetOptions(nameof(ThrowException_WhenCocktailIngredientHasNoQuantity));
@@ -120,7 +120,7 @@ namespace CocktailMagician.Services.UnitTests.CocktailServicesTests
             var cocktailTest = new Cocktail
             {
                 Name = cocktailNameTest,
-                ImageUrl = imageURLTest
+                ImagePath = imageURLTest
             };
 
             cocktailFactoryMock

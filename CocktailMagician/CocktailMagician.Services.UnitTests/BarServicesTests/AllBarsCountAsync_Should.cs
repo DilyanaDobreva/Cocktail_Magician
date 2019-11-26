@@ -31,14 +31,14 @@ namespace CocktailMagician.Services.UnitTests.BarServicesTests
             var bar1Test = new Bar
             {
                 Name = bar1TestName,
-                ImageUrl = imagaUrlTest,
+                ImagePath = imagaUrlTest,
                 Address = addressTest,
             };
 
             var bar2Test = new Bar
             {
                 Name = bar2TestName,
-                ImageUrl = imagaUrlTest,
+                ImagePath = imagaUrlTest,
                 Address = addressTest,
                 IsDeleted = true
             };

@@ -42,26 +42,26 @@ namespace CocktailMagician.Services.UnitTests.CocktailServicesTests
             var cocktail1 = new Cocktail
             {
                 Name = cocktail1NameTest,
-                ImageUrl = CocktailImageUrlTest
+                ImagePath = CocktailImageUrlTest
             };
 
             var cocktail2 = new Cocktail
             {
                 Name = cocktail2NameTest,
-                ImageUrl = CocktailImageUrlTest,
+                ImagePath = CocktailImageUrlTest,
             };
 
             var cocktail3 = new Cocktail
             {
                 Name = cocktail3NameTest,
-                ImageUrl = CocktailImageUrlTest,
+                ImagePath = CocktailImageUrlTest,
                 IsDeleted = true
             };
 
             var cocktail4 = new Cocktail
             {
                 Name = cocktail4NameTest,
-                ImageUrl = CocktailImageUrlTest,
+                ImagePath = CocktailImageUrlTest,
             };
 
             var allRatings = new List<CocktailReview>

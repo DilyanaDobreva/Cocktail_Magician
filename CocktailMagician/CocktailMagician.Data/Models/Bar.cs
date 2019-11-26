@@ -14,9 +14,8 @@ namespace CocktailMagician.Data.Models
         [Required]
         public Address Address { get; set; }
         public ICollection<BarCocktail> BarCocktails { get; set; }
-        [Url]
         [Required]
-        public string ImageUrl { get; set; }
+        public string ImagePath { get; set; }
         [Phone]
         public string PhoneNumber { get; set; }
         public ICollection<BarReview> BarReviews { get; set; }

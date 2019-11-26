@@ -36,7 +36,7 @@ namespace CocktailMagician.Services.UnitTests.BarServicesTests
             var barTest = new Bar
             {
                 Name = barTestName,
-                ImageUrl = imagaUrlTest,
+                ImagePath = imagaUrlTest,
                 Address = addressTest
             };
 
@@ -74,7 +74,7 @@ namespace CocktailMagician.Services.UnitTests.BarServicesTests
             var barTest = new Bar
             {
                 Name = barTestName,
-                ImageUrl = imagaUrlTest,
+                ImagePath = imagaUrlTest,
                 Address = addressTest,
                 IsDeleted = true
             };
@@ -116,14 +116,14 @@ namespace CocktailMagician.Services.UnitTests.BarServicesTests
             var barTest = new Bar
             {
                 Name = barTestName,
-                ImageUrl = imagaUrlTest,
+                ImagePath = imagaUrlTest,
                 Address = addressTest,
             };
 
             var cocktailTest = new Cocktail
             {
                 Name = cocktailTestName,
-                ImageUrl = imagaUrlTest,
+                ImagePath = imagaUrlTest,
             };
 
             var options = TestUtilities.GetOptions(nameof(AddCosktailToBarList));

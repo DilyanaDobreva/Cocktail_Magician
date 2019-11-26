@@ -53,7 +53,7 @@ namespace CocktailMagician.Services.UnitTests.BarServicesTests
                 var bar1 = new Bar
                 {
                     Name = bar1TestName,
-                    ImageUrl = imagaUrlTest,
+                    ImagePath = imagaUrlTest,
                     Address = addressTest,
                     BarReviews = new List<BarReview>
                     {
@@ -65,7 +65,7 @@ namespace CocktailMagician.Services.UnitTests.BarServicesTests
                 var bar2 = new Bar
                 {
                     Name = bar2TestName,
-                    ImageUrl = imagaUrlTest,
+                    ImagePath = imagaUrlTest,
                     Address = addressTest,
                     BarReviews = new List<BarReview>
                     {
@@ -77,7 +77,7 @@ namespace CocktailMagician.Services.UnitTests.BarServicesTests
                 var bar3 = new Bar
                 {
                     Name = bar3TestName,
-                    ImageUrl = imagaUrlTest,
+                    ImagePath = imagaUrlTest,
                     Address = addressTest,
                     BarReviews = new List<BarReview>
                     {
@@ -89,7 +89,7 @@ namespace CocktailMagician.Services.UnitTests.BarServicesTests
                 var bar4 = new Bar
                 {
                     Name = bar4TestName,
-                    ImageUrl = imagaUrlTest,
+                    ImagePath = imagaUrlTest,
                     Address = addressTest,
                     BarReviews = new List<BarReview>
                     {
@@ -156,7 +156,7 @@ namespace CocktailMagician.Services.UnitTests.BarServicesTests
                 var bar1 = new Bar
                 {
                     Name = bar1TestName,
-                    ImageUrl = imagaUrlTest,
+                    ImagePath = imagaUrlTest,
                     Address = addressTest,
                     BarReviews = new List<BarReview>
                     {
@@ -168,7 +168,7 @@ namespace CocktailMagician.Services.UnitTests.BarServicesTests
                 var bar2 = new Bar
                 {
                     Name = bar2TestName,
-                    ImageUrl = imagaUrlTest,
+                    ImagePath = imagaUrlTest,
                     Address = addressTest,
                     BarReviews = new List<BarReview>
                     {
@@ -180,7 +180,7 @@ namespace CocktailMagician.Services.UnitTests.BarServicesTests
                 var bar3 = new Bar
                 {
                     Name = bar3TestName,
-                    ImageUrl = imagaUrlTest,
+                    ImagePath = imagaUrlTest,
                     Address = addressTest,
                     BarReviews = new List<BarReview>
                     {
@@ -192,7 +192,7 @@ namespace CocktailMagician.Services.UnitTests.BarServicesTests
                 var bar4 = new Bar
                 {
                     Name = bar4TestName,
-                    ImageUrl = imagaUrlTest,
+                    ImagePath = imagaUrlTest,
                     Address = addressTest,
                     BarReviews = new List<BarReview>
                     {
@@ -270,7 +270,7 @@ namespace CocktailMagician.Services.UnitTests.BarServicesTests
                 var bar1 = new Bar
                 {
                     Name = bar1TestName,
-                    ImageUrl = imagaUrlTest,
+                    ImagePath = imagaUrlTest,
                     Address = address1Test,
                     BarReviews = new List<BarReview>
                     {
@@ -281,7 +281,7 @@ namespace CocktailMagician.Services.UnitTests.BarServicesTests
                 var bar2 = new Bar
                 {
                     Name = bar2TestName,
-                    ImageUrl = imagaUrlTest,
+                    ImagePath = imagaUrlTest,
                     Address = address2Test,
                     BarReviews = new List<BarReview>
                     {
@@ -292,7 +292,7 @@ namespace CocktailMagician.Services.UnitTests.BarServicesTests
                 var bar3 = new Bar
                 {
                     Name = bar3TestName,
-                    ImageUrl = imagaUrlTest,
+                    ImagePath = imagaUrlTest,
                     Address = address1Test,
                     BarReviews = new List<BarReview>
                     {
@@ -303,7 +303,7 @@ namespace CocktailMagician.Services.UnitTests.BarServicesTests
                 var bar4 = new Bar
                 {
                     Name = bar4TestName,
-                    ImageUrl = imagaUrlTest,
+                    ImagePath = imagaUrlTest,
                     Address = address1Test,
                     BarReviews = new List<BarReview>
                     {
@@ -381,7 +381,7 @@ namespace CocktailMagician.Services.UnitTests.BarServicesTests
                 var bar1 = new Bar
                 {
                     Name = bar1TestName,
-                    ImageUrl = imagaUrlTest,
+                    ImagePath = imagaUrlTest,
                     Address = address1Test,
                     BarReviews = new List<BarReview>
                     {
@@ -392,7 +392,7 @@ namespace CocktailMagician.Services.UnitTests.BarServicesTests
                 var bar2 = new Bar
                 {
                     Name = bar2TestName,
-                    ImageUrl = imagaUrlTest,
+                    ImagePath = imagaUrlTest,
                     Address = address2Test,
                     BarReviews = new List<BarReview>
                     {
@@ -403,7 +403,7 @@ namespace CocktailMagician.Services.UnitTests.BarServicesTests
                 var bar3 = new Bar
                 {
                     Name = bar3TestName,
-                    ImageUrl = imagaUrlTest,
+                    ImagePath = imagaUrlTest,
                     Address = address1Test,
                     BarReviews = new List<BarReview>
                     {
@@ -414,7 +414,7 @@ namespace CocktailMagician.Services.UnitTests.BarServicesTests
                 var bar4 = new Bar
                 {
                     Name = bar4TestName,
-                    ImageUrl = imagaUrlTest,
+                    ImagePath = imagaUrlTest,
                     Address = address1Test,
                     BarReviews = new List<BarReview>
                     {

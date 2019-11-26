@@ -33,7 +33,7 @@ namespace CocktailMagician.Services.UnitTests.ServiceTests
             var cocktailTest = new Cocktail
             {
                 Name = cocktailName,
-                ImageUrl = imageUrlTest
+                ImagePath = imageUrlTest
             };
 
 

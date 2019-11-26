@@ -31,11 +31,6 @@
                     <span asp-validation-for="@Model.Name" class="text-danger" />
                 </div>
                 <div class="form-group m-2">
-                    <label asp-for="@Model.ImageURL" class="control-label"></label>
-                    <input asp-for="@Model.ImageURL" class="form-control" />
-                    <span asp-validation-for="@Model.ImageURL" class="text-danger" />
-                </div>
-                <div class="form-group m-2">
                     <label>Ingredients</label>
                     <select multiple="multiple" class="multiple-select2 input-group input-group-lg" asp-for="@Model.CocktilIngredients" asp-items="@Model.AllIngredients " id="list-of-ingredients" width="100">
                     </select>
@@ -73,38 +68,36 @@
 }
 else
 {
-    <div class="row">
-        <div class="col-md-5" align="center">
-            <div>
-                <img class="details-image img-fluid" src="@Model.ImageURL" alt="Card image cap">
-            </div>
-        </div>
-        <div class="col-md-7" align="center">
-            <h2 class="font-cinzel m-4">@Model.Name</h2>
-            <h5>
-                Please enter ingrediens quantites:
-            </h5>
-            <div class="p-5">
+    <div class="col-md-7" align="center">
+        <h2 class="font-cinzel m-4">@Model.Name</h2>
+        <h5>
+            Please enter ingrediens quantites:
+        </h5>
+        <div class="p-5">
 
-                <form asp-action="/Distribution/Cocktails/Add">
+            <form asp-action="/Distribution/Cocktails/Add" enctype="multipart/form-data">
+                <div class="form-group m-2">
+                    <label asp-for="@Model.Image" class="control-label"></label>
+                    <input type="file" asp-for="@Model.Image" class="form-control" />
+                    <span asp-validation-for="@Model.Image" class="text-danger" />
+                </div>
 
-                    @for (int i = 0; i < Model.IngredientsQuantity.Count(); ++i)
-                    {
-                        <div class="form-row m-2">
+                @for (int i = 0; i < Model.IngredientsQuantity.Count(); ++i)
+                {
+                    <div class="form-row m-2">
 
-                            @Html.HiddenFor(m => m.IngredientsQuantity[i].Name)
+                        @Html.HiddenFor(m => m.IngredientsQuantity[i].Name)
 
-                            <label asp-for="@Model.IngredientsQuantity[i].Name" class="control-label col-md-6" align="right">@Model.IngredientsQuantity[i].Name:</label>
-                            <input type="text" asp-for="@Model.IngredientsQuantity[i].Value" class="form-control col-md-4" maxlength="20" />
-                        </div>
-                        <span asp-validation-for="@Model.IngredientsQuantity[i].Value" class="text-danger"></span>
-
-                    }
-                    <div class="m-4">
-                    <input type="submit" value="Add Cocktail" class="btn btn-pink" />
+                        <label asp-for="@Model.IngredientsQuantity[i].Name" class="control-label col-md-6" align="right">@Model.IngredientsQuantity[i].Name:</label>
+                        <input type="text" asp-for="@Model.IngredientsQuantity[i].Value" class="form-control col-md-4" maxlength="20" />
                     </div>
-                </form>
-            </div>
+                    <span asp-validation-for="@Model.IngredientsQuantity[i].Value" class="text-danger"></span>
+
+                }
+                <div class="m-4">
+                    <input type="submit" value="Add Cocktail" class="btn btn-pink" />
+                </div>
+            </form>
         </div>
     </div>
 

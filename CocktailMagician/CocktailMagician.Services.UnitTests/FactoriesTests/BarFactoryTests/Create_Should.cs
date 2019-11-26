@@ -31,7 +31,7 @@ namespace CocktailMagician.Services.UnitTests.FactoriesTests.BarFactoryTests
 
             Assert.IsInstanceOfType(bar, typeof(Bar));
             Assert.AreEqual(name, bar.Name);
-            Assert.AreEqual(imageUrl, bar.ImageUrl);
+            Assert.AreEqual(imageUrl, bar.ImagePath);
             Assert.AreEqual(phoneNum, bar.PhoneNumber);            
         }
     }

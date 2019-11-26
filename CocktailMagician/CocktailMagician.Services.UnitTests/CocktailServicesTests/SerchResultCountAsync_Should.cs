@@ -58,7 +58,7 @@ namespace CocktailMagician.Services.UnitTests.CocktailServicesTests
             var cocktail1 = new Cocktail
             {
                 Name = cocktail1NameTest,
-                ImageUrl = imageURLTest,
+                ImagePath = imageURLTest,
                 CocktailReviews = new List<CocktailReview>
                 {
                     new CocktailReview
@@ -70,7 +70,7 @@ namespace CocktailMagician.Services.UnitTests.CocktailServicesTests
             var cocktail2 = new Cocktail
             {
                 Name = cocktail2NameTest,
-                ImageUrl = imageURLTest,
+                ImagePath = imageURLTest,
                 CocktailReviews = new List<CocktailReview>
                 {
                     new CocktailReview
@@ -83,7 +83,7 @@ namespace CocktailMagician.Services.UnitTests.CocktailServicesTests
             var cocktail3 = new Cocktail
             {
                 Name = cocktail3NameTest,
-                ImageUrl = imageURLTest,
+                ImagePath = imageURLTest,
                 CocktailReviews = new List<CocktailReview>
                 {
                     new CocktailReview
@@ -95,7 +95,7 @@ namespace CocktailMagician.Services.UnitTests.CocktailServicesTests
             var cocktail4 = new Cocktail
             {
                 Name = cocktail4NameTest,
-                ImageUrl = imageURLTest,
+                ImagePath = imageURLTest,
                 CocktailReviews = new List<CocktailReview>
                 {
                     new CocktailReview
@@ -205,7 +205,7 @@ namespace CocktailMagician.Services.UnitTests.CocktailServicesTests
             var cocktail1 = new Cocktail
             {
                 Name = cocktail1NameTest,
-                ImageUrl = imageURLTest,
+                ImagePath = imageURLTest,
                 CocktailReviews = new List<CocktailReview>
                 {
                     new CocktailReview
@@ -217,7 +217,7 @@ namespace CocktailMagician.Services.UnitTests.CocktailServicesTests
             var cocktail2 = new Cocktail
             {
                 Name = cocktail2NameTest,
-                ImageUrl = imageURLTest,
+                ImagePath = imageURLTest,
                 CocktailReviews = new List<CocktailReview>
                 {
                     new CocktailReview
@@ -230,7 +230,7 @@ namespace CocktailMagician.Services.UnitTests.CocktailServicesTests
             var cocktail3 = new Cocktail
             {
                 Name = cocktail3NameTest,
-                ImageUrl = imageURLTest,
+                ImagePath = imageURLTest,
                 CocktailReviews = new List<CocktailReview>
                 {
                     new CocktailReview
@@ -242,7 +242,7 @@ namespace CocktailMagician.Services.UnitTests.CocktailServicesTests
             var cocktail4 = new Cocktail
             {
                 Name = cocktail4NameTest,
-                ImageUrl = imageURLTest,
+                ImagePath = imageURLTest,
                 CocktailReviews = new List<CocktailReview>
                 {
                     new CocktailReview
@@ -354,7 +354,7 @@ namespace CocktailMagician.Services.UnitTests.CocktailServicesTests
             var cocktail1 = new Cocktail
             {
                 Name = cocktail1NameTest,
-                ImageUrl = imageURLTest,
+                ImagePath = imageURLTest,
                 CocktailReviews = new List<CocktailReview>
                 {
                     new CocktailReview
@@ -366,7 +366,7 @@ namespace CocktailMagician.Services.UnitTests.CocktailServicesTests
             var cocktail2 = new Cocktail
             {
                 Name = cocktail2NameTest,
-                ImageUrl = imageURLTest,
+                ImagePath = imageURLTest,
                 CocktailReviews = new List<CocktailReview>
                 {
                     new CocktailReview
@@ -379,7 +379,7 @@ namespace CocktailMagician.Services.UnitTests.CocktailServicesTests
             var cocktail3 = new Cocktail
             {
                 Name = cocktail3NameTest,
-                ImageUrl = imageURLTest,
+                ImagePath = imageURLTest,
                 CocktailReviews = new List<CocktailReview>
                 {
                     new CocktailReview
@@ -391,7 +391,7 @@ namespace CocktailMagician.Services.UnitTests.CocktailServicesTests
             var cocktail4 = new Cocktail
             {
                 Name = cocktail4NameTest,
-                ImageUrl = imageURLTest,
+                ImagePath = imageURLTest,
                 CocktailReviews = new List<CocktailReview>
                 {
                     new CocktailReview
@@ -503,7 +503,7 @@ namespace CocktailMagician.Services.UnitTests.CocktailServicesTests
             var cocktail1 = new Cocktail
             {
                 Name = cocktail1NameTest,
-                ImageUrl = imageURLTest,
+                ImagePath = imageURLTest,
                 CocktailReviews = new List<CocktailReview>
                 {
                     new CocktailReview
@@ -515,7 +515,7 @@ namespace CocktailMagician.Services.UnitTests.CocktailServicesTests
             var cocktail2 = new Cocktail
             {
                 Name = cocktail2NameTest,
-                ImageUrl = imageURLTest,
+                ImagePath = imageURLTest,
                 CocktailReviews = new List<CocktailReview>
                 {
                     new CocktailReview
@@ -527,7 +527,7 @@ namespace CocktailMagician.Services.UnitTests.CocktailServicesTests
             var cocktail3 = new Cocktail
             {
                 Name = cocktail3NameTest,
-                ImageUrl = imageURLTest,
+                ImagePath = imageURLTest,
                 CocktailReviews = new List<CocktailReview>
                 {
                     new CocktailReview
@@ -539,7 +539,7 @@ namespace CocktailMagician.Services.UnitTests.CocktailServicesTests
             var cocktail4 = new Cocktail
             {
                 Name = cocktail4NameTest,
-                ImageUrl = imageURLTest,
+                ImagePath = imageURLTest,
                 CocktailReviews = new List<CocktailReview>
                 {
                     new CocktailReview

@@ -10,7 +10,7 @@ namespace CocktailMagician.Services.Factories
             var cocktail = new Cocktail
             {
                 Name = name,
-                ImageUrl = imageURL
+                ImagePath = imageURL
             };
             return cocktail;
         }

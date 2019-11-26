@@ -7,7 +7,7 @@ namespace CocktailMagician.Services.DTOs
     public class BarBasicImageDTO
     {
         public string Name { get; set; }
-        public string ImageURL { get; set; }
+        public string ImagePath { get; set; }
 
     }
 }

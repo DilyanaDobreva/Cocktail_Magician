@@ -133,7 +133,7 @@ namespace CocktailMagician.Data.Migrations
 
                     b.Property<int>("AddressId");
 
-                    b.Property<string>("ImageUrl")
+                    b.Property<string>("ImagePath")
                         .IsRequired();
 
                     b.Property<bool>("IsDeleted");
@@ -155,7 +155,7 @@ namespace CocktailMagician.Data.Migrations
                         {
                             Id = 1,
                             AddressId = 1,
-                            ImageUrl = "http://mysofiaapartments.com/wp-content/uploads/2015/12/Motto.jpg",
+                            ImagePath = "/barImages/Motto.jpg",
                             IsDeleted = false,
                             Name = "Motto",
                             PhoneNumber = "+35929872723"
@@ -164,7 +164,7 @@ namespace CocktailMagician.Data.Migrations
                         {
                             Id = 2,
                             AddressId = 2,
-                            ImageUrl = "https://vijmag.bg/service/image?wEckYaFmQsLCeWsoS5ZNo40cnQ8JsnuTGOIWPRSIWSM_",
+                            ImagePath = "/barImages/French75.jpg",
                             IsDeleted = false,
                             Name = "French 75",
                             PhoneNumber = "+359887044557"
@@ -173,7 +173,7 @@ namespace CocktailMagician.Data.Migrations
                         {
                             Id = 3,
                             AddressId = 3,
-                            ImageUrl = "http://mysofiaapartments.com/wp-content/uploads/2015/11/One-more-bar.jpg",
+                            ImagePath = "/barImages/OneMoreBar.jpg",
                             IsDeleted = false,
                             Name = "One More Bar",
                             PhoneNumber = "+359877693735"
@@ -182,7 +182,7 @@ namespace CocktailMagician.Data.Migrations
                         {
                             Id = 4,
                             AddressId = 4,
-                            ImageUrl = "http://funkt.eu/wp-content/uploads/2012/12/PAKETA-04.jpg",
+                            ImagePath = "/barImages/Raketa.jpg",
                             IsDeleted = false,
                             Name = "Rakia Raketa Bar",
                             PhoneNumber = "+35924446111"
@@ -191,7 +191,7 @@ namespace CocktailMagician.Data.Migrations
                         {
                             Id = 5,
                             AddressId = 5,
-                            ImageUrl = "https://d32swnnyen7sbd.cloudfront.net/projects/0001/27/6a4e56f5a0e66ed7a10f3ca4e611de64942568d3.jpeg",
+                            ImagePath = "/barImages/ModaBarMyPlace.jpeg",
                             IsDeleted = false,
                             Name = "Moda Bar My Place",
                             PhoneNumber = "+359876000056"
@@ -200,7 +200,7 @@ namespace CocktailMagician.Data.Migrations
                         {
                             Id = 6,
                             AddressId = 6,
-                            ImageUrl = "http://martini.bg/wp-content/uploads/2017/01/martini_food_cocktails_varna_bulgaria_interior_7.jpg",
+                            ImagePath = "/barImages/MartiniBar.jpg",
                             IsDeleted = false,
                             Name = "The Martini Bar",
                             PhoneNumber = "+359893374437"
@@ -209,7 +209,7 @@ namespace CocktailMagician.Data.Migrations
                         {
                             Id = 7,
                             AddressId = 7,
-                            ImageUrl = "https://lostinplovdiv.com/media/images/4691dddb3a.jpg",
+                            ImagePath = "/barImages/Kriloto.jpg",
                             IsDeleted = false,
                             Name = "Kriloto",
                             PhoneNumber = "+359879924799"
@@ -493,7 +493,7 @@ namespace CocktailMagician.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ImageUrl")
+                    b.Property<string>("ImagePath")
                         .IsRequired();
 
                     b.Property<bool>("IsDeleted");
@@ -510,70 +510,70 @@ namespace CocktailMagician.Data.Migrations
                         new
                         {
                             Id = 1,
-                            ImageUrl = "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/gettyimages-164770405-1-1508961546.jpg?crop=1xw:1xh;center,top&resize=980:*",
+                            ImagePath = "/cocktailImages/OldFashioned.jpg",
                             IsDeleted = false,
                             Name = "Old Fashioned"
                         },
                         new
                         {
                             Id = 2,
-                            ImageUrl = "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/gettyimages-516883622-1508961864.jpg?crop=0.44377777777777777xw:1xh;center,top&resize=980:*",
+                            ImagePath = "/cocktailImages/Margarita.jpg",
                             IsDeleted = false,
                             Name = "Margarita"
                         },
                         new
                         {
                             Id = 3,
-                            ImageUrl = "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/an-alcoholic-cosmopolitan-cocktail-is-on-the-bar-royalty-free-image-890771104-1557247368.jpg?crop=0.447xw:1.00xh;0.446xw,0&resize=980:*",
+                            ImagePath = "/cocktailImages/Cosmopolitan.jpg",
                             IsDeleted = false,
                             Name = "Cosmopolitan"
                         },
                         new
                         {
                             Id = 4,
-                            ImageUrl = "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/cocktail-negroni-on-a-old-wooden-board-drink-with-royalty-free-image-922744216-1557251200.jpg?crop=0.447xw:1.00xh;0.434xw,0&resize=980:*",
+                            ImagePath = "/cocktailImages/Negroni.jpg",
                             IsDeleted = false,
                             Name = "Negroni"
                         },
                         new
                         {
                             Id = 5,
-                            ImageUrl = "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/gettyimages-834848932-1508962243.jpg?crop=0.9998698425094363xw:1xh;center,top&resize=980:*",
+                            ImagePath = "/cocktiailImages/MoscowMule.jpg",
                             IsDeleted = false,
                             Name = "Moscow Mule"
                         },
                         new
                         {
                             Id = 6,
-                            ImageUrl = "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/close-up-of-mojito-on-table-royalty-free-image-998866018-1557246957.jpg?crop=1xw:1xh;center,top&resize=980:*",
+                            ImagePath = "/cocktailImages/Mojito.jpg",
                             IsDeleted = false,
                             Name = "Mojito"
                         },
                         new
                         {
                             Id = 7,
-                            ImageUrl = "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/gettyimages-126551868-1-1508962528.jpg?crop=1.00xw:0.949xh;0,0.0259xh&resize=980:*",
+                            ImagePath = "/cocktailImages/WhiskeySour.jpg",
                             IsDeleted = false,
                             Name = "Whiskey Sour"
                         },
                         new
                         {
                             Id = 8,
-                            ImageUrl = "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/gettyimages-89804127-1508971287.jpg?crop=0.864516129032258xw:1xh;center,top&resize=980:*",
+                            ImagePath = "/cocktailImages/Manhattan.jpg",
                             IsDeleted = false,
                             Name = "Manhattan"
                         },
                         new
                         {
                             Id = 9,
-                            ImageUrl = "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/homemade-refreshing-orange-mimosa-cocktails-royalty-free-image-538644352-1557251390.jpg?crop=0.447xw:1.00xh;0.111xw,0&resize=980:*",
+                            ImagePath = "/cocktailImages/Mimosa.jpg",
                             IsDeleted = false,
                             Name = "Mimosa"
                         },
                         new
                         {
                             Id = 10,
-                            ImageUrl = "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/gettyimages-86159584-1508963306.jpg?crop=0.785xw:0.785xh;0,0.176xh&resize=980:*",
+                            ImagePath = "/cocktailImages/Gimlet.jpg",
                             IsDeleted = false,
                             Name = "Gimlet"
                         });

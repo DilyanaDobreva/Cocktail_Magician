@@ -74,13 +74,13 @@ namespace CocktailMagician.Services.UnitTests.BarServicesTests
                 var bar1 = new Bar
                 {
                     Name = barTestName1,
-                    ImageUrl = imagaUrlTest,
+                    ImagePath = imagaUrlTest,
                     Address = addressTest1,
                 };
                 var bar2 = new Bar
                 {
                     Name = barTestName2,
-                    ImageUrl = imagaUrlTest,
+                    ImagePath = imagaUrlTest,
                     Address = addressTest1,
                     IsDeleted = true
                 };

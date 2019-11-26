@@ -16,7 +16,7 @@ namespace CocktailMagician.Web.Areas.Distribution.Mapper
             {
                 Id = cocktail.Id,
                 Name = cocktail.Name,
-                ImageURL = cocktail.ImageURL,
+                ImageURL = cocktail.ImagePath,
                 AverageRating = cocktail.AverageRating
             };
             vm.AverageRating = cocktail.AverageRating;
@@ -40,7 +40,7 @@ namespace CocktailMagician.Web.Areas.Distribution.Mapper
             {
                 Id = bar.Id,
                 Name = bar.Name,
-                ImageURL = bar.ImageURL,
+                ImagePath = bar.ImagePath,
                 Address = bar.Address,
                 City = bar.City
             };
@@ -62,7 +62,7 @@ namespace CocktailMagician.Web.Areas.Distribution.Mapper
             {
                 Id = cocktail.Id,
                 Name = cocktail.Name,
-                ImageURL = cocktail.ImageURL,
+                ImageURL = cocktail.ImagePath,
                 Ingredients = cocktail.Ingredients.Select(i => i.MapToViewModel()),
                 Bars = cocktail.Bars?.Select(b => b.MapToViewModel())
             };
@@ -76,7 +76,7 @@ namespace CocktailMagician.Web.Areas.Distribution.Mapper
             {
                 Id = cocktail.Id,
                 Name = cocktail.Name,
-                ImageURL = cocktail.ImageURL,
+                ImageURL = cocktail.ImagePath,
                 IngredientsQuantity = cocktail.Ingredients.Select(ci => ci.MapToViewModel()).ToList(),
             };
             return vm;
@@ -118,7 +118,7 @@ namespace CocktailMagician.Web.Areas.Distribution.Mapper
             {
                 Id = bar.Id,
                 Name = bar.Name,
-                ImageURL = bar.ImageURL,
+                ImagePath = bar.ImagePath,
                 PhoneNumber = bar.PhoneNumber,
                 AverageRating = bar.AverageRating,
                 Address = bar.Address.MapToViewModel(),
@@ -144,7 +144,7 @@ namespace CocktailMagician.Web.Areas.Distribution.Mapper
             var dto = new AddBarViewModel
             {
                 Name = bar.Name,
-                ImageURL = bar.ImageURL,
+                ImagePath = bar.ImagePath,
                 PhoneNumber = bar.PhoneNumber,
                 Address = bar.Address.MapToViewModel()
             };

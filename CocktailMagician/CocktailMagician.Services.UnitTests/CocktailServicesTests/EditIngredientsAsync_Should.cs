@@ -50,7 +50,7 @@ namespace CocktailMagician.Services.UnitTests.CocktailServicesTests
             var cocktail = new Cocktail
             {
                 Name = cocktailNameTest,
-                ImageUrl = imageURLTest
+                ImagePath = imageURLTest
             };
 
             var newIistIngrQuantity = new List<CocktailIngredientDTO>
@@ -125,7 +125,7 @@ namespace CocktailMagician.Services.UnitTests.CocktailServicesTests
             var cocktail = new Cocktail
             {
                 Name = cocktailNameTest,
-                ImageUrl = imageURLTest,
+                ImagePath = imageURLTest,
                 IsDeleted = true
             };
 
@@ -204,7 +204,7 @@ namespace CocktailMagician.Services.UnitTests.CocktailServicesTests
             var cocktail = new Cocktail
             {
                 Name = cocktailNameTest,
-                ImageUrl = imageURLTest,
+                ImagePath = imageURLTest,
             };
 
             var newIistIngrQuantity = new List<CocktailIngredientDTO>
@@ -290,7 +290,7 @@ namespace CocktailMagician.Services.UnitTests.CocktailServicesTests
             var cocktail = new Cocktail
             {
                 Name = cocktailNameTest,
-                ImageUrl = imageURLTest,
+                ImagePath = imageURLTest,
             };
 
             var newIistIngrQuantity = new List<CocktailIngredientDTO>
@@ -363,7 +363,7 @@ namespace CocktailMagician.Services.UnitTests.CocktailServicesTests
             var cocktail = new Cocktail
             {
                 Name = cocktailNameTest,
-                ImageUrl = imageURLTest,
+                ImagePath = imageURLTest,
             };
 
             var newIistIngrQuantity = new List<CocktailIngredientDTO>
@@ -431,7 +431,7 @@ namespace CocktailMagician.Services.UnitTests.CocktailServicesTests
             var cocktail = new Cocktail
             {
                 Name = cocktailNameTest,
-                ImageUrl = imageURLTest,
+                ImagePath = imageURLTest,
             };
 
             var newIistIngrQuantity = new List<CocktailIngredientDTO>

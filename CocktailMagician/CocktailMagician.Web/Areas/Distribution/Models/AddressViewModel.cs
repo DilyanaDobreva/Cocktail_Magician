@@ -6,8 +6,8 @@ namespace CocktailMagician.Web.Areas.Distribution.Models
     {
         [Required]
         public string Address { get; set; }
-        [Required]
         public string CityName { get; set; }
+        [Required]
         public int CityId { get; set; }
         [Required]
         public double Latitude { get; set; }

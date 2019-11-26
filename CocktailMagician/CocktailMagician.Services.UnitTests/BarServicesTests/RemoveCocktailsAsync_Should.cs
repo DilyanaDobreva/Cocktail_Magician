@@ -36,7 +36,7 @@ namespace CocktailMagician.Services.UnitTests.BarServicesTests
             var barTest = new Bar
             {
                 Name = barTestName,
-                ImageUrl = imagaUrlTest,
+                ImagePath = imagaUrlTest,
                 Address = addressTest
             };
 
@@ -74,7 +74,7 @@ namespace CocktailMagician.Services.UnitTests.BarServicesTests
             var barTest = new Bar
             {
                 Name = barTestName,
-                ImageUrl = imagaUrlTest,
+                ImagePath = imagaUrlTest,
                 Address = addressTest,
                 IsDeleted = true
             };
@@ -117,20 +117,20 @@ namespace CocktailMagician.Services.UnitTests.BarServicesTests
             var barTest = new Bar
             {
                 Name = barTestName,
-                ImageUrl = imagaUrlTest,
+                ImagePath = imagaUrlTest,
                 Address = addressTest,
             };
 
             var cocktail1Test = new Cocktail
             {
                 Name = cocktail1TestName,
-                ImageUrl = imagaUrlTest,
+                ImagePath = imagaUrlTest,
             };
 
             var cocktail2Test = new Cocktail
             {
                 Name = cocktail2TestName,
-                ImageUrl = imagaUrlTest,
+                ImagePath = imagaUrlTest,
             };
 
             var options = TestUtilities.GetOptions(nameof(RemoveSelectedCocktails));
@@ -195,20 +195,20 @@ namespace CocktailMagician.Services.UnitTests.BarServicesTests
             var barTest = new Bar
             {
                 Name = barTestName,
-                ImageUrl = imagaUrlTest,
+                ImagePath = imagaUrlTest,
                 Address = addressTest,
             };
 
             var cocktail1Test = new Cocktail
             {
                 Name = cocktail1TestName,
-                ImageUrl = imagaUrlTest,
+                ImagePath = imagaUrlTest,
             };
 
             var cocktail2Test = new Cocktail
             {
                 Name = cocktail2TestName,
-                ImageUrl = imagaUrlTest,
+                ImagePath = imagaUrlTest,
             };
 
 

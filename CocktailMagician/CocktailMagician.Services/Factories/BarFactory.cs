@@ -13,7 +13,7 @@ namespace CocktailMagician.Services.Factories
             {
                 Name = name,
                 Address = address.MapFromDTO(),
-                ImageUrl = imageURL,
+                ImagePath = imageURL,
                 PhoneNumber = phoneNumber
             };
 

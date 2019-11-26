@@ -36,7 +36,7 @@ namespace CocktailMagician.Services.UnitTests.BarServicesTests
             var barTest = new Bar
             {
                 Name = barTestName,
-                ImageUrl = imagaUrlTest,
+                ImagePath = imagaUrlTest,
                 Address = addressTest
             };
 
@@ -74,7 +74,7 @@ namespace CocktailMagician.Services.UnitTests.BarServicesTests
             var barTest = new Bar
             {
                 Name = barTestName,
-                ImageUrl = imagaUrlTest,
+                ImagePath = imagaUrlTest,
                 Address = addressTest,
                 IsDeleted = true
             };
@@ -120,7 +120,7 @@ namespace CocktailMagician.Services.UnitTests.BarServicesTests
             var barTest = new Bar
             {
                 Name = barTestName,
-                ImageUrl = imagaUrlTest,
+                ImagePath = imagaUrlTest,
                 Address = addressTest,
             };
 
@@ -141,7 +141,7 @@ namespace CocktailMagician.Services.UnitTests.BarServicesTests
                 {
                     Id = barId,
                     Name = barEditedName,
-                    ImageURL = editedUrl,
+                    ImagePath = editedUrl,
                     Address = new AddressDTO
                     {
                         Name = addressEditedName,
@@ -166,7 +166,7 @@ namespace CocktailMagician.Services.UnitTests.BarServicesTests
                     .FirstOrDefaultAsync(b => b.Name == barTestName);
 
                 Assert.AreEqual(barEditedName, editedBar.Name);
-                Assert.AreEqual(editedUrl, editedBar.ImageUrl);
+                Assert.AreEqual(editedUrl, editedBar.ImagePath);
                 Assert.AreEqual(addressEditedName, editedBar.Address.Name);
                 Assert.AreEqual(editedLatitude, editedBar.Address.Latitude);
                 Assert.AreEqual(editedLongitude, editedBar.Address.Longitude);

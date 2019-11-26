@@ -89,12 +89,12 @@ namespace CocktailMagician.Services
                 {
                     Id = c.Id,
                     Name = c.Name,
-                    ImageURL = c.ImageUrl,
+                    ImagePath = c.ImagePath,
                     Bars = c.BarCocktails.Select(b => new BarInListDTO
                     {
                         Id = b.Bar.Id,
                         Name = b.Bar.Name,
-                        ImageURL = b.Bar.ImageUrl,
+                        ImagePath = b.Bar.ImagePath,
                         Address = b.Bar.Address.Name,
                         City = b.Bar.Address.City.Name,
                     })
@@ -123,7 +123,7 @@ namespace CocktailMagician.Services
                 {
                     Id = c.Id,
                     Name = c.Name,
-                    ImageURL = c.ImageUrl,
+                    ImagePath = c.ImagePath,
                     AverageRating = c.CocktailReviews
                         .Where(r => r.Rating != null)
                         .Select(r => r.Rating)
@@ -146,7 +146,7 @@ namespace CocktailMagician.Services
             {
                 Id = c.Id,
                 Name = c.Name,
-                ImageURL = c.ImageUrl
+                ImagePath = c.ImagePath
             }).FirstAsync();
 
             return cokctailName;
@@ -248,7 +248,7 @@ namespace CocktailMagician.Services
                 {
                     Id = c.Id,
                     Name = c.Name,
-                    ImageURL = c.ImageUrl,
+                    ImagePath = c.ImagePath,
                     AverageRating = c.CocktailReviews
                         .Where(r => r.Rating != null)
                         .Select(r => r.Rating)
@@ -273,7 +273,7 @@ namespace CocktailMagician.Services
                 {
                     Id = c.Id,
                     Name = c.Name,
-                    ImageURL = c.ImageUrl,
+                    ImagePath = c.ImagePath,
                     AverageRating = c.CocktailReviews
                         .Where(r => r.Rating != null)
                         .Select(r => r.Rating)
@@ -359,7 +359,7 @@ namespace CocktailMagician.Services
                 {
                     Id = c.Id,
                     Name = c.Name,
-                    ImageURL = c.ImageUrl,
+                    ImagePath = c.ImagePath,
                     AverageRating = c.CocktailReviews
                         .Where(r => r.Rating != null)
                         .Select(r => r.Rating)

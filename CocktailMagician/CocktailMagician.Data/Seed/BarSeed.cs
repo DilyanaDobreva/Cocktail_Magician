@@ -12,7 +12,7 @@ namespace CocktailMagician.Data.Seed
                 Id = 1,
                 Name = "Motto",
                 AddressId = 1,
-                ImageUrl = "http://mysofiaapartments.com/wp-content/uploads/2015/12/Motto.jpg",
+                ImagePath = "/barImages/Motto.jpg",
                 PhoneNumber = "+35929872723",
             },
             new Bar
@@ -20,7 +20,7 @@ namespace CocktailMagician.Data.Seed
                 Id = 2,
                 Name = "French 75",
                 AddressId = 2,
-                ImageUrl = "https://vijmag.bg/service/image?wEckYaFmQsLCeWsoS5ZNo40cnQ8JsnuTGOIWPRSIWSM_",
+                ImagePath = "/barImages/French75.jpg",
                 PhoneNumber = "+359887044557"
             },
             new Bar
@@ -28,7 +28,7 @@ namespace CocktailMagician.Data.Seed
                 Id = 3,
                 Name = "One More Bar",
                 AddressId = 3,
-                ImageUrl = "http://mysofiaapartments.com/wp-content/uploads/2015/11/One-more-bar.jpg",
+                ImagePath = "/barImages/OneMoreBar.jpg",
                 PhoneNumber = "+359877693735"
             },
             new Bar
@@ -36,7 +36,7 @@ namespace CocktailMagician.Data.Seed
                 Id = 4,
                 Name = "Rakia Raketa Bar",
                 AddressId = 4,
-                ImageUrl = "http://funkt.eu/wp-content/uploads/2012/12/PAKETA-04.jpg",
+                ImagePath = "/barImages/Raketa.jpg",
                 PhoneNumber = "+35924446111"
             },
             new Bar
@@ -44,7 +44,7 @@ namespace CocktailMagician.Data.Seed
                 Id = 5,
                 Name = "Moda Bar My Place",
                 AddressId = 5,
-                ImageUrl = "https://d32swnnyen7sbd.cloudfront.net/projects/0001/27/6a4e56f5a0e66ed7a10f3ca4e611de64942568d3.jpeg",
+                ImagePath = "/barImages/ModaBarMyPlace.jpeg",
                 PhoneNumber = "+359876000056"
             },
             new Bar
@@ -52,7 +52,7 @@ namespace CocktailMagician.Data.Seed
                 Id = 6,
                 Name = "The Martini Bar",
                 AddressId = 6,
-                ImageUrl = "http://martini.bg/wp-content/uploads/2017/01/martini_food_cocktails_varna_bulgaria_interior_7.jpg",
+                ImagePath = "/barImages/MartiniBar.jpg",
                 PhoneNumber = "+359893374437"
             },
             new Bar
@@ -60,7 +60,7 @@ namespace CocktailMagician.Data.Seed
                 Id = 7,
                 Name = "Kriloto",
                 AddressId = 7,
-                ImageUrl = "https://lostinplovdiv.com/media/images/4691dddb3a.jpg",
+                ImagePath = "/barImages/Kriloto.jpg",
                 PhoneNumber = "+359879924799"
             }
         };

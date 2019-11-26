@@ -35,7 +35,7 @@ namespace CocktailMagician.Services.UnitTests.BarServicesTests
             var barTest = new Bar
             {
                 Name = barTestName,
-                ImageUrl = imagaUrlTest,
+                ImagePath = imagaUrlTest,
                 Address = addressTest,
             };
 
@@ -101,7 +101,7 @@ namespace CocktailMagician.Services.UnitTests.BarServicesTests
                     .Returns(new Bar
                     {
                         Name = barTestName,
-                        ImageUrl = imagaUrlTest,
+                        ImagePath = imagaUrlTest,
                         Address = addressTest,
                     });
 

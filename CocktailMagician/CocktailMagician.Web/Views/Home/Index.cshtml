@@ -24,7 +24,7 @@
         <div class="carousel-inner">
             <div class="carousel-item active" align="center">
                 <a href="">
-                    <img class="d-block home-carousel-img" src="@Model.First().ImageURL">
+                    <img class="d-block home-carousel-img" src="@Model.First().ImagePath">
                 </a>
                 <div class="carousel-caption">
                     <h3 class="font-cinzel">@Model.First().Name</h3>
@@ -46,7 +46,7 @@
             @foreach (var item in Model.Skip(1))
             {
                 <div class="carousel-item" align="center">
-                    <img class="d-block home-carousel-img" src="@item.ImageURL">
+                    <img class="d-block home-carousel-img" src="@item.ImagePath">
                     <div class="carousel-caption">
                         <h3 class="font-cinzel">@item.Name</h3>
                         <p>

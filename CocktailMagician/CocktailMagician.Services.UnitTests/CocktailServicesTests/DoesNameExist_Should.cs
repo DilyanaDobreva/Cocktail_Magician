@@ -38,7 +38,7 @@ namespace CocktailMagician.Services.UnitTests.CocktailServicesTests
             var cocktail = new Cocktail
             {
                 Name = cocktailNameTest,
-                ImageUrl = CocktailImageUrlTest
+                ImagePath = CocktailImageUrlTest
             };
 
             var options = TestUtilities.GetOptions(nameof(ReturnFalse_WhenNameDoesntExist));
@@ -85,7 +85,7 @@ namespace CocktailMagician.Services.UnitTests.CocktailServicesTests
             var cocktail = new Cocktail
             {
                 Name = cocktailNameTest,
-                ImageUrl = CocktailImageUrlTest
+                ImagePath = CocktailImageUrlTest
             };
 
             var options = TestUtilities.GetOptions(nameof(ReturnTrue_WhenNameDoesntExist));

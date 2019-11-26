@@ -45,7 +45,7 @@ namespace CocktailMagician.Services
                 {
                     Id = b.Id,
                     Name = b.Name,
-                    ImageURL = b.ImageUrl,
+                    ImagePath = b.ImagePath,
                     Address = b.Address.Name,
                     City = b.Address.City.Name,
                     AverageRating = b.BarReviews
@@ -76,7 +76,7 @@ namespace CocktailMagician.Services
                 {
                     Id = bar.Id,
                     Name = bar.Name,
-                    ImageURL = bar.ImageUrl,
+                    ImagePath = bar.ImagePath,
                     PhoneNumber = bar.PhoneNumber,
                     HasReviews = bar.BarReviews.Any(),
                     AverageRating = bar.BarReviews
@@ -88,7 +88,7 @@ namespace CocktailMagician.Services
                     {
                         Id = bc.Cocktail.Id,
                         Name = bc.Cocktail.Name,
-                        ImageURL = bc.Cocktail.ImageUrl
+                        ImagePath = bc.Cocktail.ImagePath
                     })
                 })
                 .FirstAsync();
@@ -114,7 +114,7 @@ namespace CocktailMagician.Services
                 .Select(bar => new BarToEditDTO
                 {
                     Name = bar.Name,
-                    ImageURL = bar.ImageUrl,
+                    ImagePath = bar.ImagePath,
                     Id = bar.Id,
                     PhoneNumber = bar.PhoneNumber,
                     Address = bar.Address.MapToDTO()
@@ -135,7 +135,7 @@ namespace CocktailMagician.Services
                 .Select(b => new BarBasicImageDTO
                 {
                     Name = b.Name,
-                    ImageURL = b.ImageUrl
+                    ImagePath = b.ImagePath
                 })
                 .FirstOrDefaultAsync();
 
@@ -228,7 +228,7 @@ namespace CocktailMagician.Services
                 .FirstOrDefaultAsync();
 
             bar.Name = newBarInfo.Name;
-            bar.ImageUrl = newBarInfo.ImageURL;
+            bar.ImagePath = newBarInfo.ImagePath;
             bar.Address.Name = newBarInfo.Address.Name;
             bar.Address.Latitude = newBarInfo.Address.Latitude;
             bar.Address.Longitude = newBarInfo.Address.Longitude;
@@ -266,7 +266,7 @@ namespace CocktailMagician.Services
                 {
                     Id = bar.Id,
                     Name = bar.Name,
-                    ImageURL = bar.ImageUrl,
+                    ImagePath = bar.ImagePath,
                     Address = bar.Address.Name,
                     City = bar.Address.City.Name,
                     AverageRating = bar.BarReviews
@@ -309,7 +309,7 @@ namespace CocktailMagician.Services
                 {
                     Id = b.Id,
                     Name = b.Name,
-                    ImageURL = b.ImageUrl,
+                    ImagePath = b.ImagePath,
                     Address = b.Address.Name,
                     City = b.Address.City.Name,
                     AverageRating = b.BarReviews

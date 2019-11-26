@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using CocktailMagician.Web.Areas.Distribution.Models;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
 
 namespace CocktailMagician.Web.Areas.Distribution.Controllers
 {
@@ -19,14 +21,15 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
         private readonly IBarReviewServices barReviewServices;
         private readonly IBarServices barServices;
         private readonly ICityServices cityServices;
-
+        private readonly IHostingEnvironment hostingEnvironment;
         private const int itemsPerPage = 3;
 
-        public BarsController(IBarReviewServices barReviewServices, IBarServices barServices, ICityServices cityServices)
+        public BarsController(IBarReviewServices barReviewServices, IBarServices barServices, ICityServices cityServices, IHostingEnvironment hostingEnvironment)
         {
             this.barReviewServices = barReviewServices;
             this.barServices = barServices;
             this.cityServices = cityServices;
+            this.hostingEnvironment = hostingEnvironment;
         }
         public async Task<IActionResult> Index(int id = 1)
         {
@@ -62,7 +65,12 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
             {
                 try
                 {
-                    await barServices.AddAsync(bar.Name, bar.ImageURL, bar.PhoneNumber, bar.Address.MapToDTO());
+                    var fileName = Path.Combine(hostingEnvironment.WebRootPath + "\\barImages", Path.GetFileName(bar.Image.FileName));
+                    bar.Image.CopyTo(new FileStream(fileName, FileMode.Create));
+
+                    var imgPath = "/barImages/" + Path.GetFileName(bar.Image.FileName);
+
+                    await barServices.AddAsync(bar.Name, imgPath, bar.PhoneNumber, bar.Address.MapToDTO());
                     return RedirectToAction("Index");
                 }
                 catch (ArgumentException ex)
@@ -103,7 +111,7 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
                 var dto = await barServices.GetBasicDTOAsync(id);
 
                 barVM.BarName = dto.Name;
-                barVM.ImageUrl = dto.ImageURL;
+                barVM.ImagePath = dto.ImagePath;
 
                 barVM.PresentCocktails = (await barServices.GetPresentCocktailsAsync(id))
                     .Select(c => new SelectListItem(c.Name, c.Id.ToString()));
@@ -163,7 +171,13 @@ namespace CocktailMagician.Web.Areas.Distribution.Controllers
         {
             try
             {
+                var fileName = Path.Combine(hostingEnvironment.WebRootPath, Path.GetFileName(vm.Image.FileName));
+                vm.Image.CopyTo(new FileStream(fileName, FileMode.Create));
+
+                var imgPath = "/barImages/" + Path.GetFileName(vm.Image.FileName);
+
                 var barToEdit = vm.MapToDTO();
+                barToEdit.ImagePath = imgPath;
                 barToEdit.Id = id;
 
                 await barServices.EditAsync(barToEdit);

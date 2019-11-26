@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Authorization;
 using System;
 using CocktailMagician.Services.DTOs;
 using CocktailMagician.Web.Areas.Distribution.Models;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
 
 namespace CocktailMagician.Web.Areas.Cocktails.Controllers
 {
@@ -19,14 +21,15 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
         private readonly ICocktailReviewServices cocktailReview;
         private readonly ICocktailServices cocktailServices;
         private readonly IIngredientServices ingredientServices;
-
+        private readonly IHostingEnvironment hostingEnvironment;
         private const int itemsPerPage = 4;
 
-        public CocktailsController(ICocktailReviewServices cocktailReview, ICocktailServices cocktailServices, IIngredientServices ingredientServices)
+        public CocktailsController(ICocktailReviewServices cocktailReview, ICocktailServices cocktailServices, IIngredientServices ingredientServices, IHostingEnvironment hostingEnvironment)
         {
             this.cocktailReview = cocktailReview;
             this.cocktailServices = cocktailServices;
             this.ingredientServices = ingredientServices;
+            this.hostingEnvironment = hostingEnvironment;
         }
 
         public async Task<IActionResult> Index(int id = 1)
@@ -62,6 +65,7 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
                 TempData["Status"] = "Cocktail with such name alredy exists.";
                 return View(cocktailVM);
             }
+
             foreach (var ingr in cocktailVM.CocktilIngredients)
             {
 
@@ -76,8 +80,13 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
         {
             if (ModelState.IsValid)
             {
+                var fileName = Path.Combine(hostingEnvironment.WebRootPath + "\\cocktailImages", Path.GetFileName(cocktailVM.Image.FileName));
+                cocktailVM.Image.CopyTo(new FileStream(fileName, FileMode.Create));
+
+                cocktailVM.ImagePath = "/cocktailImages/" + Path.GetFileName(cocktailVM.Image.FileName);
+
                 var ingredientsQuantityDTO = cocktailVM.IngredientsQuantity.Select(i => i.MapToDTO()).ToList();
-                await cocktailServices.AddAsync(cocktailVM.Name, cocktailVM.ImageURL, ingredientsQuantityDTO);
+                await cocktailServices.AddAsync(cocktailVM.Name, cocktailVM.ImagePath, ingredientsQuantityDTO);
                 return RedirectToAction("Index");
             }
             ModelState.AddModelError("", "Something went wrong...");
@@ -103,7 +112,7 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
                 var cocktail = await cocktailServices.GetDTOAsync(id);
                 vm.Id = cocktail.Id;
                 vm.CocktailName = cocktail.Name;
-                vm.ImageUrl = cocktail.ImageURL;
+                vm.ImageUrl = cocktail.ImagePath;
                 vm.AllOtherBars = (await cocktailServices.GetAllNotIncludedBarsDTOAsync(id)).Select(b => new SelectListItem(b.Name, b.Id.ToString())).ToList();
                 vm.BarsOfCocktail = (await cocktailServices.GetBarsOfCocktailAsync(id)).Select(b => new SelectListItem(b.Name, b.Id.ToString())).ToList();
                 return View(vm);

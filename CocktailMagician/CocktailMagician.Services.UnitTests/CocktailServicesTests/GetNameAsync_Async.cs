@@ -40,7 +40,7 @@ namespace CocktailMagician.Services.UnitTests.CocktailServicesTests
             var cocktail = new Cocktail
             {
                 Name = cocktailNameTest,
-                ImageUrl = imageURLTest
+                ImagePath = imageURLTest
             };
 
             var options = TestUtilities.GetOptions(nameof(ThrowException_WhenIdIsInvalid));
@@ -75,7 +75,7 @@ namespace CocktailMagician.Services.UnitTests.CocktailServicesTests
             var cocktail = new Cocktail
             {
                 Name = cocktailNameTest,
-                ImageUrl = imageURLTest,
+                ImagePath = imageURLTest,
                 IsDeleted = true
             };
 
@@ -118,7 +118,7 @@ namespace CocktailMagician.Services.UnitTests.CocktailServicesTests
                 var cocktail = new Cocktail
                 {
                     Name = cocktailNameTest,
-                    ImageUrl = CocktailImageUrlTest
+                    ImagePath = CocktailImageUrlTest
                 };
 
 

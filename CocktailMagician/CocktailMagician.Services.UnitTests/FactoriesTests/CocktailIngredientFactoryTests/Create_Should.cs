@@ -13,7 +13,7 @@ namespace CocktailMagician.Services.UnitTests.FactoriesTests.CocktailIngredientF
             var cocktail = new Cocktail
             {
                 Name = "Name",
-                ImageUrl = "www.test.com"
+                ImagePath = "www.test.com"
             };
 
             var ingredientId = 1;
