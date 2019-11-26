@@ -14,12 +14,12 @@
     <span class="left">
         @if (User.IsInRole("admin"))
         {
-            <a href="/Distribution/Cocktails/Add" class="icon-add mr-3 h5">Add cocktail</a>
+            <a href="/Distribution/Cocktails/Add" class="icon-add mr-3 h5 pink-color">Add cocktail</a>
         }
     </span>
 
     <span class="right">
-        <a href="/Distribution/Cocktails/Search" class="icon-search2 h5">Search</a>
+        <a href="/Distribution/Cocktails/Search" class="icon-search2 h5 pink-color">Search</a>
     </span>
 </div>
 
@@ -42,7 +42,7 @@
     <ul class="pagination m-1">
         @if (Model.Paging.HasPrevious)
         {
-            <li class="page-item"><a class="page-link" href="/Distribution/Cocktails/Index/@Model.Paging.PreviousPage">Previous</a></li>
+            <li class="page-item"><a class="page-link pink-color" href="/Distribution/Cocktails/Index/@Model.Paging.PreviousPage">Previous</a></li>
         }
         @for (int i = 1; i <= Model.Paging.LastPage; i++)
         {
@@ -52,12 +52,12 @@
             }
             else
             {
-                <li class="page-item"><a class="page-link" href="/Distribution/Cocktails/Index/@i">@i</a></li>
+                <li class="page-item"><a class="page-link pink-color" href="/Distribution/Cocktails/Index/@i">@i</a></li>
             }
         }
         @if (Model.Paging.HasNext)
         {
-            <li class="page-item"><a class="page-link" href="/Distribution/Cocktails/Index/@Model.Paging.NextPage">Next</a></li>
+            <li class="page-item pink-color"><a class="page-link pink-color" href="/Distribution/Cocktails/Index/@Model.Paging.NextPage">Next</a></li>
         }
     </ul>
 </div>

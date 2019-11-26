@@ -1306,7 +1306,7 @@ h1, h2, h3, h4, h5,
   font-size: .9rem; }
 
 .wine_v_1, .wine_h_1 {
-    height:420px;
+    height:450px;
   position: relative;
   margin-bottom: 20px; }
   .wine_v_1:before, .wine_h_1:before {

@@ -28,7 +28,7 @@
         <ul class="pagination">
             @if (Model.Paging.HasPrevious)
             {
-                <li class="page-item"><a class="page-link" href="/Distribution/Ingredients/Index/@Model.Paging.PreviousPage">Previous</a></li>
+                <li class="page-item"><a class="page-link pink-color" href="/Distribution/Ingredients/Index/@Model.Paging.PreviousPage">Previous</a></li>
             }
             @for (int i = 1; i <= Model.Paging.LastPage; i++)
             {
@@ -38,12 +38,12 @@
                 }
                 else
                 {
-                    <li class="page-item"><a class="page-link" href="/Distribution/Ingredients/Index/@i">@i</a></li>
+                    <li class="page-item"><a class="page-link pink-color" href="/Distribution/Ingredients/Index/@i">@i</a></li>
                 }
             }
             @if (Model.Paging.HasNext)
             {
-                <li class="page-item"><a class="page-link" href="/Distribution/Ingredients/Index/@Model.Paging.NextPage">Next</a></li>
+                <li class="page-item"><a class="page-link pink-color" href="/Distribution/Ingredients/Index/@Model.Paging.NextPage">Next</a></li>
             }
         </ul>
     </div>

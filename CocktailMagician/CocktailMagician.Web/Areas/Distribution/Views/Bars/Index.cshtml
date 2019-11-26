@@ -14,12 +14,12 @@
     <span class="left">
         @if (User.IsInRole("admin"))
         {
-            <a href="/Distribution/Bars/Add" class="icon-add mr-3 h5">Add bar</a>
+            <a href="/Distribution/Bars/Add" class="icon-add mr-3 h5 pink-color">Add bar</a>
         }
     </span>
 
     <span class="right">
-        <a href="/Distribution/Bars/Search" class="icon-search2 h5">Search</a>
+        <a href="/Distribution/Bars/Search" class="icon-search2 h5 pink-color">Search</a>
     </span>
 </div>
 
@@ -41,7 +41,7 @@
 <ul class="pagination">
     @if (Model.Paging.HasPrevious)
     {
-        <li class="page-item"><a class="page-link" href="/Distribution/Bars/Index/@Model.Paging.PreviousPage">Previous</a></li>
+        <li class="page-item"><a class="page-link pink-color" href="/Distribution/Bars/Index/@Model.Paging.PreviousPage">Previous</a></li>
     }
     @for (int i = 1; i <= Model.Paging.LastPage; i++)
     {
@@ -51,12 +51,12 @@
         }
         else
         {
-            <li class="page-item"><a class="page-link" href="/Distribution/Bars/Index/@i">@i</a></li>
+            <li class="page-item"><a class="page-link pink-color" href="/Distribution/Bars/Index/@i">@i</a></li>
         }
     }
     @if (Model.Paging.HasNext)
     {
-        <li class="page-item"><a class="page-link" href="/Distribution/Bars/Index/@Model.Paging.NextPage">Next</a></li>
+        <li class="page-item"><a class="page-link pink-color" href="/Distribution/Bars/Index/@Model.Paging.NextPage">Next</a></li>
     }
 </ul>
 
