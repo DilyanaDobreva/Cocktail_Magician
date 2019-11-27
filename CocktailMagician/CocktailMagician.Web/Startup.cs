@@ -93,7 +93,7 @@ namespace CocktailMagician.Web
             app.UseCookiePolicy();
 
             app.UseAuthentication();
-            //app.UseMiddleware<ErrorCatcher>();
+            app.UseMiddleware<ErrorCatcher>();
 
 
             app.UseMvc(routes =>
