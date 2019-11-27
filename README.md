@@ -39,7 +39,7 @@ You don't need any additional software to use the application.
 #### Public Part
 * The public part consists of a home page displaying top rated bars and cocktails also you are able to log in or register.
 
-![Alt text](https://github.com/DilyanaDobreva/Cocktail_Magician/tree/master/Images/TopRatedCoctails.jpg)
+![Alt text](https://github.com/DilyanaDobreva/Cocktail_Magician/blob/master/Images/TopRatedCoctails.jpg)
 * When visitors click on a cocktail, they can see the details of the cocktail and in which bars can be found.
 
 ![Alt text](https://github.com/DilyanaDobreva/Cocktail_Magician/tree/master/Images/CocktailDetail.jpg)
