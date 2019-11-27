@@ -4,7 +4,7 @@ This is a system which will assist you to manage cocktails and bars from end to 
 
 ## Getting Started
 
-Just use the link (https://cocktailmagicianproject.azurewebsites.net/) to use the application
+Just use the link [WebSite](https://cocktailmagicianproject.azurewebsites.net/) to use the application
 
 ### Prerequisites
 
