@@ -50,9 +50,9 @@ $('#ingrediens-to-db').click(function () {
         },
         dataType: 'json',
         success: function (response) {
-            $('#list-of-ingredients').append(new Option(response.name, response.id))
-            //let div = $('#ingrediens-div');
-            //div.hide();
+            $('#list-of-ingredients').append(new Option(response.name + ', ' + response.unit, response.name + ', ' + response.unit))
+            let div = $('#ingrediens-div');
+            div.hide();
 
         },
         error: function (msg) {

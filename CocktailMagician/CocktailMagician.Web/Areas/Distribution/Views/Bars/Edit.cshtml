@@ -7,14 +7,14 @@
 <div class="row">
     <div class="col-xl-6 col-md-12" align="center">
         @*TODO Check image*@
-        @*<div>
-            <img class="edit-bar-image mt-4" src="@Model.ImageURL" alt="Card image cap">
-        </div>*@
+        <div>
+            <img class="edit-bar-image mt-4" src="@Model.ImagePath" alt="Card image cap">
+        </div>
     </div>
-    @*<div class="col-xl-1" align="center">
-        </div>*@
+    <div class="col-xl-1" align="center">
+    </div>
 
-    <div class="col-xl-6 col-md-12 pl-3" align="center">
+    <div class="col-xl-5 col-md-12 pl-3" align="center">
         <h2 class="font-cinzel m-4">@Model.Name</h2>
 
         <h5>Edit bar information</h5>
@@ -48,7 +48,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" id="city-to-db">Save changes</button>
+                        <button type="button" class="btn btn-pink" id="city-to-db">Save changes</button>
                     </div>
                 </div>
             </div>

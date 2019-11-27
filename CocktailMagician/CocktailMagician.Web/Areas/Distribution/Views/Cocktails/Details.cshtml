@@ -40,7 +40,7 @@
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                             <form asp-controller="Cocktails" asp-action="Delete" asp-route-id="@Model.Id">
-                                                <button type="submit" class="btn btn-primary">Delete</button>
+                                                <button type="submit" class="btn btn-pink">Delete</button>
                                             </form>
                                         </div>
                                     </div>
@@ -119,7 +119,7 @@
                                                 </div>
                                                 <div class="col-sm-8">
                                                     <div class="p-2" align="center">
-                                                        <a class="font-cinzel font-size-15" asp-controller="Bars" asp-action="Details" asp-route-id="@bar.Id">@bar.Name</a>
+                                                        <a class="font-cinzel font-size-15 pink-color" asp-controller="Bars" asp-action="Details" asp-route-id="@bar.Id">@bar.Name</a>
                                                         <div>@bar.Address, @bar.City</div>
                                                     </div>
                                                 </div>

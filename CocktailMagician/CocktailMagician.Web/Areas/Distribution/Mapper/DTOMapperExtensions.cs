@@ -11,10 +11,18 @@ namespace CocktailMagician.Web.Areas.Distribution.Mapper
         {
             var dto = new CocktailIngredientDTO
             {
-                Name = vm.Name,
-                Value = vm.Value,
-                Unit = vm.Unit
+                Value = vm.Value
             };
+
+            var commaIndex = vm.Name.IndexOf(',');
+            if (commaIndex >= 0)
+            {
+                dto.Name = vm.Name.Substring(0, commaIndex);
+            }
+            else
+            {
+                dto.Name = vm.Name;
+            }
             return dto;
         }
         public static AddressDTO MapToDTO(this AddressViewModel address)

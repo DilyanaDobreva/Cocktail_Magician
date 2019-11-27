@@ -19,8 +19,7 @@ namespace CocktailMagician.Web.Areas.Distribution.Models.Cocktails
         [Required]
         [MaxLength(50, ErrorMessage = "Name must be less than 50 symbols")]
         public string Name { get; set; }
-        [Url]
-        public string ImageURL { get; set; }
+        public string ImagePath { get; set; }
         public List<string> ListCurrentIngredients { get; set; }
         public List<SelectListItem> AllNotIncludedIngredients { get; set; }
         public List<SelectListItem> CurrentCocktailIngredients { get; set; }

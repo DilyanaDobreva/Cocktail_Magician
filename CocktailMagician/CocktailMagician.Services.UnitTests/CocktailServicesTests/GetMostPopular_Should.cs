@@ -29,9 +29,6 @@ namespace CocktailMagician.Services.UnitTests.CocktailServicesTests
 
             var CocktailImageUrlTest = "https://www.google.com/";
 
-            var ingrNameTest = "IngrTest";
-            var ingrUnitTest = "Unit";
-
             var user = new User
             {
                 Role = new Role { Name = "user" },

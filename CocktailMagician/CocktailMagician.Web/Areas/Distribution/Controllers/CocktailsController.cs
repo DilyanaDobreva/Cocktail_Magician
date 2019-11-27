@@ -54,7 +54,7 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
             if (cocktailVM.CocktilIngredients == null)
             {
                 var ingredients = await ingredientServices.GetAllDTOAsync();
-                cocktailVM.AllIngredients = ingredients.Select(b => new SelectListItem(b.Name, b.Name)).ToList();
+                cocktailVM.AllIngredients = ingredients.Select(b => new SelectListItem($"{b.Name}, {b.Unit}", $"{b.Name}, {b.Unit}")).ToList();
 
                 return View(cocktailVM);
             }
@@ -174,10 +174,10 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
                 var ingredients = await cocktailServices.GetAllNotIncludedIngredientsDTOAsync(id);
 
                 cocktailToEdit.AllNotIncludedIngredients = ingredients
-                    .Select(b => new SelectListItem(b.Name, b.Name)).ToList();
+                    .Select(b => new SelectListItem($"{b.Name}, {b.Unit}", $"{b.Name}, {b.Unit}")).ToList();
 
                 cocktailToEdit.CurrentCocktailIngredients = cocktailToEdit.IngredientsQuantity
-                    .Select(i => new SelectListItem(i.Name, i.Name)).ToList();
+                    .Select(i => new SelectListItem($"{i.Name}, {i.Unit}", i.Name)).ToList();
 
                 return View(cocktailToEdit);
             }
@@ -260,17 +260,6 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
             return View(vm);
 
         }
-        //public async Task<IActionResult> CocktailReview(int id)
-        //{
-        //    var cocktail = await cocktailServices.GetDetailedDTOAsync(id);
-        //    var cocktailVM = cocktail.MapToViewModel();
-
-        //    var vm = new CocktailReviewViewModel
-        //    {
-        //        Cocktail = cocktailVM.
-        //    };
-        //    return View(vm);
-        //}
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CocktailReview([FromBody]ReviewViewModel vm)
@@ -285,18 +274,5 @@ namespace CocktailMagician.Web.Areas.Cocktails.Controllers
             return RedirectToAction("Details", "Cocktails", new { id = vm.Id });
         }
 
-        //public async Task<IActionResult> ShowReviews(int id)
-        //{
-        //    var list = await cocktailReview.AllReviewsAsync(id);
-        //    var cocktail = (await cocktailServices.GetDTO(id));
-        //    var vm = new CocktailDetailsViewModel()
-        //    {
-        //        CocktailReviews = list.Select(r => r.MapToViewModel()),
-        //        Name = cocktail.Name,
-        //        Id = id
-        //    };
-
-        //    return View(vm);
-        //}
     }
 }

@@ -52,32 +52,18 @@
     </div>
 </div>
 <div class="m-4" align="center">
-    <div>
+    <div id="rating">
         @if (Model.AverageRating != null)
         {
-            <div>
-                Rating:
-                <span class="yellow-color">
-                    @if (Model.AverageRating != null)
-                    {
-                        for (int i = 1; i <= Model.AverageRating; i++)
-                        {
-                            <span class="icon-star"></span>
-                        }
-                        for (int i = 5; i > Model.AverageRating; i--)
-                        {
-                            <span class="icon-star-o"></span>
-                        }
-                    }
-                </span>
-                @String.Format("{0:0.0}", Model.AverageRating)
-            </div>
+            <partial name="_Rating" model="@Model.AverageRating" />
+
         }
         else
         {
             <div id="no-review">No reviews yet!</div>
         }
     </div>
+    <input type="hidden" id="barId" value="@Model.Id" />
     @if (User.Identity.IsAuthenticated)
     {
         <div class="text-link" data-toggle="modal" data-target=".reviewModal">Add Review</div>
@@ -102,12 +88,6 @@
                 </div>
             </div>
         </div>
-    }
-
-    @if (Model.HasReviews)
-    {
-        <input type="hidden" id="barId" value="@Model.Id" />
-        <button class="btn btn-pink ml-2" id="load-bar-reviews" data-toggle="modal" data-target="#exampleModalScrollable">Show reviews</button>
     }
 
 
@@ -201,10 +181,12 @@
                     <div class="carousel-item active">
                         @foreach (var cocktail in Model.Cocktails.Take(4))
                         {
-                            <div class="col-xs-3 col-sm-3 col-md-3" align="center">
-                                <img src="@cocktail.ImageURL" class="image-cocktail-carousel shadow img-fluid" />
-                                <a href="\Distribution\Cocktails\Details\@cocktail.Id" class="font-cinzel">@cocktail.Name</a>
-                            </div>
+                            <a href="\Distribution\Cocktails\Details\@cocktail.Id">
+                                <div class="col-xs-3 col-sm-3 col-md-3" align="center">
+                                    <img src="@cocktail.ImagePath" class="image-cocktail-carousel shadow img-fluid" />
+                                    <div class="font-cinzel pink-color">@cocktail.Name</div>
+                                </div>
+                            </a>
                         }
                     </div>
                     @{
@@ -216,10 +198,12 @@
                         <div class="carousel-item">
                             @foreach (var cocktail in Model.Cocktails.Skip(skipCounter * 4).Take(4))
                             {
-                                <div class="col-xs-3 col-sm-3 col-md-3" align="center">
-                                    <img src="@cocktail.ImageURL" class="image-cocktail-carousel shadow" />
-                                    <a href="\Distribution\Cocktails\Details\@cocktail.Id" class="font-cinzel"><b>@cocktail.Name</b></a>
-                                </div>
+                                <a href="\Distribution\Cocktails\Details\@cocktail.Id">
+                                    <div class="col-xs-3 col-sm-3 col-md-3" align="center">
+                                        <img src="@cocktail.ImagePath" class="image-cocktail-carousel shadow" />
+                                        <div" class="font-cinzel pink-color">@cocktail.Name</div">
+                                    </div>
+                                </a>
                             }
                         </div>
 

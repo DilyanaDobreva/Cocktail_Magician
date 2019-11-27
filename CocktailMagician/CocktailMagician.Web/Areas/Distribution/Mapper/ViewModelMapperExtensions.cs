@@ -16,7 +16,7 @@ namespace CocktailMagician.Web.Areas.Distribution.Mapper
             {
                 Id = cocktail.Id,
                 Name = cocktail.Name,
-                ImageURL = cocktail.ImagePath,
+                ImagePath = cocktail.ImagePath,
                 AverageRating = cocktail.AverageRating
             };
             vm.AverageRating = cocktail.AverageRating;
@@ -76,7 +76,7 @@ namespace CocktailMagician.Web.Areas.Distribution.Mapper
             {
                 Id = cocktail.Id,
                 Name = cocktail.Name,
-                ImageURL = cocktail.ImagePath,
+                ImagePath = cocktail.ImagePath,
                 IngredientsQuantity = cocktail.Ingredients.Select(ci => ci.MapToViewModel()).ToList(),
             };
             return vm;

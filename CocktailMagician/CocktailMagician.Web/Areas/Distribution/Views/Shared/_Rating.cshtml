@@ -1,0 +1,25 @@
+﻿@model double?
+
+@if (Model != null)
+{
+    <div>
+        Rating:
+        <span class="yellow-color">
+            @if (Model != null)
+            {
+                for (int i = 1; i <= Model; i++)
+                {
+                    <span class="icon-star"></span>
+                }
+                for (int i = 5; i > Model; i--)
+                {
+                    <span class="icon-star-o"></span>
+                }
+            }
+        </span>
+        @String.Format("{0:0.0}", Model)
+    </div>
+
+    <button class="btn btn-pink ml-2" id="load-bar-reviews" data-toggle="modal" data-target="#exampleModalScrollable">Show reviews</button>
+
+}
