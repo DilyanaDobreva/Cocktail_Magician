@@ -4,13 +4,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="row mb-2">
+<div class="row mb-1">
     <div class="col-12 text-center mb-3">
         <h2 class="font-cinzel">Our Cocktails</h2>
         <p>You can't buy happiness, but you can drink a cocktail and that's the kind of the same thing!</p>
     </div>
 </div>
-<div >
+<div>
     <span class="left">
         @if (User.IsInRole("admin"))
         {
@@ -23,7 +23,7 @@
     </span>
 </div>
 
-<hr class="mt-1"/>
+<hr class="mt-1" />
 <div class="container">
     @if (Model.AllCocktails.Count() == 0)
     {

@@ -140,7 +140,7 @@ $(document).ready(function () {
         $('#show-bars').css("background-color", "white").css("color", "gray").css("cursor", "default");
     });
 
-
+})
 
 
 $('#bar-review').click(function () {
