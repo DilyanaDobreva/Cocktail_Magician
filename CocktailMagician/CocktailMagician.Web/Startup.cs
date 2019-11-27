@@ -4,6 +4,7 @@ using CocktailMagician.Services.Contracts;
 using CocktailMagician.Services.Contracts.Factories;
 using CocktailMagician.Services.Factories;
 using CocktailMagician.Services.Hasher;
+using CocktailMagician.Web.Middleware;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -92,6 +93,7 @@ namespace CocktailMagician.Web
             app.UseCookiePolicy();
 
             app.UseAuthentication();
+            app.UseMiddleware<ErrorCatcher>();
 
 
             app.UseMvc(routes =>

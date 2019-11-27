@@ -16,20 +16,21 @@
 
 
     <h3 class="under-centered">
-        COCKTAIL FOR EVERYONE
+        All you need is love and cocktails!
     </h3>
 </div>
-<div class="site-section mt-5">
+<div class="site-section">
+    <hr class="pb-5">
     <div class="container">
         <div class="row mb-5">
             <div class="col-12 section-title text-center mb-5">
+
                 <p class="homepage-text">
                     Our Top Rated Cocktails
                 </p>
-
                 <p>
                     <a id="home-page-a" asp-area="Distribution" asp-controller="Cocktails" asp-action="Index">
-                        View All Products
+                        View All Cocktails
                         <span class="icon-long-arrow-right">
                         </span>
                     </a>
@@ -121,21 +122,22 @@
                         </div>
                     </div>
                 </div>
-                @*<div class="row">
-                        @foreach (var cocktail in Model.ListOfCocktails)
-                        {
-                            <div class="col-lg-3 col-md-6" align="center">
-                                <partial name="~/Areas/Distribution/Views/Shared/_RowCocktail.cshtml" model="@cocktail" />
-                            </div>
-                        }
-                    </div>*@
             </div>
         </div>
     </div>
 </div>
 
-<p class="homepage-text"> Top Rated Bars</p>
+<p class="homepage-text">
+    Our Top Rated Bars
+</p>
 
+<p id="p-on-center">
+    <a id="home-page-a" asp-area="Distribution" asp-controller="Bars" asp-action="Index">
+        View All Bars
+        <span class="icon-long-arrow-right">
+        </span>
+    </a>
+</p>
 <div class="container">
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">

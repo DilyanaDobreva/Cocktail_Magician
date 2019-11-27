@@ -8,38 +8,38 @@
 <h1 class="text-center">Modify Account</h1>
 
 <hr />
-<div class="text-center">
-    <div class="text-center">
+<div align="center">
+    <div class="col-md-6">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <input type="hidden" asp-for="Id" />
 
-            <div class="text-center">
-                <h5 class="text-center">Enter current password.</h5>
+            <div class="m-3" align="left">
+                <label asp-for="Password" class="control-label mb-0">Enter current password:</label>
                 <input asp-for="Password" class="form-control" />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
-            <div class="text-center">
-                <h5 class="text-center">Retype password.</h5>
+            <div class="m-3" align="left">
+                <label asp-for="ComparePassword" class="control-label mb-0">Retype password:</label>
                 <input asp-for="ComparePassword" class="form-control" />
                 <span asp-validation-for="ComparePassword" class="text-danger"></span>
             </div>
-            <div class="text-center">
-                <h5 class="text-center">Choose new password</h5>
+            <div class="m-3" align="left">
+                <label asp-for="ComparePassword" class="control-label mb-0">Choose new password:</label>
                 <input asp-for="NewPassword" class="form-control" />
                 <span asp-validation-for="NewPassword" class="text-danger"></span>
             </div>
             @if (User.IsInRole("admin"))
             {
-                <div class="form-group">
-                    <label asp-for="Role" class="control-label"></label>
+                <div class="form-group m-3" align="left">
+                    <label asp-for="Role" class="control-label mb-0"></label>
                     <select asp-for="RoleId" asp-items="@Model.Role " class="form-control">
                     </select>
                 </div>
             }
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-outline-info" />
+                <input type="submit" value="Save" class="btn btn-pink" />
             </div>
         </form>
     </div>
@@ -48,7 +48,7 @@
 @if (User.IsInRole("admin"))
 {
     <div>
-        <a asp-action="Index">Back to List</a>
+        <a class="pink-color" asp-action="Index">Back to List</a>
     </div>
 }
 

@@ -2,26 +2,29 @@
 for details on configuring this project to bundle and minify static web assets. */
 * {
     font-family: Cinzel !important;
-    font-weight: 400;
+    font-weight: 500;
     /*color:darkslategray*/
 }
-
 #home-page-img {
     width: 100%;
 }
-
+.error-img {
+    width: 100%;
+    object-fit: cover;
+}
 .home-page-image {
     position: relative;
     text-align: center;
     color: white;
 }
-
+#p-on-center {
+    text-align: center;
+}
 #home-page-a {
     color: #df1a56;
     text-decoration: none;
     background-color: transparent;
 }
-
 .under-centered {
     position: absolute;
     top: 60%;
@@ -30,34 +33,30 @@ for details on configuring this project to bundle and minify static web assets. 
     font-size: 53px;
     background-color: #dd1b5a6e;
 }
-
 .btn-outline-primary {
     border-color: #da1b5e
 }
-
 .cocktail-homepage {
     position: absolute;
     top: 80%;
     left: 47%;
-    color: white !important;
+    color: white!important;
     transform: translate(-50%, -50%);
     background-color: #dd1b5a6e;
 }
-
     .cocktail-homepage h3 {
         color: white !important;
+        padding-left: 20px;
+        padding-right: 20px;
     }
-
 .carousel-caption {
     background-color: #dd1b5a6e;
 }
-
 .homepage-text {
     text-align: center;
     font-size: 25px;
     color: black;
 }
-
 body.modal-open {
     padding-right: 0 !important;
 }
@@ -69,10 +68,10 @@ nav .container {
     background: #fff !important;
 }
 
-    nav .container {
-        border-bottom: 1px solid rgba(220, 27, 93, 0.55);
-        text-align: left;
-    }
+nav .container {
+    border-bottom: 1px solid rgba(220, 27, 93, 0.55);
+    text-align: left;
+}
 
     nav img {
         height: 4vw;
@@ -85,8 +84,8 @@ a.navbar-brand {
 }
 
 .page-item.active a {
-    background: #dc1b5d !important;
-    border-color: #cc084b !important;
+    background: #dc1b5d!important;
+    border-color: #cc084b!important;
 }
 
 /* Sticky footer styles
@@ -198,7 +197,6 @@ body {
     width: 220px;
     object-fit: cover;
 }
-
 .image-cocktail-carousel {
     height: 200px;
     width: 150px;
@@ -210,6 +208,7 @@ body {
     height: 270px;
     max-width: 310px;
     object-fit: cover;
+    
 }
 
 .bar-card-size {
@@ -278,8 +277,8 @@ body {
 
 
 .cocktail-backframe {
-    color: #000;
-}
+        color: #000;
+    }
 
 /*.cocktail-backframe {
     padding-top: 20px;
@@ -296,7 +295,7 @@ body {
     transition: .3s all ease;
 }*/
 
-/*.cocktail-backframe:hover {
+    /*.cocktail-backframe:hover {
         opacity: 1;
         visibility: visible;
     }*/
@@ -310,24 +309,21 @@ body {
     overflow-y: auto;
 }
 
-.recepie-container {
+.recepie-container{
     height: 180px;
 }
-
-.display-none {
-    display: none
+.display-none{
+    display:none
 }
 
-#show-reviews {
+#show-reviews{
     background-color: #df1a57;
     color: white;
     cursor: pointer;
 }
-
-.float-right {
-    float: right;
+.float-right{
+    float:right;
 }
-
 .bars-scroll-frame {
     /*overflow: auto;*/
     max-width: calc(100vh - 80px);
@@ -337,17 +333,16 @@ body {
     padding: 15px;
     /*border-radius: 5px;*/
     box-shadow: 7px 7px 15px grey;
-    vertical-align: middle
+    vertical-align:middle
 }
 
 .scroll {
     overflow: auto;
     height: calc(100vh - 520px);
-    overflow-x: hidden
+    overflow-x:hidden
 }
-
-.font-size-15 {
-    font-size: 20px
+.font-size-15{
+    font-size:20px
 }
 
 .text-link {
@@ -355,7 +350,6 @@ body {
     text-decoration: underline;
     cursor: pointer
 }
-
 .hr-primary {
     background-color: #da1b5e;
 }
@@ -466,9 +460,9 @@ body {
     text-shadow: -2px -2px 0 #000, 1px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
 }
 
-.white-text {
-    color: white;
-    opacity: 1;
+.white-text{
+    color:white;
+    opacity:1;
 }
 
 .col-md-3 {
@@ -476,7 +470,7 @@ body {
     margin-left: -4px;
 }
 
-/*.col-md-3 img {
+    /*.col-md-3 img {
         width: 100%;
         height: auto;
     }*/
@@ -495,8 +489,8 @@ body.no-padding {
     padding-right: 0;
 }
 
-#logOut-button {
-    cursor: pointer;
+#logOut-button{
+    cursor:pointer;
 }
 
 .btn-pink {
@@ -508,7 +502,7 @@ body.no-padding {
     .btn-pink:hover {
         border-color: #dc1b5d;
         background-color: #dc1b5d;
-        color: white !important;
+        color:white !important;
     }
 
 .btn-text-only {
@@ -517,43 +511,17 @@ body.no-padding {
     background: none;
 }
 
-.logout {
-    width: 70px;
-    height: 25px;
+.logout{
+    width:70px;
+    height:25px;
 }
 
-.home-carousel-img {
-    width: 90%;
+.home-carousel-img{
+    width:90%;
     height: 550px;
-    object-fit: cover;
+    object-fit:cover;
 }
 
 .pink-color {
     color: #dc1b5d !important
-}
-
-.margin-right-1 {
-    margin-right: 1rem;
-}
-
-.input-border {
-    border: 1px solid #ccc !important;
-    border-radius: 3px;
-}
-
-nav {
-    position: fixed; /* Set the navbar to fixed position */
-    top: 0; /* Position the navbar at the top of the page */
-    /*width: 100%;*/
-}
-
-
-header {
-    position: fixed;
-    z-index: 99;
-    top: 0;
-    width:100%;
-}
-body{
-    margin-top:90px;
 }
