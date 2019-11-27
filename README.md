@@ -1,4 +1,4 @@
-![Alt text](https://github.com/DilyanaDobreva/Cocktail_Magician/blob/master/Images/HomePage.jpg)
+![Alt text](https://github.com/DilyanaDobreva/Cocktail_Magician/blob/master/Images/HomePage.png)
 
 # Application for cocktails and bars.
 
@@ -39,32 +39,32 @@ You don't need any additional software to use the application.
 #### Public Part
 * The public part consists of a home page displaying top rated bars and cocktails also you are able to log in or register.
 
-![Alt text](https://github.com/DilyanaDobreva/Cocktail_Magician/blob/master/Images/TopRatedCoctails.jpg)
+![Alt text](https://github.com/DilyanaDobreva/Cocktail_Magician/blob/master/Images/TopRatedCoctails.png)
 * When visitors click on a cocktail, they can see the details of the cocktail and in which bars can be found.
 
-![Alt text](https://github.com/DilyanaDobreva/Cocktail_Magician/tree/master/Images/CocktailDetail.jpg)
+![Alt text](https://github.com/DilyanaDobreva/Cocktail_Magician/blob/master/Images/CocktailDetail.png)
 * In home page also can be found the top rated bars.
 
-![Alt text](https://github.com/DilyanaDobreva/Cocktail_Magician/tree/master/Images/TopBars.jpg)
+![Alt text](https://github.com/DilyanaDobreva/Cocktail_Magician/blob/master/Images/TopBars.png)
 * When visitors click on a bar, they can see the details of the bar and in what cocktails can be found in this bar.
 
-![Alt text](https://github.com/DilyanaDobreva/Cocktail_Magician/tree/master/Images/BarDetail1.jpg)
-![Alt text](https://github.com/DilyanaDobreva/Cocktail_Magician/tree/master/Images/BarDetail2.jpg)
+![Alt text](https://github.com/DilyanaDobreva/Cocktail_Magician/blob/master/Images/BarDetail1.png)
+![Alt text](https://github.com/DilyanaDobreva/Cocktail_Magician/blob/master/Images/BarDetail2.png)
 
 * Also we have 2 types of searching:
 
 * Cocktails searching:
-![Alt text](https://github.com/DilyanaDobreva/Cocktail_Magician/tree/master/Images/CocktailSearch.jpg)
+![Alt text](https://github.com/DilyanaDobreva/Cocktail_Magician/blob/master/Images/CocktailSearch.png)
 
 * Bar searching:
-![Alt text](https://github.com/DilyanaDobreva/Cocktail_Magician/tree/master/Images/BarSearch.jpg)
+![Alt text](https://github.com/DilyanaDobreva/Cocktail_Magician/blob/master/Images/BarSearch.png)
 
 #### Private Part
 * After Sign up
-![Alt text](https://github.com/DilyanaDobreva/Cocktail_Magician/tree/master/Images/SignUp.jpg)
+![Alt text](https://github.com/DilyanaDobreva/Cocktail_Magician/blob/master/Images/SignUp.png)
 
 * And Log In
-![Alt text](https://github.com/DilyanaDobreva/Cocktail_Magician/tree/master/Images/SignIn.jpg)
+![Alt text](https://github.com/DilyanaDobreva/Cocktail_Magician/blob/master/Images/SignIn.png)
 * Users can see everything visible to website visitors and also they can:
 
 
