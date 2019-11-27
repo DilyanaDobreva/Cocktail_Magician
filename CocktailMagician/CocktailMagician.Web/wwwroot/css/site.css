@@ -525,3 +525,29 @@ body.no-padding {
 .pink-color {
     color: #dc1b5d !important
 }
+.margin-right-1 {
+    margin-right: 1rem;
+}
+
+.input-border {
+    border: 1px solid #ccc !important;
+    border-radius: 3px;
+}
+
+nav {
+    position: fixed; /* Set the navbar to fixed position */
+    top: 0; /* Position the navbar at the top of the page */
+    /*width: 100%;*/
+}
+
+
+header {
+    position: fixed;
+    z-index: 99;
+    top: 0;
+    width: 100%;
+}
+
+body {
+    margin-top: 90px;
+}
