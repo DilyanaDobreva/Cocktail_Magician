@@ -35,7 +35,7 @@ namespace CocktailMagician.Data.Seed
             {
                 Id = 5,
                 Name = "Moscow Mule",
-                ImagePath = "/cocktiailImages/MoscowMule.jpg"
+                ImagePath = "/cocktailImages/MoscowMule.jpg"
             },
             new Cocktail
             {

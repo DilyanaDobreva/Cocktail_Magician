@@ -140,25 +140,7 @@ $(document).ready(function () {
         $('#show-bars').css("background-color", "white").css("color", "gray").css("cursor", "default");
     });
 
-    const navbarContainer = $('nav .container');
 
-    window.addEventListener('scroll', function () {
-        const logoHeight = $('#logo').height();
-        const topOffset = window.scrollY;
-
-        if (topOffset > logoHeight) {
-            navbarContainer.css({
-                position: 'fixed',
-                top: 0,
-                zIndex: 99
-            });
-        } else {
-            navbarContainer.css({
-                position: 'relative'
-            });
-        }
-    });
-});
 
 
 $('#bar-review').click(function () {
