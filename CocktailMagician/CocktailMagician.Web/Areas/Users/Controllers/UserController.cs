@@ -85,6 +85,10 @@ namespace CocktailMagician.Web.Areas.Users.Controllers
             }
             else
             {
+                if (id != null)
+                {
+                    return NotFound();
+                }
                 var currentMember = User.Identity.Name;
                 var user = await userService.FindUserDTOAsync(currentMember);
                 id = user.Id;

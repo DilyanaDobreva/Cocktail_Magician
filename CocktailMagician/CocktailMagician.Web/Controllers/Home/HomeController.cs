@@ -27,5 +27,7 @@ namespace CocktailMagician.Web.Areas.Home
             vm.ListOfCocktails = (await cocktailServices.GetMostPopular(4)).Select(c => c.MapToViewModel()).ToList();
             return View(vm);
         }
+        public IActionResult Error(string code, string message) => View(new ErrorViewModel()
+        { Code = code, Message = message });
     }
 }

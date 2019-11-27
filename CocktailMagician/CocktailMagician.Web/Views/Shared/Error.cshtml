@@ -1,0 +1,22 @@
+﻿@model ErrorViewModel
+@{
+    ViewData["Title"] = "Error";
+}
+
+@*<h1 class="text-danger">@Model.Message</h1>
+    <h1 class="text-danger">@Model.Code</h1>*@
+<div class="row">
+    <div class="col-lg-6">
+        <img class="error-img" src="~/images/wine-glass-liquid-spilled-splashing-curved-731200.jpg" />
+    </div>
+    <div class="col-lg-6">
+        <h1>Something went wrong.</h1>
+        <h2>@Model.Message</h2>
+        <h5>The page you requested could not be found. It might have been moved or removed, or you may have mistyped the URL.</h5>
+        <div class="nav-item logout-btn">
+            <form asp-area="" asp-controller="Home" asp-action="Index">
+                <button class="btn btn-pink">Back to homepage</button>
+            </form>
+        </div>
+    </div>
+</div>

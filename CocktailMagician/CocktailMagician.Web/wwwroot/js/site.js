@@ -139,25 +139,6 @@ $(document).ready(function () {
         $('#show-reviews').css("background-color", "#da1b5e").css("color", "white").css("cursor", "pointer");
         $('#show-bars').css("background-color", "white").css("color", "gray").css("cursor", "default");
     });
-
-    const navbarContainer = $('nav .container');
-
-    window.addEventListener('scroll', function () {
-        const logoHeight = $('#logo').height();
-        const topOffset = window.scrollY;
-
-        if (topOffset > logoHeight) {
-            navbarContainer.css({
-                position: 'fixed',
-                top: 0,
-                zIndex: 99
-            });
-        } else {
-            navbarContainer.css({
-                position: 'relative'
-            });
-        }
-    });
 });
 
 
