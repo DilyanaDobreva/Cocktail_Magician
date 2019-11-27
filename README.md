@@ -12,12 +12,21 @@ You don't need any additional software to use the application.
 
 ## Built With
 
-* [Visual Studio](https://visualstudio.microsoft.com/vs/) - Software
-* [C#](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/) - Program language C#
+
+* [Visual Studio](https://visualstudio.microsoft.com/vs/)
+* [ASP.NET CORE](https://docs.microsoft.com/en-us/aspnet/core/?view=aspnetcore-3.0)
+* [Azure](https://azure.microsoft.com/en-us/)
+* [Azure SQL Server](https://azure.microsoft.com/en-us/services/sql-database/)
+* [Entity Framework Core](https://docs.microsoft.com/en-us/ef/core/)
+* [Moq](https://github.com/Moq/moq4/wiki/Quickstart)
+* [JavaScript](https://www.javascript.com/)
+* [jQuery](https://jquery.com/)
+* [HTML](https://developer.mozilla.org/bg/docs/Web/HTML)
+* [Bootstrap](https://getbootstrap.com/)
 
 ## CHANGELOG
 
-Please read [CHANGELOG.md](https://gitlab.com/kristiqntashev/teamprojectlibrary/blob/master/Team%20Work%203/CHANGELOG.md) for more information about all changelogs.
+Please read [Wiki](https://github.com/DilyanaDobreva/Cocktail_Magician/wiki) for more information about the code structure.
 
 ## Authors
 
